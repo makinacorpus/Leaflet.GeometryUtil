@@ -1,0 +1,16 @@
+{
+    "name": "leaflet-geometryutil"
+  , "version": "0.0.1"
+  , "description": "Leaflet utility function on geometries"
+  , "keywords": ["Leaflet", "GIS"]
+  , "main": "dist/leaflet.geometryutil.js"
+  , "scripts": {
+    "test": "make test"
+  }
+  , "dependencies": {
+    "leaflet": "*"
+  }
+  , "devDependencies": {
+    "mocha": "*"
+  }
+}
