@@ -1,9 +1,8 @@
-var assert = require('assert')
-  , GeometryUtil = require('./../dist/leaflet.geometryutil').GeometryUtil;
+var assert = chai.assert;
 
-describe('distance', function() {
-  it('should be ok', function(done) {
-    assert.equal(11, GeometryUtil.distance());
+describe('Plannar distance', function() {
+  it('It should be 0 if same point', function(done) {
+    assert.equal(0, L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10])));
     done();
   });
 });

@@ -8,7 +8,7 @@ var L = L || exports;
 L.GeometryUtil = {
 
     /**
-        Shortcut function for planar distance between two {L.LatLng}
+        Shortcut function for planar distance between two {L.LatLng} at current zoom.
         @param {L.Map} map
         @param {L.LatLng} origin
         @param {L.LatLng} destination

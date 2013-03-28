@@ -12,6 +12,8 @@
   }
   , "devDependencies": {
     "mocha": "*",
+    "chai": "*",
+    "mocha-phantomjs": "*",
     "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/master"
   }
 }
