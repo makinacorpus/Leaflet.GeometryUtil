@@ -1,5 +1,20 @@
+/**
+ * @fileOverview Leaflet Geometry utilities for distances and linear referencing.
+ * @name L.GeometryUtil
+ */
+
 var L = L || exports;
 
 L.GeometryUtil = {
-    distance: function () { return 2; }
+
+    /**
+        Shortcut function for planar distance between two {L.LatLng}
+        @param {L.Map} map
+        @param {L.LatLng} origin
+        @param {L.LatLng} destination
+        @returns {Number}
+     */
+    distance: function (map, latlng1, latlng2) {
+        return map.latLngToLayerPoint(latlng1).distanceTo(map.latLngToLayerPoint(latlng2));
+    }
 }
