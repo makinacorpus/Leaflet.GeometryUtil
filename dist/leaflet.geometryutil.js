@@ -46,9 +46,11 @@ L.GeometryUtil = {
     */
     closestOnSegment: function (map, latlng, latlngA, latlngB) {
         var maxzoom = map.getMaxZoom();
+        if (maxzoom === Infinity)
+            maxzoom = map.getZoom();
         var p = map.project(latlng, maxzoom),
            p1 = map.project(latlngA, maxzoom),
-           p2 = map.project(latlngB, maxzoom);
+           p2 = map.project(latlngB, maxzoom),
            closest = L.LineUtil.closestPointOnSegment(p, p1, p2);
         return map.unproject(closest, maxzoom);
     },
@@ -62,9 +64,10 @@ L.GeometryUtil = {
     */
     closest: function (map, latlng, layer) {
         if (typeof layer.getLatLngs != 'function')
-            layer = L.PolyLine(layer);
+            layer = L.polyline(layer);
 
-        var mindist = Number.MAX_VALUE,
+        var latlngs = layer.getLatLngs(),
+            mindist = Number.MAX_VALUE,
             result = null;
         // Keep the closest point of all segments
         for (var i = 0, n = latlngs.length; i < n-1; i++) {
