@@ -57,9 +57,9 @@ L.GeometryUtil = {
     /**
         Returns the closest latlng on layer.
         @param {L.Map} map
-        @param {Array|L.PolyLine} layer - An array of {L.LatLng} or the {L.PolyLine} that contains the result.
+        @param {Array<L.LatLng>|L.PolyLine} layer - Layer that contains the result.
         @param {L.LatLng} latlng
-        @param {Boolean} vertices [default vertices=false] - Whether to restrict to path vertices.
+        @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng}
     */
     closest: function (map, layer, latlng, vertices) {
@@ -101,9 +101,9 @@ L.GeometryUtil = {
     /**
         Returns the closest layer to latlng among a list of layers.
         @param {L.Map} map
-        @param {Array} layers
+        @param {Array<L.ILayer>} layers
         @param {L.LatLng} latlng
-        @returns {Object} with layer, latlng and distance or {null} if list is empty;
+        @returns {object} with layer, latlng and distance or {null} if list is empty;
     */
     closestLayer: function (map, layers, latlng) {
         var mindist = Infinity,
@@ -134,11 +134,11 @@ L.GeometryUtil = {
         Returns the closest position from specified {LatLng} among specified layers,
         with a maximum tolerance in pixels, providing snapping behaviour.
         @param {L.Map} map
-        @param {Array} layers - A list of layers to snap on.
+        @param {Array<ILayer>} layers - A list of layers to snap on.
         @param {L.LatLng} latlng - The position to snap.
-        @param {Integer} tolerance [tolerance=Infinity] - Maximum number of pixels.
-        @param {Boolean} withVertices [withVertices=true] - Snap to layers vertices.
-        @returns {Object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
+        @param {?Number} [tolerance=Infinity] - Maximum number of pixels.
+        @param {?boolean} [withVertices=true] - Snap to layers vertices.
+        @returns {object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
     */
     closestLayerSnap: function (map, layers, latlng, tolerance, withVertices) {
         var tolerance = typeof tolerance == 'number' ? tolerance : Infinity,
