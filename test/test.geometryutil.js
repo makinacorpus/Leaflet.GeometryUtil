@@ -129,16 +129,16 @@ describe('Closest among layers', function() {
 
 
 describe('Closest snap', function() {
+  var square, diagonal, d, w, layers;
 
-  // Setup environment statically
-  var snap_distance = L.GeometryUtil.distance(map, L.latLng([0, 0]), L.latLng([0, 10])),
-      d = snap_distance,
-      w = snap_distance * 3;
-
-  var square = L.rectangle([[-w, -w], [w, w]]),
-      diagonal = L.polyline([[-w, -w], [0, 0], [w, w]]),
-      point1 = L.marker([d, d]),
-      layers = [square, diagonal, point1];
+  beforeEach(function() {
+    // Snapping distance
+    d = L.GeometryUtil.distance(map, L.latLng([0, 0]), L.latLng([0, 10]));
+    w = 3 * d;
+    square = L.rectangle([[-w, -w], [w, w]]);
+    diagonal = L.polyline([[-w, -w], [0, 0], [w, w]]);
+    layers = [square, diagonal];
+  });
 
   it('It should snap even if over layer', function(done) {
     var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([0, 0]));
