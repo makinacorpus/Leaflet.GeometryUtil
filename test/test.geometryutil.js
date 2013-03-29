@@ -2,6 +2,7 @@ var assert = chai.assert;
 
 
 assert.almostequal = function (a, b, n) {
+    n = n || 12;
     return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                         Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
 };
@@ -97,6 +98,9 @@ describe('Closest on path with precision', function() {
 
         closest = L.GeometryUtil.closest(map, line, ll);
         assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
+        // Restore zoom
+        map.off('moveend');
+        map._resetView(map.getCenter(), 0);
         done();
     });
 
@@ -117,25 +121,66 @@ describe('Closest among layers', function() {
     var ll = L.latLng([0, 0]),
         layers = [L.marker([2, 2])],
         closest = L.GeometryUtil.closestLayer(map, layers, ll);
-    assert.equal(null, closest);
+    assert.deepEqual(closest,
+                     {layer: layers[0], latlng: layers[0].getLatLng(), distance: Math.sqrt(2)});
     done();
   });
 });
 
 
-describe('Snap on layers', function() {
+describe('Closest snap', function() {
 
   // Setup environment statically
   var snap_distance = L.GeometryUtil.distance(map, L.latLng([0, 0]), L.latLng([0, 10])),
+      d = snap_distance,
       w = snap_distance * 3;
 
   var square = L.rectangle([[-w, -w], [w, w]]),
       diagonal = L.polyline([[-w, -w], [0, 0], [w, w]]),
-      point1 = L.marker([w/3, w/3]),
+      point1 = L.marker([d, d]),
       layers = [square, diagonal, point1];
 
   it('It should snap even if over layer', function(done) {
-    var snap = L.GeometryUtil.snapLayer(map, layers, []);
+    var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([0, 0]));
+    assert.equal(snap.distance, 0);
+    assert.equal(snap.layer, diagonal);
+    done();
+  });
+
+  it('It should not snap if tolerance exceeded', function(done) {
+    var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([-w-d, w+d]), d);
+    assert.equal(null, snap);
+    done();
+  });
+
+  it('It should snap to corners by default', function(done) {
+    var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([-w-d, w+d]));
+    assert.isTrue(snap.distance > d);
+    assert.equal(snap.layer, square);
+    done();
+  });
+
+  it('It should not snap to corners if vertices disabled', function(done) {
+    var corner = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d, -w-d]));
+    assert.equal(corner.layer, square);
+    assert.almostequal(corner.latlng.lat, w);
+    assert.almostequal(corner.latlng.lng, -w);
+
+    var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d, -w-d]), Infinity, false);
+    assert.almostequal(snap.latlng.lat, w-d);
+    assert.almostequal(snap.latlng.lng, -w);
+    done();
+  });
+
+  it('It should not snap to corners if distance to vertice exceeds tolerance', function(done) {
+    var corner = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d-d/2, -w-d]));
+    assert.equal(corner.layer, square);
+    assert.almostequal(corner.latlng.lat, w);
+    assert.almostequal(corner.latlng.lng, -w);
+
+    var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d-d/2, -w-d]), d);
+    assert.almostequal(snap.latlng.lat, w-d-d/2);
+    assert.almostequal(snap.latlng.lng, -w);
     done();
   });
 });
