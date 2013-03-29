@@ -9,9 +9,6 @@ var L = L || exports;
 
 L.GeometryUtil = {
 
-    /** Default snapping distance in pixels */
-    SNAP_DISTANCE: 15,
-
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
         @param {L.Map} map
@@ -58,19 +55,35 @@ L.GeometryUtil = {
     },
 
     /**
-        Returns the point on that is closest to latlng.
+        Returns the closest latlng on layer.
         @param {L.Map} map
         @param {Array|L.PolyLine} layer - An array of {L.LatLng} or the {L.PolyLine} that contains the result.
         @param {L.LatLng} latlng
+        @param {Boolean} vertices [default vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng}
     */
-    closest: function (map, layer, latlng) {
+    closest: function (map, layer, latlng, vertices) {
         if (typeof layer.getLatLngs != 'function')
             layer = L.polyline(layer);
 
         var latlngs = layer.getLatLngs(),
-            mindist = Number.MAX_VALUE,
+            mindist = Infinity,
             result = null;
+
+        // Lookup vertices
+        if (vertices) {
+            for(var i = 0, n = latlngs.length; i < n; i++) {
+                var ll = latlngs[i],
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                if (distance < mindist) {
+                    mindist = distance;
+                    result = ll;
+                    result.distance = distance;
+                }
+            }
+            return result;
+        }
+
         // Keep the closest point of all segments
         for (var i = 0, n = latlngs.length; i < n-1; i++) {
             var latlngA = latlngs[i],
@@ -86,21 +99,19 @@ L.GeometryUtil = {
     },
 
     /**
-        Snap the specified {LatLng} to the closest layer.
+        Returns the closest layer to latlng among a list of layers.
         @param {L.Map} map
-        @param {Array} layers - A list of layers to snap on.
-        @param {L.LatLng} latlng - The position to snap.
-        @returns {Object} with snapped {LatLng} and snapped {Layer}.
+        @param {Array} layers
+        @param {L.LatLng} latlng
+        @returns {Object} with layer, latlng and distance or {null} if list is empty;
     */
-    snapLayer: function (map, latlng, layers, tolerance) {
-        var mindist = Number.MAX_VALUE,
+    closestLayer: function (map, layers, latlng) {
+        var mindist = Infinity,
             result = null,
-            tolerance = tolerance || L.GeometryUtil.SNAP_DISTANCE,
             ll = null,
-            distance = null;
+            distance = Infinity;
 
-        // Iterate the whole snaplist
-        for (var i = 0, n = layers.length; i < n ; i++) {
+        for (var i = 0, n = layers.length; i < n; i++) {
             var layer = layers[i];
             // Single dimension, snap on points, else snap on closest
             if (typeof layer.getLatLng == 'function') {
@@ -108,31 +119,43 @@ L.GeometryUtil = {
                 distance = L.GeometryUtil.distance(map, latlng, ll);
             }
             else {
-                ll = L.GeometryUtil.closest(map, latlng, layer);
-                distance = ll.distance;
+                ll = L.GeometryUtil.closest(map, layer, latlng);
+                if (ll) distance = ll.distance;  // Can return null if layer has no points.
             }
-            // Keep the closest point of all objects
-            if (distance < tolerance && distance < mindist) {
+            if (distance < mindist) {
                 mindist = distance;
-                result = {snap: object, latlng: ll, distance: mindist};
+                result = {layer: layer, latlng: ll, distance: distance};
             }
         }
+        return result;
+    },
+
+    /**
+        Returns the closest position from specified {LatLng} among specified layers,
+        with a maximum tolerance in pixels, providing snapping behaviour.
+        @param {L.Map} map
+        @param {Array} layers - A list of layers to snap on.
+        @param {L.LatLng} latlng - The position to snap.
+        @param {Integer} tolerance [tolerance=Infinity] - Maximum number of pixels.
+        @param {Boolean} withVertices [withVertices=true] - Snap to layers vertices.
+        @returns {Object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
+    */
+    closestLayerSnap: function (map, layers, latlng, tolerance, withVertices) {
+        var tolerance = typeof tolerance == 'number' ? tolerance : Infinity,
+            withVertices = typeof withVertices == 'boolean' ? withVertices : true;
+
+        var result = L.GeometryUtil.closestLayer(map, layers, latlng);
+        if (!result || result.distance > tolerance)
+            return null;
+
         // If snapped layer is linear, try to snap on vertices (extremities and middle points)
-        if (result && result.snap && result.snap.getLatLngs) {
-            var vertices = result.snap.getLatLngs(),
-                vertice = null;
-            // Do not snap to vertices below tolerance
-            mindist = tolerance;
-            for (var i=0, n = vertices.length; i < n; i++) {
-                vertice = vertices[i];
-                distance = L.GeometryUtil.distance(map, result.latlng, vertice);
-                if (distance < mindist) {
-                    result.latlng = vertice;
-                    result.distance = distance;
-                    mindist = distance;
-                }
+        if (withVertices && typeof result.layer.getLatLngs == 'function') {
+            var closest = L.GeometryUtil.closest(map, result.layer, result.latlng, true);
+            if (closest.distance < tolerance) {
+                result.latlng = closest;
+                result.distance = L.GeometryUtil.distance(map, closest, latlng);
             }
         }
         return result;
     }
-}
+};

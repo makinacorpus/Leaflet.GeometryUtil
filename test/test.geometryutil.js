@@ -105,8 +105,37 @@ describe('Closest on path with precision', function() {
 });
 
 
+describe('Closest among layers', function() {
+  it('It should return null if list is empty', function(done) {
+    var ll = L.latLng([0, 0]),
+        closest = L.GeometryUtil.closestLayer(map, [], ll);
+    assert.equal(null, closest);
+    done();
+  });
+
+  it('It should return an object with layer, latlng and distance', function(done) {
+    var ll = L.latLng([0, 0]),
+        layers = [L.marker([2, 2])],
+        closest = L.GeometryUtil.closestLayer(map, layers, ll);
+    assert.equal(null, closest);
+    done();
+  });
+});
+
+
 describe('Snap on layers', function() {
-  it('TODO', function(done) {
+
+  // Setup environment statically
+  var snap_distance = L.GeometryUtil.distance(map, L.latLng([0, 0]), L.latLng([0, 10])),
+      w = snap_distance * 3;
+
+  var square = L.rectangle([[-w, -w], [w, w]]),
+      diagonal = L.polyline([[-w, -w], [0, 0], [w, w]]),
+      point1 = L.marker([w/3, w/3]),
+      layers = [square, diagonal, point1];
+
+  it('It should snap even if over layer', function(done) {
+    var snap = L.GeometryUtil.snapLayer(map, layers, []);
     done();
   });
 });
