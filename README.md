@@ -1,7 +1,7 @@
 Leaflet.GeometryUtil
 ====================
 
-![Travis status](https://secure.travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png)
+[![Build Status](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master)](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil)
 
 * Tested with stable Leaflet 0.5.1
 
