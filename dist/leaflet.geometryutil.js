@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * @fileOverview Leaflet Geometry utilities for distances and linear referencing.
  * @name L.GeometryUtil
