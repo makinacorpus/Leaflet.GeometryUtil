@@ -4,7 +4,7 @@ var assert = chai.assert;
 assert.almostequal = function (a, b, n) {
     return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                         Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
-}
+};
 
 
 describe('Distance between LatLng', function() {
