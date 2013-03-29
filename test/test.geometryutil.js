@@ -44,6 +44,7 @@ describe('Closest on segment', function() {
   it('It should be exactly on path', function(done) {
     var ll = L.latLng([-1, 1]),
         closest = L.GeometryUtil.closestOnSegment(map, ll, L.latLng([-10, -10]), L.latLng([10, 10]));
+    // TODO: should not be almost equal
     assert.almostequal(0, closest.lat, 2);
     assert.almostequal(0, closest.lng, 2);
     done();
@@ -54,7 +55,7 @@ describe('Closest on segment', function() {
 describe('Closest on path with precision', function() {
   it('It should have distance at 0 if on path', function(done) {
     var ll = L.latLng([0, 0]),
-        closest = L.GeometryUtil.closest(map, ll, [[-10, -10], [10, 10]]);
+        closest = L.GeometryUtil.closest(map, ll, [[-30, -50], [-10, -10], [10, 10], [30, 50]]);
     assert.equal(0, closest.distance);
     assert.equal(ll.toString(), closest.toString());
     done();
@@ -64,19 +65,42 @@ describe('Closest on path with precision', function() {
     var ll = L.latLng([1, -1]),
         closest = L.GeometryUtil.closest(map, ll, [[-10, -10], [10, 10]]);
     assert.equal(Math.sqrt(2), closest.distance);
+    // TODO: should not be almost equal
     assert.almostequal(closest.lat, 0, 2);
     assert.almostequal(closest.lng, 0, 2);
     done();
   });
 
-  it('It should just work :)', function(done) {
+  it('It should not depend on zoom', function(done) {
     // Test with plain value
     var ll = L.latLng([5, 10]),
         line = L.polyline([[-50, -10], [30, 40]]).addTo(map),
         closest = L.GeometryUtil.closest(map, ll, line);
     assert.isTrue(closest.distance > 0);
+    /*
+      SELECT ST_AsText(
+                ST_ClosestPoint(
+                    ST_MakeLine('SRID=4326;POINT(-10 -50)'::geometry, 'SRID=4326;POINT(40 30)'::geometry),
+                    'SRID=4326;POINT(10 5)'::geometry))
+      Gives:
+        "POINT(20.3370786516854 -1.46067415730337)"
+      TODO: find out what's going on with Longitudes :)
+     */
     assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
-    done();
+
+    // Change zoom and check that closest did not change.
+    assert.equal(0, map.getZoom());
+    L.Util.setOptions(map, {maxZoom: 18});
+
+    map.on('moveend', function () {
+        assert.notEqual(0, map.getZoom());
+
+        closest = L.GeometryUtil.closest(map, ll, line);
+        assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
+        done();
+    });
+
+    map._resetView(map.getCenter(), 17);
   });
 });
 
