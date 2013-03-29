@@ -60,7 +60,7 @@ L.GeometryUtil = {
     /**
         Returns the point on that is closest to latlng.
         @param {L.Map} map
-        @param {Array|L.PolyLine} layer
+        @param {Array|L.PolyLine} layer - An array of {L.LatLng} or the {L.PolyLine} that contains the result.
         @param {L.LatLng} latlng
         @returns {L.LatLng}
     */
@@ -87,6 +87,9 @@ L.GeometryUtil = {
 
     /**
         Snap the specified {LatLng} to the closest layer.
+        @param {L.Map} map
+        @param {Array} layers - A list of layers to snap on.
+        @param {L.LatLng} latlng - The position to snap.
         @returns {Object} with snapped {LatLng} and snapped {Layer}.
     */
     snapLayer: function (map, latlng, layers, tolerance) {
