@@ -17,7 +17,7 @@ L.GeometryUtil = {
         @param {L.Map} map
         @param {L.LatLng} latlngA
         @param {L.LatLng} latlngB
-        @returns {Number}
+        @returns {Number} in pixels
      */
     distance: function (map, latlngA, latlngB) {
         return map.latLngToLayerPoint(latlngA).distanceTo(map.latLngToLayerPoint(latlngB));
@@ -29,7 +29,7 @@ L.GeometryUtil = {
         @param {L.LatLng} latlng
         @param {L.LatLng} latlngA
         @param {L.LatLng} latlngB
-        @returns {Number}
+        @returns {Number} in pixels
     */
     distanceSegment: function (map, latlng, latlngA, latlngB) {
         var p = map.latLngToLayerPoint(latlng),
@@ -58,13 +58,13 @@ L.GeometryUtil = {
     },
 
     /**
-        Returns the closest point of a {L.LatLng} on the segment (A-B)
+        Returns the point on that is closest to latlng.
         @param {L.Map} map
+        @param {Array|L.PolyLine} layer
         @param {L.LatLng} latlng
-        @param {Array} of {L.LatLng} or {L.PolyLine} latlngs
         @returns {L.LatLng}
     */
-    closest: function (map, latlng, layer) {
+    closest: function (map, layer, latlng) {
         if (typeof layer.getLatLngs != 'function')
             layer = L.polyline(layer);
 

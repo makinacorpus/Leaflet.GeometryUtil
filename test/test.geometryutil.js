@@ -55,7 +55,7 @@ describe('Closest on segment', function() {
 describe('Closest on path with precision', function() {
   it('It should have distance at 0 if on path', function(done) {
     var ll = L.latLng([0, 0]),
-        closest = L.GeometryUtil.closest(map, ll, [[-30, -50], [-10, -10], [10, 10], [30, 50]]);
+        closest = L.GeometryUtil.closest(map, [[-30, -50], [-10, -10], [10, 10], [30, 50]], ll);
     assert.equal(0, closest.distance);
     assert.equal(ll.toString(), closest.toString());
     done();
@@ -63,7 +63,7 @@ describe('Closest on path with precision', function() {
 
   it('It should be exactly on path', function(done) {
     var ll = L.latLng([1, -1]),
-        closest = L.GeometryUtil.closest(map, ll, [[-10, -10], [10, 10]]);
+        closest = L.GeometryUtil.closest(map, [[-10, -10], [10, 10]], ll);
     assert.equal(Math.sqrt(2), closest.distance);
     // TODO: should not be almost equal
     assert.almostequal(closest.lat, 0, 2);
@@ -75,7 +75,7 @@ describe('Closest on path with precision', function() {
     // Test with plain value
     var ll = L.latLng([5, 10]),
         line = L.polyline([[-50, -10], [30, 40]]).addTo(map),
-        closest = L.GeometryUtil.closest(map, ll, line);
+        closest = L.GeometryUtil.closest(map, line, ll);
     assert.isTrue(closest.distance > 0);
     /*
       SELECT ST_AsText(
@@ -95,7 +95,7 @@ describe('Closest on path with precision', function() {
     map.on('moveend', function () {
         assert.notEqual(0, map.getZoom());
 
-        closest = L.GeometryUtil.closest(map, ll, line);
+        closest = L.GeometryUtil.closest(map, line, ll);
         assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
         done();
     });
