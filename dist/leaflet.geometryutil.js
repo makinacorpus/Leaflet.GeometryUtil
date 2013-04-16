@@ -157,5 +157,73 @@ L.GeometryUtil = {
             }
         }
         return result;
+    },
+    
+    /**
+        Returns the Point located on a segment at the specified ratio of the segment length.
+        @param {L.Point} pA
+        @param {L.Point} pB
+        @param {Number} the length ratio, expressed as a decimal between 0 and 1, inclusive.
+        @returns {L.Point} the interpolated point.  
+    */
+    interpolateOnPointSegment: function (pA, pB, ratio) {
+        return L.point(
+            (pA.x * (1 - ratio)) + (ratio * pB.x),
+            (pA.y * (1 - ratio)) + (ratio * pB.y)
+        );
+    },
+    
+    /**
+        Returns the coordinate of the point located on a line at the specified ratio of the line length.
+        @param {L.Map} map
+        @param {Array<L.LatLng>|L.PolyLine} latlngs
+        @param {Number} the length ratio, expressed as a decimal between 0 and 1, inclusive
+        @returns {Object} an object with latLng ({LatLng}) and predecessor ({Number}), the index of the preceding vertex in the Polyline
+        (-1 if the interpolated point is the first vertex)
+    */
+    interpolateOnLine: function (map, latLngs, ratio) {
+        latLngs = (latLngs instanceof L.Polyline) ? latLngs.getLatLngs() : latLngs;
+        var n = latLngs.length;
+        if (n < 2) {
+            return null;
+        }
+        
+        // ensure the ratio is between 0 and 1;
+        var ratio = Math.max(Math.min(ratio, 1), 0);
+        
+        // project the LatLngs as Points,
+        // and compute total planar length of the line at max precision
+        var maxzoom = map.getMaxZoom();
+        if (maxzoom === Infinity)
+            maxzoom = map.getZoom();
+        var pts = [];
+        var lineLength = 0;
+        for(var i = 0; i < n; i++) {
+            pts[i] = map.project(latLngs[i], maxzoom);
+            if(i > 0) 
+              lineLength += pts[i-1].distanceTo(pts[i]);
+        }
+        
+        var ratioDist = lineLength * ratio;
+        var a = pts[0],
+            b = pts[1],
+            distA = 0,
+            distB = a.distanceTo(b);
+        // follow the line segments [ab], adding lengths,
+        // until we find the segment where the points should lie on
+        var index = 1;
+        for (; index < n && distB < ratioDist; index++) {
+            a = b;
+            distA = distB;
+            b = pts[index];
+            distB += a.distanceTo(b);
+        }
+        // compute the ratio relative to the segment [ab]
+        var segmentRatio = ((distB - distA) != 0) ? ((ratioDist - distA) / (distB - distA)) : 0;
+        var interpolatedPoint = L.GeometryUtil.interpolateOnPointSegment(a, b, segmentRatio);
+        return {
+            latLng: map.unproject(interpolatedPoint, maxzoom),
+            predecessor: index-2
+        }
     }
 };

@@ -6,7 +6,13 @@ assert.almostequal = function (a, b, n) {
     return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                         Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
 };
-
+// use Leaflet equality functions for Point and LatLng
+assert.pointEqual = function (a, b) {
+    return a.equals(b);
+};
+assert.latLngEqual = function (a, b) {
+    return a.equals(b); // includes a small margin of error
+};
 
 describe('Distance between LatLng', function() {
   it('It should be 0 if same point', function(done) {
@@ -181,6 +187,73 @@ describe('Closest snap', function() {
     var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d-d/2, -w-d]), d);
     assert.almostequal(snap.latlng.lat, w-d-d/2);
     assert.almostequal(snap.latlng.lng, -w);
+    done();
+  });
+});
+
+describe('Interpolate on point segment', function() {
+  var p1 = L.point(0, 2),
+      p2 = L.point(0, 6);
+  it('It should be the first point if offset is 0', function(done) {
+    assert.pointEqual(p1, L.GeometryUtil.interpolateOnPointSegment(p1, p2, 0));
+    done();
+  });
+  
+  it('It should be the last point if offset is 1', function(done) {
+    assert.pointEqual(p2, L.GeometryUtil.interpolateOnPointSegment(p1, p2, 1));
+    done();
+  });
+
+  it('It should return the correct interpolations', function(done) {
+    assert.pointEqual(L.point(0, 4), L.GeometryUtil.interpolateOnPointSegment(p1, p2, 0.5));
+    assert.pointEqual(L.point(0, 5), L.GeometryUtil.interpolateOnPointSegment(p1, p2, 0.75));
+    done();
+  });
+});
+
+describe('Interpolate on line', function() {
+  var llA = L.latLng(1, 2),
+      llB = L.latLng(3, 4),
+      llC = L.latLng(5, 6);
+      
+  it('It should be null if the line has less than 2 vertices', function(done) {
+    assert.equal(null, L.GeometryUtil.interpolateOnLine(map, [], 0.5));
+    assert.equal(null, L.GeometryUtil.interpolateOnLine(map, [llA], 0.5));
+    done();
+  });
+  
+  it('It should be the first vertex if offset is 0', function(done) {
+    var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB], 0);
+    assert.latLngEqual(interp.latLng, llA);
+    assert.equal(interp.predecessor, -1);
+    done();
+  });
+  
+  it('It should be the last vertex if offset is 1', function(done) {
+    var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 1);
+    assert.latLngEqual(interp.latLng, llC);
+    assert.equal(interp.predecessor, 1);
+    done();
+  });
+  
+  it('It should not fail if line has no length', function(done) {
+    var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llA, llA], 0.5);
+    assert.latLngEqual(interp.latLng, llA);
+    done();
+  });
+
+  it('It should return the correct interpolations', function(done) {
+    var interp1 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 0.5);
+    var interp2 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 0.75);
+    // TODO: how to test that?
+    done();
+  });
+  
+  it('It should work the same with instances of L.PolyLine and arrays of L.LatLng', function(done) {
+    var lls = [llA, llB, llC];
+    var withArray = L.GeometryUtil.interpolateOnLine(map, lls, 0.75);
+    var withPolyLine = L.GeometryUtil.interpolateOnLine(map, L.polyline(lls), 0.75);
+    assert.deepEqual(withArray, withPolyLine);
     done();
   });
 });
