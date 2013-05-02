@@ -236,6 +236,46 @@ L.GeometryUtil = {
     */
     reverse: function (polyline) {
         return L.polyline(polyline.getLatLngs().slice(0).reverse());
+    },
+
+    /**
+        Returns true if first polyline ends where other second starts.
+        @param {L.PolyLine} polyline
+        @param {L.PolyLine} other
+        @returns {bool}
+    */
+    isBefore: function (polyline, other) {
+        if (!other) return false;
+        var lla = polyline.getLatLngs(),
+            llb = other.getLatLngs();
+        return (lla[lla.length-1]).equals(llb[0]);
+    },
+
+    /**
+        Returns true if first polyline starts where second ends.
+        @param {L.PolyLine} polyline
+        @param {L.PolyLine} other
+        @returns {bool}
+    */
+    isAfter: function (polyline, other) {
+        if (!other) return false;
+        var lla = polyline.getLatLngs(),
+            llb = other.getLatLngs();
+        return (lla[0]).equals(llb[llb.length-1]);
+    },
+
+    /**
+        Returns true if first polyline starts where second ends or start.
+        @param {L.PolyLine} polyline
+        @param {L.PolyLine} other
+        @returns {bool}
+    */
+    startsAtExtremity: function (polyline, other) {
+        if (!other) return false;
+        var lla = polyline.getLatLngs(),
+            llb = other.getLatLngs(),
+            start = lla[0];
+        return start.equals(llb[0]) || start.equals(llb[llb.length-1]);
     }
 };
 

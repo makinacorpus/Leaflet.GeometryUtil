@@ -14,6 +14,7 @@ assert.latLngEqual = function (a, b) {
     return a.equals(b); // includes a small margin of error
 };
 
+
 describe('Distance between LatLng', function() {
   it('It should be 0 if same point', function(done) {
     assert.equal(0, L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10])));
@@ -271,6 +272,31 @@ describe('Reverse line', function() {
     var start = line.getLatLngs()[0];
     L.GeometryUtil.reverse(line);
     assert.latLngEqual(start, line.getLatLngs()[0]);
+    done();
+  });
+});
+
+describe('Line order', function() {
+  var lineA = L.polyline([[0, 0], [1, 1]]),
+      lineB = L.polyline([[1, 1], [2, 2]]);
+
+  it('It should detect if line is before', function(done) {
+    assert.isTrue(L.GeometryUtil.isBefore(lineA, lineB));
+    assert.isFalse(L.GeometryUtil.isBefore(lineB, lineA));
+    done();
+  });
+
+  it('It should detect if line is after', function(done) {
+    assert.isTrue(L.GeometryUtil.isAfter(lineB, lineA));
+    assert.isFalse(L.GeometryUtil.isAfter(lineA, lineB));
+    done();
+  });
+
+  it('It should detect if line starts at extremity', function(done) {
+    var lineC = L.polyline([[0, 0], [1, 1]]);
+    assert.isTrue(L.GeometryUtil.startsAtExtremity(lineA, lineC));
+    assert.isTrue(L.GeometryUtil.startsAtExtremity(lineB, lineC));
+    assert.isFalse(L.GeometryUtil.startsAtExtremity(lineC, lineB));
     done();
   });
 });
