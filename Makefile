@@ -13,4 +13,7 @@ test: install
 docs: install
 	@./node_modules/jsdoc/jsdoc -d ./docs/ dist/ README.md
 
+clean:
+	rm -rf node_modules/ $(INSTALL_STAMP)
+
 .PHONY: test docs
