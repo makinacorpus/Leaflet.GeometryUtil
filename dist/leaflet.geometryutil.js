@@ -1,11 +1,12 @@
+var L = L || exports;
+
+(function () {
 "use strict";
 
 /**
  * @fileOverview Leaflet Geometry utilities for distances and linear referencing.
  * @name L.GeometryUtil
  */
-
-var L = L || exports;
 
 L.GeometryUtil = {
 
@@ -68,13 +69,14 @@ L.GeometryUtil = {
 
         var latlngs = layer.getLatLngs(),
             mindist = Infinity,
-            result = null;
+            result = null,
+            i, n, distance;
 
         // Lookup vertices
         if (vertices) {
-            for(var i = 0, n = latlngs.length; i < n; i++) {
-                var ll = latlngs[i],
-                    distance = L.GeometryUtil.distance(map, latlng, ll);
+            for(i = 0, n = latlngs.length; i < n; i++) {
+                var ll = latlngs[i];
+                distance = L.GeometryUtil.distance(map, latlng, ll);
                 if (distance < mindist) {
                     mindist = distance;
                     result = ll;
@@ -85,10 +87,10 @@ L.GeometryUtil = {
         }
 
         // Keep the closest point of all segments
-        for (var i = 0, n = latlngs.length; i < n-1; i++) {
+        for (i = 0, n = latlngs.length; i < n-1; i++) {
             var latlngA = latlngs[i],
-                latlngB = latlngs[i+1],
-                distance = L.GeometryUtil.distanceSegment(map, latlng, latlngA, latlngB);
+                latlngB = latlngs[i+1];
+            distance = L.GeometryUtil.distanceSegment(map, latlng, latlngA, latlngB);
             if (distance < mindist) {
                 mindist = distance;
                 result = L.GeometryUtil.closestOnSegment(map, latlng, latlngA, latlngB);
@@ -141,8 +143,8 @@ L.GeometryUtil = {
         @returns {object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
     */
     closestLayerSnap: function (map, layers, latlng, tolerance, withVertices) {
-        var tolerance = typeof tolerance == 'number' ? tolerance : Infinity,
-            withVertices = typeof withVertices == 'boolean' ? withVertices : true;
+        tolerance = typeof tolerance == 'number' ? tolerance : Infinity;
+        withVertices = typeof withVertices == 'boolean' ? withVertices : true;
 
         var result = L.GeometryUtil.closestLayer(map, layers, latlng);
         if (!result || result.distance > tolerance)
@@ -189,7 +191,7 @@ L.GeometryUtil = {
         }
 
         // ensure the ratio is between 0 and 1;
-        var ratio = Math.max(Math.min(ratio, 1), 0);
+        ratio = Math.max(Math.min(ratio, 1), 0);
 
         // project the LatLngs as Points,
         // and compute total planar length of the line at max precision
@@ -219,11 +221,13 @@ L.GeometryUtil = {
             distB += a.distanceTo(b);
         }
         // compute the ratio relative to the segment [ab]
-        var segmentRatio = ((distB - distA) != 0) ? ((ratioDist - distA) / (distB - distA)) : 0;
+        var segmentRatio = ((distB - distA) !== 0) ? ((ratioDist - distA) / (distB - distA)) : 0;
         var interpolatedPoint = L.GeometryUtil.interpolateOnPointSegment(a, b, segmentRatio);
         return {
             latLng: map.unproject(interpolatedPoint, maxzoom),
             predecessor: index-2
-        }
+        };
     }
 };
+
+}());
