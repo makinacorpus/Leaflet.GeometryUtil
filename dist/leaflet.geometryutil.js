@@ -227,6 +227,15 @@ L.GeometryUtil = {
             latLng: map.unproject(interpolatedPoint, maxzoom),
             predecessor: index-2
         };
+    },
+
+    /**
+        Returns a clone with reversed coordinates.
+        @param {L.PolyLine} polyline
+        @returns {L.PolyLine}
+    */
+    reverse: function (polyline) {
+        return L.polyline(polyline.getLatLngs().slice(0).reverse());
     }
 };
 
