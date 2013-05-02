@@ -244,8 +244,9 @@ describe('Interpolate on line', function() {
 
   it('It should return the correct interpolations', function(done) {
     var interp1 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 0.5);
+    assert.latLngEqual(interp1.latLng, llB);
     var interp2 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 0.75);
-    // TODO: how to test that?
+    assert.latLngEqual(interp2.latLng, L.latLng([4, 5]));
     done();
   });
 
