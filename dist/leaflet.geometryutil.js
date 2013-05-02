@@ -276,6 +276,28 @@ L.GeometryUtil = {
             llb = other.getLatLngs(),
             start = lla[0];
         return start.equals(llb[0]) || start.equals(llb[llb.length-1]);
+    },
+
+    /**
+        Returns horizontal angle in degres between two points.
+        @param {L.Point} a
+        @param {L.Point} b
+        @returns {float}
+     */
+    computeAngle: function(a, b) {
+        return (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI);
+    },
+
+    /**
+       Returns slope (Ax+B) between two points.
+        @param {L.Point} a
+        @param {L.Point} b
+        @returns {Object} with ``a`` and ``b`` properties.
+     */
+    computeSlope: function(a, b) {
+        var s = (b.y - a.y) / (b.x - a.x),
+            o = a.y - (s * a.x);
+        return {'a': s, 'b': o};
     }
 };
 
