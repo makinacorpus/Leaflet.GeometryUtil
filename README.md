@@ -14,7 +14,7 @@ Check out [online documentation](http://makinacorpus.github.io/Leaflet.GeometryU
 Development
 -----------
 
-## Running tests in command-line
+### Running tests in command-line
 
 * Install [nodejs](http://nodejs.org) and [phantomjs](http://phantomjs.org)
 
