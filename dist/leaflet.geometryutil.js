@@ -37,6 +37,22 @@ L.GeometryUtil = {
     },
 
     /**
+     * Returns total length of line
+     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
+     * @returns {Number} in meters
+     */
+    length: function (coords) {
+        if (typeof coords.getLatLngs == 'function') {
+            coords = coords.getLatLngs();
+        }
+        var len = 0;
+        for (var i = 0, n = coords.length - 1; i< n; i++) {
+            len += coords[i].distanceTo(coords[i+1]);
+        }
+        return len;
+    },
+
+    /**
         Returns the closest point of a {L.LatLng} on the segment (A-B)
         @param {L.Map} map
         @param {L.LatLng} latlng
