@@ -220,6 +220,15 @@ L.GeometryUtil = {
             return null;
         }
 
+        if (ratio === 0) {
+            return {latLng: latLngs[0],
+                    predecessor: -1};
+        }
+        if (ratio == 1) {
+            return {latLng: latLngs[latLngs.length -1],
+                    predecessor: latLngs.length-2};
+        }
+
         // ensure the ratio is between 0 and 1;
         ratio = Math.max(Math.min(ratio, 1), 0);
 
@@ -266,6 +275,36 @@ L.GeometryUtil = {
     */
     reverse: function (polyline) {
         return L.polyline(polyline.getLatLngs().slice(0).reverse());
+    },
+
+    /**
+        Returns a sub-part of the polyline, from start to end.
+        If start is superior to end, returns extraction from inverted line.
+        @param {L.Map} map
+        @param {L.PolyLine} latlngs
+        @param {Number} start ratio, expressed as a decimal between 0 and 1, inclusive
+        @param {Number} end ratio, expressed as a decimal between 0 and 1, inclusive
+        @returns {Array<L.LatLng>}
+     */
+    extract: function (map, polyline, start, end) {
+        if (start > end) {
+            return L.GeometryUtil.extract(map, L.GeometryUtil.reverse(polyline), 1.0-start, 1.0-end);
+        }
+        if (start == end) {
+            var point = L.GeometryUtil.interpolateOnLine(map, polyline, end);
+            return [point.latLng];
+        }
+        var latlngs = polyline.getLatLngs(),
+            startpoint = L.GeometryUtil.interpolateOnLine(map, polyline, start),
+            endpoint = L.GeometryUtil.interpolateOnLine(map, polyline, end);
+        if (startpoint.predecessor == -1)
+            startpoint.predecessor = 0;
+        if (endpoint.predecessor == -1)
+            endpoint.predecessor = 0;
+        console.log(startpoint.predecessor, endpoint.predecessor);
+        var result = latlngs.slice(startpoint.predecessor, endpoint.predecessor+1);
+        result.push(endpoint.latLng);
+        return result;
     },
 
     /**
