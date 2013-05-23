@@ -42,14 +42,28 @@ L.GeometryUtil = {
      * @returns {Number} in meters
      */
     length: function (coords) {
+        var accumulated = L.GeometryUtil.accumulatedLengths(coords);
+        return accumulated.length > 0 ? accumulated[accumulated.length-1] : 0;
+    },
+
+    /**
+     * Returns a list of accumulated length along a line.
+     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
+     * @returns {Number} in meters
+     */
+    accumulatedLengths: function (coords) {
         if (typeof coords.getLatLngs == 'function') {
             coords = coords.getLatLngs();
         }
-        var len = 0;
+        if (coords.length === 0)
+            return [];
+        var total = 0,
+            lengths = [0];
         for (var i = 0, n = coords.length - 1; i< n; i++) {
-            len += coords[i].distanceTo(coords[i+1]);
+            total += coords[i].distanceTo(coords[i+1]);
+            lengths.push(total);
         }
-        return len;
+        return lengths;
     },
 
     /**
