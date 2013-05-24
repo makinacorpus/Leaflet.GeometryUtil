@@ -8,12 +8,12 @@
     "test": "make test"
   }
   , "dependencies": {
-    "leaflet": "*"
+    "leaflet": "0.5.1"
   }
   , "devDependencies": {
-    "mocha": "*",
-    "chai": "*",
-    "mocha-phantomjs": "*",
-    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/master"
+    "mocha": "1.9.0",
+    "chai": "1.6.0",
+    "mocha-phantomjs": "2.0.1",
+    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/v3.1.1"
   }
 }
