@@ -290,19 +290,21 @@ L.GeometryUtil = {
         if (start > end) {
             return L.GeometryUtil.extract(map, L.GeometryUtil.reverse(polyline), 1.0-start, 1.0-end);
         }
+        var latlngs = polyline.getLatLngs(),
+            startpoint = L.GeometryUtil.interpolateOnLine(map, polyline, start),
+            endpoint = L.GeometryUtil.interpolateOnLine(map, polyline, end);
+        // Return single point if start == end
         if (start == end) {
             var point = L.GeometryUtil.interpolateOnLine(map, polyline, end);
             return [point.latLng];
         }
-        var latlngs = polyline.getLatLngs(),
-            startpoint = L.GeometryUtil.interpolateOnLine(map, polyline, start),
-            endpoint = L.GeometryUtil.interpolateOnLine(map, polyline, end);
+        // Array.slice() works indexes at 0
         if (startpoint.predecessor == -1)
             startpoint.predecessor = 0;
         if (endpoint.predecessor == -1)
             endpoint.predecessor = 0;
-        console.log(startpoint.predecessor, endpoint.predecessor);
-        var result = latlngs.slice(startpoint.predecessor, endpoint.predecessor+1);
+        var result = latlngs.slice(startpoint.predecessor+1, endpoint.predecessor+1);
+        result.unshift(startpoint.latLng);
         result.push(endpoint.latLng);
         return result;
     },

@@ -332,6 +332,14 @@ describe('Extract line', function() {
                      [L.latLng([0, 0]), L.latLng([0.600141459027052, 0.6001219630588661])]);
     assert.deepEqual(L.GeometryUtil.extract(map, line, 0, 0.6),
                      [L.latLng([0, 0]), L.latLng([1, 1]), L.latLng([1.800282914111311, 1.8002439493392906])]);
+    assert.deepEqual(L.GeometryUtil.extract(map, line, 0.6, 1.0),
+                     [L.latLng([1.800282914111311, 1.8002439493392906]), L.latLng([2, 2]), L.latLng([3, 3])]);
+    assert.deepEqual(L.GeometryUtil.extract(map, line, 0.2, 0.8),
+                     [L.latLng([0.600141459027052, 0.6001219630588661]), L.latLng([1, 1]), L.latLng([2, 2]), L.latLng([2.40024267258436, 2.4001524293923637])]);
+
+    // Should work symetrically
+    assert.deepEqual(L.GeometryUtil.extract(map, line, 1.0, 0.6),
+                     [L.latLng([3, 3]), L.latLng([2, 2]), L.latLng([1.800282914111311, 1.8002439493392906])]);
     done();
   });
 });
@@ -375,7 +383,7 @@ describe('Compute slope', function() {
   it('It should return A and B', function(done) {
     var p1 = L.point(0, 2),
         p2 = L.point(5, 7);
-    assert.deepEqual(L.GeometryUtil.computeSlope(p1, p2), {a: 1, b: 2});
+    assert.deepEqual(L.GeometryUtil.computeSlope(p1, p2), {a: 1, b: 2})
     done();
   });
 });
