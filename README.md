@@ -28,6 +28,22 @@ Development
     make test
 ```
 
+Changelog
+---------
+
+### 0.1.0 ###
+
+* Line subpart extraction
+* Line lengths
+* Angle and slope computation
+* Line reverse
+* Line interpolation
+
+### 0.0.1 ###
+
+* Initial working version
+
+
 Authors
 -------
 
