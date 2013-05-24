@@ -31,6 +31,10 @@ Development
 Changelog
 ---------
 
+### current ###
+
+* Locate point on line
+
 ### 0.1.0 ###
 
 * Line subpart extraction

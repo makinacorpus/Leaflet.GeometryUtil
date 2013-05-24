@@ -37,6 +37,21 @@ L.GeometryUtil = {
     },
 
     /**
+        Returns true if the latlng belongs to segment.
+        param {L.LatLng} latlng
+        @param {L.LatLng} latlngA
+        @param {L.LatLng} latlngB
+        @param {?Number} [tolerance=0.2]
+        @returns {boolean}
+     */
+    belongsSegment: function(latlng, latlngA, latlngB, tolerance) {
+        tolerance = tolerance === undefined ? 0.2 : tolerance;
+        var hypotenuse = latlngA.distanceTo(latlngB),
+            delta = latlngA.distanceTo(latlng) + latlng.distanceTo(latlngB) - hypotenuse;
+        return delta/hypotenuse < tolerance;
+    },
+
+    /**
      * Returns total length of line
      * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
      * @returns {Number} in meters
@@ -268,6 +283,28 @@ L.GeometryUtil = {
         };
     },
 
+    locateOnLine: function (map, polyline, latlng) {
+        var latlngs = polyline.getLatLngs();
+        if (latlng.equals(latlngs[0]))
+            return 0.0;
+        if (latlng.equals(latlngs[latlngs.length-1]))
+            return 1.0;
+
+        var point = L.GeometryUtil.closest(map, polyline, latlng),
+            lengths = L.GeometryUtil.accumulatedLengths(latlngs),
+            portion = 0;
+        for (var i=0, n = latlngs.length-1; i < n; i++) {
+            var l1 = latlngs[i],
+                l2 = latlngs[i+1];
+            portion = lengths[i];
+            if (L.GeometryUtil.belongsSegment(latlng, l1, l2)) {
+                portion += l1.distanceTo(latlng);
+                break;
+            }
+        }
+        return portion / lengths[lengths.length-1];
+    },
+
     /**
         Returns a clone with reversed coordinates.
         @param {L.PolyLine} polyline
@@ -290,6 +327,11 @@ L.GeometryUtil = {
         if (start > end) {
             return L.GeometryUtil.extract(map, L.GeometryUtil.reverse(polyline), 1.0-start, 1.0-end);
         }
+
+        // Bound start and end to [0-1]
+        start = Math.max(Math.min(start, 1), 0);
+        end = Math.max(Math.min(end, 1), 0);
+
         var latlngs = polyline.getLatLngs(),
             startpoint = L.GeometryUtil.interpolateOnLine(map, polyline, start),
             endpoint = L.GeometryUtil.interpolateOnLine(map, polyline, end);
