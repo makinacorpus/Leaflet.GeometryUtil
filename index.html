@@ -47,7 +47,13 @@
 
 <ul><li>Tested with stable Leaflet 0.5.1</li></ul>
 
-<h2>Running tests in command-line</h2>
+<h2>Usage</h2>
+
+<p>Check out <a href="http://makinacorpus.github.io/Leaflet.GeometryUtil/">online documentation</a>.</p>
+
+<h2>Development</h2>
+
+<h3>Running tests in command-line</h3>
 
 <ul><li>Install <a href="http://nodejs.org">nodejs</a> and <a href="http://phantomjs.org">phantomjs</a></li></ul>
 
@@ -59,7 +65,23 @@
 
 <p><code>
     make test
-</code></p></article>
+</code></p>
+
+<h2>Changelog</h2>
+
+<h3>0.1.0</h3>
+
+<ul><li>Line subpart extraction</li><li>Line lengths</li><li>Angle and slope computation</li><li>Line reverse</li><li>Line interpolation</li></ul>
+
+<h3>0.0.1</h3>
+
+<ul><li>Initial working version</li></ul>
+
+<h2>Authors</h2>
+
+<ul><li><a href="https://github.com/bbecquet">Benjamin Becquet</a></li><li><a href="https://github.com/leplatrem">Mathieu Leplatre</a></li><li><a href="https://github.com/djcoin">Simon Thépot</a></li></ul>
+
+<p>[<img alt="Makina Corpus" src="http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com"/></p></article>
     </section>
 
 
@@ -110,7 +132,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line6">line 6</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 6
     </li></ul></dd>
     
     
@@ -142,6 +164,147 @@
         <h3 class="subsection-title">Methods</h3>
         
         <dl>
+            
+<dt>
+    <h4 class="name" id="accumulatedLengths"><span class="type-signature">&lt;static> </span>accumulatedLengths<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns a list of accumulated length along a line.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">L.Polyline</span>
+|
+
+<span class="param-type">Array&lt;L.Point></span>
+|
+
+<span class="param-type">Array&lt;L.LatLng></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 54
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    in meters
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
             
 <dt>
     <h4 class="name" id="closest"><span class="type-signature">&lt;static> </span>closest<span class="signature">(map, layer, latlng, <span class="optional">vertices</span>)</span><span class="type-signature"> &rarr; {L.LatLng}</span></h4>
@@ -207,8 +370,6 @@
                 
                     
                 
-                    
-                
                 </td>
             
             
@@ -231,7 +392,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;L.LatLng></span>
+<span class="param-type">Array&lt;L.LatLng></span>
 |
 
 <span class="param-type">L.PolyLine</span>
@@ -242,8 +403,6 @@
             
             
                 <td class="attributes">
-                
-                    
                 
                     
                 
@@ -277,8 +436,6 @@
             
             
                 <td class="attributes">
-                
-                    
                 
                     
                 
@@ -318,8 +475,6 @@
                     
                 
                     &lt;nullable><br>
-                
-                    
                 
                 </td>
             
@@ -363,7 +518,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line66">line 66</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 96
     </li></ul></dd>
     
     
@@ -375,10 +530,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -480,7 +631,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;L.ILayer></span>
+<span class="param-type">Array&lt;L.ILayer></span>
 
 
             
@@ -544,7 +695,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line110">line 110</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 140
     </li></ul></dd>
     
     
@@ -556,10 +707,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -658,8 +805,6 @@
                 
                     
                 
-                    
-                
                 </td>
             
             
@@ -682,7 +827,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;ILayer></span>
+<span class="param-type">Array&lt;ILayer></span>
 
 
             
@@ -690,8 +835,6 @@
             
             
                 <td class="attributes">
-                
-                    
                 
                     
                 
@@ -725,8 +868,6 @@
             
             
                 <td class="attributes">
-                
-                    
                 
                     
                 
@@ -767,8 +908,6 @@
                 
                     &lt;nullable><br>
                 
-                    
-                
                 </td>
             
             
@@ -807,8 +946,6 @@
                     
                 
                     &lt;nullable><br>
-                
-                    
                 
                 </td>
             
@@ -852,7 +989,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line145">line 145</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 175
     </li></ul></dd>
     
     
@@ -864,10 +1001,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1060,7 +1193,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line47">line 47</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 77
     </li></ul></dd>
     
     
@@ -1072,10 +1205,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1218,7 +1347,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line287">line 287</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 358
     </li></ul></dd>
     
     
@@ -1230,10 +1359,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1376,7 +1501,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line297">line 297</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 368
     </li></ul></dd>
     
     
@@ -1388,10 +1513,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1561,7 +1682,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line20">line 20</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 20
     </li></ul></dd>
     
     
@@ -1573,10 +1694,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1769,7 +1886,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line32">line 32</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 32
     </li></ul></dd>
     
     
@@ -1781,10 +1898,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -1806,6 +1919,207 @@
 	<dd>
 		
 <span class="param-type">Number</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="extract"><span class="type-signature">&lt;static> </span>extract<span class="signature">(map, latlngs, start, end)</span><span class="type-signature"> &rarr; {Array&lt;L.LatLng>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns a sub-part of the polyline, from start to end.
+        If start is superior to end, returns extraction from inverted line.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>map</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">L.Map</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>latlngs</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">L.PolyLine</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>start</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">ratio, expressed as a decimal between 0 and 1, inclusive</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>end</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">ratio, expressed as a decimal between 0 and 1, inclusive</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 289
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Array&lt;L.LatLng></span>
 
 
 	</dd>
@@ -1890,7 +2204,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;L.LatLng></span>
+<span class="param-type">Array&lt;L.LatLng></span>
 |
 
 <span class="param-type">L.PolyLine</span>
@@ -1957,7 +2271,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line186">line 186</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 216
     </li></ul></dd>
     
     
@@ -1969,10 +2283,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2143,7 +2453,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line171">line 171</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 201
     </li></ul></dd>
     
     
@@ -2155,10 +2465,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2305,7 +2611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line260">line 260</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 331
     </li></ul></dd>
     
     
@@ -2317,10 +2623,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2463,7 +2765,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line247">line 247</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 318
     </li></ul></dd>
     
     
@@ -2475,10 +2777,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2496,6 +2794,147 @@
 	<dd>
 		
 <span class="param-type">bool</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="length"><span class="type-signature">&lt;static> </span>length<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Returns total length of line
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">L.Polyline</span>
+|
+
+<span class="param-type">Array&lt;L.Point></span>
+|
+
+<span class="param-type">Array&lt;L.LatLng></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last"></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 44
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    in meters
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Number</span>
 
 
 	</dd>
@@ -2598,7 +3037,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line237">line 237</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 276
     </li></ul></dd>
     
     
@@ -2610,10 +3049,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2756,7 +3191,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line273">line 273</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, line 344
     </li></ul></dd>
     
     
@@ -2768,10 +3203,6 @@
 </dl>
 
     
-    
-
-    
-
     
     
     
@@ -2821,10 +3252,9 @@
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a> on Thu May 02 2013 18:35:31 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Fri May 24 2013 11:51:09 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>
-<script src="scripts/linenumber.js"> </script>
 </body>
 </html>
