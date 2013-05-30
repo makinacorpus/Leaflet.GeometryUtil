@@ -140,7 +140,7 @@ L.GeometryUtil = {
             var latlngA = latlngs[i],
                 latlngB = latlngs[i+1];
             distance = L.GeometryUtil.distanceSegment(map, latlng, latlngA, latlngB);
-            if (distance < mindist) {
+            if (distance <= mindist) {
                 mindist = distance;
                 result = L.GeometryUtil.closestOnSegment(map, latlng, latlngA, latlngB);
                 result.distance = distance;
@@ -294,15 +294,15 @@ L.GeometryUtil = {
         if (latlng.equals(latlngs[latlngs.length-1]))
             return 1.0;
 
-        var point = L.GeometryUtil.closest(map, polyline, latlng),
+        var point = L.GeometryUtil.closest(map, polyline, latlng, false),
             lengths = L.GeometryUtil.accumulatedLengths(latlngs),
             portion = 0;
         for (var i=0, n = latlngs.length-1; i < n; i++) {
             var l1 = latlngs[i],
                 l2 = latlngs[i+1];
             portion = lengths[i];
-            if (L.GeometryUtil.belongsSegment(latlng, l1, l2)) {
-                portion += l1.distanceTo(latlng);
+            if (L.GeometryUtil.belongsSegment(point, l1, l2)) {
+                portion += l1.distanceTo(point);
                 break;
             }
         }

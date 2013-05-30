@@ -101,6 +101,14 @@ describe('Closest on path with precision', function() {
     done();
   });
 
+  it('It should return same point if on path', function(done) {
+      var line = L.polyline([[0,0], [1, 1], [2, 2]]);
+          closest = L.GeometryUtil.closest(map, line, [1.7, 1.7]);
+      assert.almostequal(closest.lat, 1.7, 2);
+      assert.almostequal(closest.lng, 1.7, 2);
+      done();
+  });
+
   it('It should be exactly on path', function(done) {
     var ll = L.latLng([1, -1]),
         closest = L.GeometryUtil.closest(map, [[-10, -10], [10, 10]], ll);
