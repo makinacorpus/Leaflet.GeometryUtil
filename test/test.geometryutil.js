@@ -146,7 +146,7 @@ describe('Closest on path with precision', function() {
   });
 
   it('It should work with last segment of polygon', function(done) {
-      var polygon = L.polygon([[0, 0], [10, 10], [0, 10], [0, 0]]),
+      var polygon = L.polygon([[0, 0], [10, 10], [0, 10]]),
           ll = [-1, 5],
           closest = L.GeometryUtil.closest(map, polygon, ll);
       assert.latLngEqual(closest, L.latLng([0, 0.5]));
