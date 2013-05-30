@@ -149,7 +149,8 @@ describe('Closest on path with precision', function() {
       var polygon = L.polygon([[0, 0], [10, 10], [0, 10]]),
           ll = [-1, 5],
           closest = L.GeometryUtil.closest(map, polygon, ll);
-      assert.latLngEqual(closest, L.latLng([0, 0.5]));
+      assert.almostequal(closest.lat, 0, 2);
+      assert.almostequal(closest.lng, 5, 2);
       done();
   });
 });

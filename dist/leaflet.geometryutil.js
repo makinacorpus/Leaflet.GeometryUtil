@@ -131,6 +131,10 @@ L.GeometryUtil = {
             return result;
         }
 
+        if (layer instanceof L.Polygon) {
+            latlngs.push(latlngs[0]);
+        }
+
         // Keep the closest point of all segments
         for (i = 0, n = latlngs.length; i < n-1; i++) {
             var latlngA = latlngs[i],
