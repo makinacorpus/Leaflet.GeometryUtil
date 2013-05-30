@@ -10,8 +10,9 @@ assert.almostequal = function (a, b, n) {
 assert.pointEqual = function (a, b) {
     return a.equals(b);
 };
-assert.latLngEqual = function (a, b) {
-    return a.equals(b); // includes a small margin of error
+assert.latLngEqual = function (a, b, n) {
+    n = n || 2;
+    return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
 };
 
 
