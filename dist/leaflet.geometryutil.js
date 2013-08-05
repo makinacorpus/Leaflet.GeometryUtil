@@ -416,6 +416,26 @@ L.GeometryUtil = {
             o = a.y - (s * a.x);
         return {'a': s, 'b': o};
     }
+    
+    /**
+       Returns LatLng of rotated point around specified LatLng center.
+        @param {L.LatLng} point_latlng: point to rotate
+        @param {double} angle_deg: angle to rotate in degrees
+        @param {L.LatLng} center_latlng: center of rotation.
+        @returns {L.LatLng} rotated point
+     */
+    rotatePoint: function(point_latlng,angle_deg,center_latlng) {
+
+        var angle_rad = angle_deg*Math.PI/180;
+        var point_px = map.latLngToLayerPoint(point_latlng);
+        var center_px = map.latLngToLayerPoint(center_latlng);
+  
+        var x2 = Math.cos(angle_rad)*(point_px.x-center_px.x) - Math.sin(angle_rad)*(point_px.y-center_px.y) + center_px.x;
+        var y2 = Math.sin(angle_rad)*(point_px.x-center_px.x) + Math.cos(angle_rad)*(point_px.y-center_px.y) + center_px.y;
+  
+        return map.layerPointToLatLng(new L.Point(x2,y2));  
+    }
+    
 };
 
 }());
