@@ -296,15 +296,20 @@ L.GeometryUtil = {
 
         var point = L.GeometryUtil.closest(map, polyline, latlng, false),
             lengths = L.GeometryUtil.accumulatedLengths(latlngs),
-            portion = 0;
+            portion = 0,
+            found = false;
         for (var i=0, n = latlngs.length-1; i < n; i++) {
             var l1 = latlngs[i],
                 l2 = latlngs[i+1];
             portion = lengths[i];
             if (L.GeometryUtil.belongsSegment(point, l1, l2)) {
                 portion += l1.distanceTo(point);
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            throw "Could not interpolate " + latlng.toString() + " within " + polyline.toString();
         }
         return portion / lengths[lengths.length-1];
     },
