@@ -287,6 +287,15 @@ L.GeometryUtil = {
         };
     },
 
+    /**
+        Returns a float between 0 and 1 representing the location of the
+        closest point on polyline to the given latlng, as a fraction of total 2d line length.
+        (opposite of L.GeometryUtil.interpolateOnLine())
+        @param {L.Map} map
+        @param {L.PolyLine} polyline
+        @param {L.LatLng} latlng
+        @returns {Number}
+    */
     locateOnLine: function (map, polyline, latlng) {
         var latlngs = polyline.getLatLngs();
         if (latlng.equals(latlngs[0]))
