@@ -305,6 +305,7 @@ L.GeometryUtil = {
 
         var point = L.GeometryUtil.closest(map, polyline, latlng, false),
             lengths = L.GeometryUtil.accumulatedLengths(latlngs),
+            total_length = lengths[lengths.length-1],
             portion = 0,
             found = false;
         for (var i=0, n = latlngs.length-1; i < n; i++) {
@@ -320,7 +321,7 @@ L.GeometryUtil = {
         if (!found) {
             throw "Could not interpolate " + latlng.toString() + " within " + polyline.toString();
         }
-        return portion / lengths[lengths.length-1];
+        return portion / total_length;
     },
 
     /**
