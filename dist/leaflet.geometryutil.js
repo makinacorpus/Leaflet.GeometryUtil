@@ -430,25 +430,25 @@ L.GeometryUtil = {
         var s = (b.y - a.y) / (b.x - a.x),
             o = a.y - (s * a.x);
         return {'a': s, 'b': o};
-    }
+    },
     
     /**
        Returns LatLng of rotated point around specified LatLng center.
-        @param {L.LatLng} point_latlng: point to rotate
-        @param {double} angle_deg: angle to rotate in degrees
-        @param {L.LatLng} center_latlng: center of rotation.
+        @param {L.LatLng} latlngPoint: point to rotate
+        @param {double} angleDeg: angle to rotate in degrees
+        @param {L.LatLng} latlngCenter: center of rotation
         @returns {L.LatLng} rotated point
      */
-    rotatePoint: function(point_latlng,angle_deg,center_latlng) {
-
-        var angle_rad = angle_deg*Math.PI/180;
-        var point_px = map.latLngToLayerPoint(point_latlng);
-        var center_px = map.latLngToLayerPoint(center_latlng);
-  
-        var x2 = Math.cos(angle_rad)*(point_px.x-center_px.x) - Math.sin(angle_rad)*(point_px.y-center_px.y) + center_px.x;
-        var y2 = Math.sin(angle_rad)*(point_px.x-center_px.x) + Math.cos(angle_rad)*(point_px.y-center_px.y) + center_px.y;
-  
-        return map.layerPointToLatLng(new L.Point(x2,y2));  
+    rotatePoint: function(map, latlngPoint, angleDeg, latlngCenter) {
+        var maxzoom = map.getMaxZoom();
+        if (maxzoom === Infinity)
+            maxzoom = map.getZoom();
+        var angleRad = angleDeg*Math.PI/180,
+            pPoint = map.project(latlngPoint, maxzoom),
+            pCenter = map.project(latlngCenter, maxzoom),
+            x2 = Math.cos(angleRad)*(pPoint.x-pCenter.x) - Math.sin(angleRad)*(pPoint.y-pCenter.y) + pCenter.x,
+            y2 = Math.sin(angleRad)*(pPoint.x-pCenter.x) + Math.cos(angleRad)*(pPoint.y-pCenter.y) + pCenter.y;
+        return map.unproject(new L.Point(x2,y2), maxzoom);
     }
     
 };
