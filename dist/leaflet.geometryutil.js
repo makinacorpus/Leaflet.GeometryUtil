@@ -430,7 +430,27 @@ L.GeometryUtil = {
         var s = (b.y - a.y) / (b.x - a.x),
             o = a.y - (s * a.x);
         return {'a': s, 'b': o};
+    },
+    
+    /**
+       Returns LatLng of rotated point around specified LatLng center.
+        @param {L.LatLng} latlngPoint: point to rotate
+        @param {double} angleDeg: angle to rotate in degrees
+        @param {L.LatLng} latlngCenter: center of rotation
+        @returns {L.LatLng} rotated point
+     */
+    rotatePoint: function(map, latlngPoint, angleDeg, latlngCenter) {
+        var maxzoom = map.getMaxZoom();
+        if (maxzoom === Infinity)
+            maxzoom = map.getZoom();
+        var angleRad = angleDeg*Math.PI/180,
+            pPoint = map.project(latlngPoint, maxzoom),
+            pCenter = map.project(latlngCenter, maxzoom),
+            x2 = Math.cos(angleRad)*(pPoint.x-pCenter.x) - Math.sin(angleRad)*(pPoint.y-pCenter.y) + pCenter.x,
+            y2 = Math.sin(angleRad)*(pPoint.x-pCenter.x) + Math.cos(angleRad)*(pPoint.y-pCenter.y) + pCenter.y;
+        return map.unproject(new L.Point(x2,y2), maxzoom);
     }
+    
 };
 
 }());
