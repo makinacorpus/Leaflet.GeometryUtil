@@ -34,6 +34,7 @@ Changelog
 ### current ###
 
 * Locate point on line
+* Rotate point around center
 
 ### 0.1.0 ###
 
@@ -54,5 +55,7 @@ Authors
 * [Benjamin Becquet](https://github.com/bbecquet)
 * [Mathieu Leplatre](https://github.com/leplatrem)
 * [Simon Thépot](https://github.com/djcoin)
+* [Nhinze](https://github.com/nhinze)
+* [Frédéric Bonifas](https://github.com/fredericbonifas)
 
 [![Makina Corpus](http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com)
