@@ -31,10 +31,11 @@ Development
 Changelog
 ---------
 
-### current ###
+### 0.2.0 ###
 
 * Locate point on line
 * Rotate point around center
+* Fixed bug if closest point was on last segment
 
 ### 0.1.0 ###
 
