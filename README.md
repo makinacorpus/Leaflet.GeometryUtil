@@ -3,7 +3,7 @@ Leaflet.GeometryUtil
 
 [![Build Status](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master)](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil)
 
-* Tested with stable Leaflet 0.6.4
+* Tested with stable Leaflet 0.7.0
 
 Usage
 -----

@@ -8,7 +8,7 @@
     "test": "make test"
   }
   , "dependencies": {
-    "leaflet": "0.6.4"
+    "leaflet": "0.7.0"
   }
   , "devDependencies": {
     "mocha": "1.9.0",
