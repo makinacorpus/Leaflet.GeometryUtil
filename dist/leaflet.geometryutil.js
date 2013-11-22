@@ -8,7 +8,7 @@ var L = L || exports;
  * @name L.GeometryUtil
  */
 
-L.GeometryUtil = {
+L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
@@ -450,7 +450,6 @@ L.GeometryUtil = {
             y2 = Math.sin(angleRad)*(pPoint.x-pCenter.x) + Math.cos(angleRad)*(pPoint.y-pCenter.y) + pCenter.y;
         return map.unproject(new L.Point(x2,y2), maxzoom);
     }
-    
-};
+});
 
 }());
