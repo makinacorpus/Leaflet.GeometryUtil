@@ -50,6 +50,12 @@ Changelog
 * Initial working version
 
 
+License
+-------
+
+* BSD New
+
+
 Authors
 -------
 
