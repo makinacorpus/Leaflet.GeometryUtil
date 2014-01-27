@@ -30,6 +30,9 @@ Development
 
 Changelog
 ---------
+### master ###
+
+* Fix side effects on latlngs with `closest()` (thanks @AndrewIngram)
 
 ### 0.2.0 ###
 
