@@ -112,7 +112,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         if (typeof layer.getLatLngs != 'function')
             layer = L.polyline(layer);
 
-        var latlngs = layer.getLatLngs(),
+        var latlngs = layer.getLatLngs().slice(0),
             mindist = Infinity,
             result = null,
             i, n, distance;
