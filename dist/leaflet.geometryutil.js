@@ -26,29 +26,28 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         @param distance
         @param isMetric return distance in meters or kilometers
         @returns {Number} in yard or miles
-     */
-	readableDistance: function (distance, isMetric) {
-	    var distanceStr;
+    */
+    readableDistance: function (distance, isMetric) {
+        var distanceStr;
 	    
-	    if (isMetric) {
-		// show metres when distance is < 1km, then show km
-		if (distance > 1000) {
-		    distanceStr = (distance  / 1000).toFixed(2) + ' km';
-		} else {
-		    distanceStr = Math.ceil(distance) + ' m';
-		}
-	    } else {
-		distance *= 1.09361;
+	if (isMetric) {
 		
-		if (distance > 1760) {
-		    distanceStr = (distance / 1760).toFixed(2) + ' miles';
-		} else {
-		    distanceStr = Math.ceil(distance) + ' yd';
-		}
+	    // show metres when distance is < 1km, then show km
+	    if (distance > 1000) {
+	        distanceStr = (distance  / 1000).toFixed(2) + ' km';
+	    } else {
+	        distanceStr = Math.ceil(distance) + ' m';
 	    }
-	    
-	    return distanceStr;
-	},
+	} else {
+	    distance *= 1.09361;
+            if (distance > 1760) {
+	        distanceStr = (distance / 1760).toFixed(2) + ' miles';
+	    } else {
+	        distanceStr = Math.ceil(distance) + ' yd';
+	    }
+	}
+        return distanceStr;
+    },
 
     /**
         Shortcut function for planar distance between a {L.LatLng} and a segment (A-B).
