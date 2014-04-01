@@ -15,7 +15,6 @@ assert.latLngEqual = function (a, b, n) {
     return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
 };
 
-
 describe('Distance between LatLng', function() {
   it('It should be 0 if same point', function(done) {
     assert.equal(0, L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10])));
@@ -23,6 +22,37 @@ describe('Distance between LatLng', function() {
   });
 });
 
+describe('Distance between LatLng in meter', function() {
+  it('It should be 0 m if same point', function(done) {
+    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10]));  
+    assert.equal("0 m", L.GeometryUtil.readableDistance(dist, true));
+    done();
+  });
+});
+
+describe('Distance between LatLng in yard', function() {
+  it('It should be 0 yd if same point', function(done) {
+    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10]));  
+    assert.equal("0 yd", L.GeometryUtil.readableDistance(dist));
+    done();
+  });
+});
+
+describe('Distance between LatLng in meter', function() {
+  it('It should be 1321.52 km', function(done) {
+    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
+    assert.equal("1321.52 km", L.GeometryUtil.readableDistance(dist, true));
+    done();
+  });
+});
+
+describe('Distance between LatLng in yard', function() {
+  it('It should be 821.15 miles', function(done) {
+    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
+    assert.equal("821.15 miles", L.GeometryUtil.readableDistance(dist));
+    done();
+  });
+});
 
 describe('Distance to segment', function() {
   it('It should be 0 if point on segment', function(done) {
