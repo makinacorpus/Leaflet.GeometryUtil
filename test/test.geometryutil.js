@@ -39,17 +39,17 @@ describe('Distance between LatLng in yard', function() {
 });
 
 describe('Distance between LatLng in meter', function() {
-  it('It should be 1321.52 km', function(done) {
+  it('It should be 10321.52 km', function(done) {
     var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
-    assert.equal("1321.52 km", L.GeometryUtil.readableDistance(dist, true));
+    assert.equal("10321.52 km", L.GeometryUtil.readableDistance(dist, true));
     done();
   });
 });
 
 describe('Distance between LatLng in yard', function() {
-  it('It should be 821.15 miles', function(done) {
+  it('It should be 821.15 yd', function(done) {
     var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
-    assert.equal("821.15 miles", L.GeometryUtil.readableDistance(dist));
+    assert.equal("821.15 yd", L.GeometryUtil.readableDistance(dist));
     done();
   });
 });
