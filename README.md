@@ -67,5 +67,6 @@ Authors
 * [Simon Thépot](https://github.com/djcoin)
 * [Nhinze](https://github.com/nhinze)
 * [Frédéric Bonifas](https://github.com/fredericbonifas)
+* [Alexander Melard](https://github.com/mylen)
 
 [![Makina Corpus](http://depot.makina-corpus.org/public/logo.gif)](http://makinacorpus.com)
