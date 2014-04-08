@@ -15,45 +15,6 @@ assert.latLngEqual = function (a, b, n) {
     return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
 };
 
-describe('Distance between LatLng', function() {
-  it('It should be 0 if same point', function(done) {
-    assert.equal(0, L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10])));
-    done();
-  });
-});
-
-describe('Distance between LatLng in meter', function() {
-  it('It should be 0 m if same point', function(done) {
-    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10]));  
-    assert.equal("0 m", L.GeometryUtil.readableDistance(dist, true));
-    done();
-  });
-});
-
-describe('Distance between LatLng in yard', function() {
-  it('It should be 0 yd if same point', function(done) {
-    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([10, 10]));  
-    assert.equal("0 yd", L.GeometryUtil.readableDistance(dist));
-    done();
-  });
-});
-
-describe('Distance between LatLng in meter', function() {
-  it('It should be 10321.52 km', function(done) {
-    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
-    assert.equal("10321.52 km", L.GeometryUtil.readableDistance(dist, true));
-    done();
-  });
-});
-
-describe('Distance between LatLng in yard', function() {
-  it('It should be 821.15 yd', function(done) {
-    var dist = L.GeometryUtil.distance(map, L.latLng([10, 10]), L.latLng([0, 0]));  
-    assert.equal("821.15 yd", L.GeometryUtil.readableDistance(dist));
-    done();
-  });
-});
-
 describe('Distance to segment', function() {
   it('It should be 0 if point on segment', function(done) {
     assert.equal(0, L.GeometryUtil.distanceSegment(map, L.latLng([10, 5]), L.latLng([10, 0]), L.latLng([10, 10])));
@@ -80,6 +41,29 @@ describe('Length of line', function() {
 
   it('It should return length in meters', function(done) {
     assert.equal(111319.49079327357, L.GeometryUtil.length(L.polyline([[0, 0], [1, 0]])));
+    done();
+  });
+});
+
+
+describe('Readable distances', function() {
+  it('It should be meters by default', function(done) {
+    assert.equal("0 m", L.GeometryUtil.readableDistance(0));
+    done();
+  });
+
+  it('It should be 0 yd if imperial', function(done) {
+    assert.equal("0 yd", L.GeometryUtil.readableDistance(0, 'imperial'));
+    done();
+  });
+
+  it('It should be kilometers if superior to 1000', function(done) {
+    assert.equal("1.01 km", L.GeometryUtil.readableDistance(1010));
+    done();
+  });
+
+  it('It should be miles if superior to 1760', function(done) {
+    assert.equal("1.24 miles", L.GeometryUtil.readableDistance(2000, 'imperial'));
     done();
   });
 });

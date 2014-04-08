@@ -22,34 +22,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-        Shortcut function for converting distance to readable distance.
-        @param distance
-        @param isMetric return distance in meters or kilometers
-        @returns {Number} in yard or miles
-    */
-    readableDistance: function (distance, isMetric) {
-        var distanceStr;
-	    
-	if (isMetric) {
-		
-	    // show metres when distance is < 1km, then show km
-	    if (distance > 1000) {
-	        distanceStr = (distance  / 1000).toFixed(2) + ' km';
-	    } else {
-	        distanceStr = Math.ceil(distance) + ' m';
-	    }
-	} else {
-	    distance *= 1.09361;
-            if (distance > 1760) {
-	        distanceStr = (distance / 1760).toFixed(2) + ' miles';
-	    } else {
-	        distanceStr = Math.ceil(distance) + ' yd';
-	    }
-	}
-        return distanceStr;
-    },
-
-    /**
         Shortcut function for planar distance between a {L.LatLng} and a segment (A-B).
         @param {L.Map} map
         @param {L.LatLng} latlng
@@ -62,6 +34,36 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
            p1 = map.latLngToLayerPoint(latlngA),
            p2 = map.latLngToLayerPoint(latlngB);
         return L.LineUtil.pointToSegmentDistance(p, p1, p2);
+    },
+
+    /**
+        Shortcut function for converting distance to readable distance.
+        @param {Number} distance
+        @param {String} unit ('metric' or 'imperial')
+        @returns {Number} in yard or miles
+    */
+    readableDistance: function (distance, unit) {
+        var isMetric = (unit !== 'imperial'),
+            distanceStr;
+        if (isMetric) {
+            // show metres when distance is < 1km, then show km
+            if (distance > 1000) {
+                distanceStr = (distance  / 1000).toFixed(2) + ' km';
+            }
+            else {
+                distanceStr = Math.ceil(distance) + ' m';
+            }
+        }
+        else {
+            distance *= 1.09361;
+            if (distance > 1760) {
+                distanceStr = (distance / 1760).toFixed(2) + ' miles';
+            }
+            else {
+                distanceStr = Math.ceil(distance) + ' yd';
+            }
+        }
+        return distanceStr;
     },
 
     /**
@@ -459,7 +461,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             o = a.y - (s * a.x);
         return {'a': s, 'b': o};
     },
-    
+
     /**
        Returns LatLng of rotated point around specified LatLng center.
         @param {L.LatLng} latlngPoint: point to rotate
