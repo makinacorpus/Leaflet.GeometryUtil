@@ -32,6 +32,8 @@ Changelog
 ---------
 ### master ###
 
+* Added UMD style initialization (thanks @PerLiedman)
+* Added readable distance (thanks @Mylen)
 * Fix side effects on latlngs with `closest()` (thanks @AndrewIngram)
 
 ### 0.2.0 ###
