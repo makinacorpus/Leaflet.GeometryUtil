@@ -1,6 +1,20 @@
-var L = L || exports;
-
-(function () {
+// Packaging/modules magic dance.
+(function (factory) {
+    var L;
+    if (typeof define === 'function' && define.amd) {
+        // AMD
+        define(['leaflet'], factory);
+    } else if (typeof module !== 'undefined') {
+        // Node/CommonJS
+        L = require('leaflet');
+        module.exports = factory(L);
+    } else {
+        // Browser globals
+        if (typeof window.L === 'undefined')
+            throw 'Leaflet must be loaded first';
+        factory(window.L);
+    }
+}(function (L) {
 "use strict";
 
 /**
@@ -482,4 +496,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     }
 });
 
-}());
+return L.GeometryUtil;
+
+}));
