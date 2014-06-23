@@ -32,7 +32,7 @@ Changelog
 ---------
 ### master ###
 
-* Nothing changed yet.
+* Make sure interpolateOnLine() always returns a L.LatLng object (thanks Justin Manley)
 
 ### 0.3.0 ###
 
