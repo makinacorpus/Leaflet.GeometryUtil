@@ -321,6 +321,16 @@ describe('Interpolate on line', function() {
     assert.deepEqual(withArray, withPolyLine);
     done();
   });
+
+  it('Should always return a LatLng object.', function() {
+    var interp1 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 0);
+    var interp2 = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 1);
+
+    assert.isDefined(interp1.latLng.lat);
+    assert.isDefined(interp1.latLng.lng);
+    assert.isDefined(interp2.latLng.lat);
+    assert.isDefined(interp2.latLng.lng);
+  });
 });
 
 

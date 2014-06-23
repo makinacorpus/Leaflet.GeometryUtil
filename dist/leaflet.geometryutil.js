@@ -284,12 +284,16 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         }
 
         if (ratio === 0) {
-            return {latLng: latLngs[0],
-                    predecessor: -1};
+            return {
+                latLng: latLngs[0] instanceof L.LatLng ? latLngs[0] : L.latLng(latLngs[0]),
+                predecessor: -1
+            };
         }
         if (ratio == 1) {
-            return {latLng: latLngs[latLngs.length -1],
-                    predecessor: latLngs.length-2};
+            return {
+                latLng: latLngs[latLngs.length -1] instanceof L.LatLng ? latLngs[latLngs.length -1] : L.latLng(latLngs[latLngs.length -1]),
+                predecessor: latLngs.length - 2
+            };
         }
 
         // ensure the ratio is between 0 and 1;
