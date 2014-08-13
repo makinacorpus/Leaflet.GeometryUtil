@@ -1,6 +1,6 @@
 {
     "name": "leaflet-geometryutil"
-  , "version": "0.3.1"
+  , "version": "0.3.2"
   , "description": "Leaflet utility functions on geometries"
   , "keywords": ["Leaflet", "GIS"]
   , "main": "dist/leaflet.geometryutil.js"

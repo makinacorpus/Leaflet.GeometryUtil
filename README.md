@@ -34,6 +34,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.3.2 ###
+
+* Use a soft dependency for Leaflet (thanks Erik Escoffier)
+
 ### 0.3.1 ###
 
 * Make sure interpolateOnLine() always returns a L.LatLng object (thanks Justin Manley)
