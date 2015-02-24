@@ -200,7 +200,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         @param {L.LatLng} latlng
         @returns {object} with layer, latlng and distance or {null} if list is empty;
     */
-    closestLayer: function (map, layers, latlng) {
+    closestLayer: function (map, layers, latlng, withVertices) {
         var mindist = Infinity,
             result = null,
             ll = null,
@@ -214,7 +214,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 distance = L.GeometryUtil.distance(map, latlng, ll);
             }
             else {
-                ll = L.GeometryUtil.closest(map, layer, latlng);
+                ll = L.GeometryUtil.closest(map, layer, latlng, withVertices);
                 if (ll) distance = ll.distance;  // Can return null if layer has no points.
             }
             if (distance < mindist) {
@@ -239,7 +239,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         tolerance = typeof tolerance == 'number' ? tolerance : Infinity;
         withVertices = typeof withVertices == 'boolean' ? withVertices : true;
 
-        var result = L.GeometryUtil.closestLayer(map, layers, latlng);
+        var result = L.GeometryUtil.closestLayer(map, layers, latlng, withVertices);
         if (!result || result.distance > tolerance)
             return null;
 
