@@ -497,7 +497,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             x2 = Math.cos(angleRad)*(pPoint.x-pCenter.x) - Math.sin(angleRad)*(pPoint.y-pCenter.y) + pCenter.x,
             y2 = Math.sin(angleRad)*(pPoint.x-pCenter.x) + Math.cos(angleRad)*(pPoint.y-pCenter.y) + pCenter.y;
         return map.unproject(new L.Point(x2,y2), maxzoom);
-    }
+    },
 
     /**
        Returns the bearing in degrees clockwise from north (0 degrees)
