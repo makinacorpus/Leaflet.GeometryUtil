@@ -506,7 +506,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
        @param {L.LatLng} latlng2: destination point of the bearing
        @returns {float} degrees clockwise from north.
     */
-    computeBearing: function(latlng1, latlng2) {
+    bearing: function(latlng1, latlng2) {
         var rad = Math.PI / 180,
             lat1 = latlng1.lat * rad,
             lat2 = latlng2.lat * rad,
@@ -516,7 +516,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             x = Math.cos(lat1) * Math.sin(lat2) -
                 Math.sin(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1);
 
-        return ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+        var bearing = ((Math.atan2(y, x) * 180 / Math.PI) + 360) % 360;
+        return bearing >= 180 ? bearing-360 : bearing;
     },
 
     /**
@@ -528,9 +529,10 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
        @returns {L.latLng} the destination point.
     */
     destination: function(latlng, bearing, distance) {
+        bearing = (bearing + 360) % 360;
         var rad = Math.PI / 180,
             radInv = 180 / Math.PI,
-            R = 6378137, // approximate of Earth's radius
+            R = 6378137, // approximation of Earth's radius
             lon1 = latlng.lng * rad,
             lat1 = latlng.lat * rad,
             rbearing = bearing * rad,
