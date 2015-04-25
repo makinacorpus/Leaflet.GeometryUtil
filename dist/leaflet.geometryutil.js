@@ -544,7 +544,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 sinDistR * Math.cos(rbearing)),
             lon2 = lon1 + Math.atan2(Math.sin(rbearing) * sinDistR *
                 cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
-        return L.latLng([lat2 * radInv, lon2 * radInv]);
+        lon2 = lon2 * radInv;
+        lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
+        return L.latLng([lat2 * radInv, lon2]);
     }
 });
 
