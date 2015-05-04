@@ -521,28 +521,28 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-       Returns the point that is a distance and bearing from
+       Returns the point that is a distance and heading away from
        the given origin point.
        @param {L.LatLng} latlng: origin point
-       @param {float}: bearing in degrees, clockwise from 0 degrees north.
+       @param {float}: heading in degrees, clockwise from 0 degrees north.
        @param {float}: distance in meters
        @returns {L.latLng} the destination point.
     */
-    destination: function(latlng, bearing, distance) {
-        bearing = (bearing + 360) % 360;
+    destination: function(latlng, heading, distance) {
+        heading = (heading + 360) % 360;
         var rad = Math.PI / 180,
             radInv = 180 / Math.PI,
             R = 6378137, // approximation of Earth's radius
             lon1 = latlng.lng * rad,
             lat1 = latlng.lat * rad,
-            rbearing = bearing * rad,
+            rheading = heading * rad,
             sinLat1 = Math.sin(lat1),
             cosLat1 = Math.cos(lat1),
             cosDistR = Math.cos(distance / R),
             sinDistR = Math.sin(distance / R),
             lat2 = Math.asin(sinLat1 * cosDistR + cosLat1 *
-                sinDistR * Math.cos(rbearing)),
-            lon2 = lon1 + Math.atan2(Math.sin(rbearing) * sinDistR *
+                sinDistR * Math.cos(rheading)),
+            lon2 = lon1 + Math.atan2(Math.sin(rheading) * sinDistR *
                 cosLat1, cosDistR - sinLat1 * Math.sin(lat2));
         lon2 = lon2 * radInv;
         lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
