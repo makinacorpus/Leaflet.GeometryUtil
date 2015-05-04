@@ -478,3 +478,67 @@ describe('Point rotation', function() {
     done();
   });
 });
+
+describe('Compute Bearing', function() {
+
+  it('It should be degrees clockwise from north, 0 degrees.', function(done) {
+    var latlng1 = L.latLng([0.0, 0.0]),
+        latlng2 = L.latLng([90.0, 0.0]);
+    assert.equal(0.0, L.GeometryUtil.bearing(latlng1,latlng2));
+    done();
+  });
+
+  it('Same point, should be zero.', function(done) {
+    var latlng1 = L.latLng([0.0, 0.0]),
+        latlng2 = L.latLng([0.0, 0.0]);
+    assert.equal(0, L.GeometryUtil.bearing(latlng1,latlng2));
+    done();
+  });
+
+  it('Crossing Prime Meridian.', function(done) {
+    var latlng1 = L.latLng([10.0, -10.0]),
+        latlng2 = L.latLng([-10.0, 10.0]);
+    assert.equal(134.5614514132577, L.GeometryUtil.bearing(latlng1,latlng2));
+    done();
+  });
+
+  it('Negative value for bearing greater than / equal to 180', function(done) {
+    var latlng1 = L.latLng([33.0, -120.0]),
+        latlng2 = L.latLng([34.0, -122.0]);
+    assert.equal(-58.503883697887375, L.GeometryUtil.bearing(latlng1,latlng2));
+    done();
+  });
+
+});
+
+describe('Destination', function() {
+
+  it('It should be [90.0,0.0]', function(done) {
+    var latlng1 = L.latLng([0.0, 0.0]),
+        bearing = 0.0;
+        dist = 6378137 * Math.PI / 2.0; // 1/4 Earth's circumference.
+        result = L.latLng([90.0,0.0]);
+    assert.latLngEqual(result, L.GeometryUtil.destination(latlng1, bearing, dist));
+    done();
+  });
+
+  it('Crossing the International Date Line', function(done) {
+    var latlng1 = L.latLng([0.0, -175.0]),
+        bearing = -90.0;
+        dist = 6378137 * Math.PI / 8.0;
+        result = L.latLng([0.0, 162.5]);
+    console.log(L.GeometryUtil.destination(latlng1, bearing, dist));
+    assert.latLngEqual(result, L.GeometryUtil.destination(latlng1, bearing, dist));
+    done();
+  });
+
+  it('Crossing the Prime Meridian', function(done) {
+    var latlng1 = L.latLng([10.0, -10.0]),
+        bearing = 134.5614514132577;
+        dist = 3140555.3283872544;
+        result = L.latLng([-10, 10.0]);
+    console.log(latlng1.distanceTo(result));
+    assert.latLngEqual(result, L.GeometryUtil.destination(latlng1, bearing, dist));
+    done();
+  });
+});
