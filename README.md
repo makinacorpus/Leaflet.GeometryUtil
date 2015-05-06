@@ -34,6 +34,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.3.3 ###
+
+* Add bearing and destination functions (thanks @doublestranded)
+
 ### 0.3.2 ###
 
 * Use a soft dependency for Leaflet (thanks Erik Escoffier)
