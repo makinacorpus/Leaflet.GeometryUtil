@@ -501,7 +501,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
        Returns the bearing in degrees clockwise from north (0 degrees)
-       from the first L.LatLng to the second.
+       from the first L.LatLng to the second, at the first LatLng 
        @param {L.LatLng} latlng1: origin point of the bearing
        @param {L.LatLng} latlng2: destination point of the bearing
        @returns {float} degrees clockwise from north.
@@ -527,6 +527,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
        @param {float}: heading in degrees, clockwise from 0 degrees north.
        @param {float}: distance in meters
        @returns {L.latLng} the destination point.
+       Many thanks to Chris Veness at http://www.movable-type.co.uk/scripts/latlong.html
+       for a great reference and examples.
     */
     destination: function(latlng, heading, distance) {
         heading = (heading + 360) % 360;
