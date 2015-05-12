@@ -34,6 +34,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.4.0 ###
+
+* Same version as v0.3.3, new release as v0.4.0 to keep numbering coherent as a new feature has been added
+
 ### 0.3.3 ###
 
 * Add bearing and destination functions (thanks @doublestranded)
