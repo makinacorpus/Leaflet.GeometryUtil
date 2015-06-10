@@ -285,6 +285,7 @@ describe('Interpolate on line', function() {
     assert.equal(null, L.GeometryUtil.interpolateOnLine(map, [llA], 0.5));
     done();
   });
+  
 
   it('It should be the first vertex if offset is 0', function(done) {
     var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB], 0);
@@ -293,8 +294,22 @@ describe('Interpolate on line', function() {
     done();
   });
 
+  it('It should be the first vertex if offset is less than 0', function(done) {
+    var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB], -10);
+    assert.latLngEqual(interp.latLng, llA);
+    assert.equal(interp.predecessor, -1);
+    done();
+  });
+
   it('It should be the last vertex if offset is 1', function(done) {
     var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 1);
+    assert.latLngEqual(interp.latLng, llC);
+    assert.equal(interp.predecessor, 1);
+    done();
+  });
+
+  it('It should be the last vertex if offset is more than 1', function(done) {
+    var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB, llC], 10);
     assert.latLngEqual(interp.latLng, llC);
     assert.equal(interp.predecessor, 1);
     done();

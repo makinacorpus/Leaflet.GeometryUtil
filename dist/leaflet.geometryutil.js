@@ -283,6 +283,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             return null;
         }
 
+        // ensure the ratio is between 0 and 1;
+        ratio = Math.max(Math.min(ratio, 1), 0);
+
         if (ratio === 0) {
             return {
                 latLng: latLngs[0] instanceof L.LatLng ? latLngs[0] : L.latLng(latLngs[0]),
@@ -295,9 +298,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 predecessor: latLngs.length - 2
             };
         }
-
-        // ensure the ratio is between 0 and 1;
-        ratio = Math.max(Math.min(ratio, 1), 0);
 
         // project the LatLngs as Points,
         // and compute total planar length of the line at max precision
