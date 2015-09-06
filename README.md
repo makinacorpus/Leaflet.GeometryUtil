@@ -8,9 +8,18 @@ Leaflet.GeometryUtil
 Usage
 -----
 
+Using Node:
+
 ```
     npm install leaflet-geometryutil
 ```
+
+Or browser:
+
+```
+    <script src="leaflet.geometryutil.js"></script>
+```
+
 
 Check out [online documentation](http://makinacorpus.github.io/Leaflet.GeometryUtil/).
 
