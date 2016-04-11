@@ -197,6 +197,24 @@ describe('Closest among layers', function() {
   });
 });
 
+describe('Layers within a radius of the given location', function() {
+  it('It should return an empty array if the list is empty', function(done) {
+    var ll = L.latLng([0, 0]);
+    var results = L.GeometryUtil.layersWithin(map, [], ll);
+    assert.equal(0, results.length);
+    done();
+  });
+
+  it('It should return an array containing one layer', function(done) {
+    var ll = L.latLng([0, 0]);
+    var layers = [L.marker([2, 2]), L.marker([100, 100])];
+    var results = L.GeometryUtil.layersWithin(map, layers, ll, 5);
+    assert.equal(1, results.length);
+    assert.deepEqual(results[0], {layer: layers[0], latlng: layers[0].getLatLng(), distance: Math.sqrt(2)});
+    done();
+  });
+});
+
 
 describe('Closest snap', function() {
   var square, diagonal, d, w, layers;
@@ -285,7 +303,7 @@ describe('Interpolate on line', function() {
     assert.equal(null, L.GeometryUtil.interpolateOnLine(map, [llA], 0.5));
     done();
   });
-  
+
 
   it('It should be the first vertex if offset is 0', function(done) {
     var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB], 0);
