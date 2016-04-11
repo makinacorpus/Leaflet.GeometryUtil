@@ -257,7 +257,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         }
       }
 
-      return results;
+      var sortedResults = results.sort(function(a, b) {
+          return a.distance - b.distance;
+      });
+
+      return sortedResults;
     },
 
     /**
