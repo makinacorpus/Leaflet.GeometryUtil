@@ -228,7 +228,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
      * Returns all layers within a radius of the given position.
        @param {L.Map} map
-       @param {Array<ILayer>} layers - A list of layers to snap on.
+       @param {Array<ILayer>} layers - A list of layers.
        @param {L.LatLng} latlng - The position to search.
        @param {?Number} [radius=Infinity] - Search radius in pixels
        @return {object[]} an array of object including layer within the radius, closest latlng, and distance
