@@ -214,7 +214,7 @@ describe('Layers within a radius of the given location', function() {
     done();
   });
 
-  it('It should return an array containing two layer ordered by distance', function(done) {
+  it('It should return an array containing two layers ordered by distance', function(done) {
     var ll = L.latLng([0, 0]);
     var layers = [L.marker([2, 2]), L.marker([3, 3])];
     var results = L.GeometryUtil.layersWithin(map, layers, ll, 10);

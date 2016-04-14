@@ -226,7 +226,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-     * Returns all layers within a radius of the given position.
+     * Returns all layers within a radius of the given position, in an ascending order of distance.
        @param {L.Map} map
        @param {Array<ILayer>} layers - A list of layers.
        @param {L.LatLng} latlng - The position to search.
