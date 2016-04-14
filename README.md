@@ -43,9 +43,14 @@ Development
 
 Changelog
 ---------
+
+### master ###
+
+* Nothing changed yet.
+
 ### 0.5.0 ###
 
-- Add function `layersWithin()` (#34, thanks @haoliangyu)
+* Add function `layersWithin()` (#34, thanks @haoliangyu)
 * Fix safety check on the ratio value in ``interpolateOnLine()` (#29, thanks @Marcussacapuces91)
 
 ### 0.4.0 ###
