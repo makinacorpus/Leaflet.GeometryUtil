@@ -498,76 +498,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-     * Concatenate polylines in two line groups
-     * @param  {L.Map}        map
-     * @param  {L.Polyline[]} lineGroupA        An array of L.Polyline objects
-     * @param  {L.Polyline[]} lineGroupB        An array of L.Polyline objects
-     * @param  {Number}       tolerance         A pixel distance in which points will be considered equal
-     * @param  {Function}     [onEachConcat]    A function called at each Concatenation. It accepts two parameters:
-     *                                          dest (line to be concatenated) and src (line to concatenate).
-     * @return {L.Polyline[]} concateLines      An array of concatenated L.Polyline objects
-     */
-    _concatLineGroups: function(map, lineGroupA, lineGroupB, tolerance, onEachConcat) {
-
-        var ll, lr;
-
-        for (var i = 0, n = lineGroupA.length; i < n; i++) {
-
-            ll = lineGroupA[i].getLatLngs();
-
-            for (var j = 0, m = lineGroupB.length; j < m; j++) {
-
-                // if the right line has been merged, skip it
-                if (lineGroupB[j].merged) { continue; }
-
-                lr = lineGroupB[j].getLatLngs();
-
-                // if the right line starts at the start of the left line
-                if (L.GeometryUtil.distance(map, ll[0], lr[0]) < tolerance) {
-                    lr.splice(0, 1);
-                    lineGroupA[i].spliceLatLngs.apply(lineGroupA[i], [0, 0].concat(lr.reverse()));
-                    lineGroupB[j].merged = true;
-                    if (onEachConcat) { onEachConcat(lineGroupA[i], lineGroupB[j]); }
-                    continue;
-                }
-
-                // if the right line ends at the start of the left line
-                if (L.GeometryUtil.distance(map, ll[0], lr[lr.length - 1]) < tolerance) {
-                    lr.splice(lr.length - 1, 1);
-                    lineGroupA[i].spliceLatLngs.apply(lineGroupA[i], [0, 0].concat(lr));
-                    lineGroupB[j].merged = true;
-                    if (onEachConcat) { onEachConcat(lineGroupA[i], lineGroupB[j]); }
-                    continue;
-                }
-
-                // if the right line starts at the end of the left line
-                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[0]) < tolerance) {
-                    lr.splice(0, 1);
-                    lineGroupA[i].spliceLatLngs.apply(lineGroupA[i], [ll.length, 0].concat(lr));
-                    lineGroupB[j].merged = true;
-                    if (onEachConcat) { onEachConcat(lineGroupA[i], lineGroupB[j]); }
-                    continue;
-                }
-
-                // if the right line ends at the end of the left line
-                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[lr.length - 1]) < tolerance) {
-                    lr.splice(lr.length - 1, 1);
-                    lineGroupA[i].spliceLatLngs.apply(lineGroupA[i], [ll.length, 0].concat(lr.reverse()));
-                    lineGroupB[j].merged = true;
-                    if (onEachConcat) { onEachConcat(lineGroupA[i], lineGroupB[j]); }
-                    continue;
-                }
-            }
-        }
-
-        var unmerged = lineGroupB.filter(function(polyline) {
-            return !polyline.merged;
-        });
-
-        return lineGroupA.concat(unmerged);
-    },
-
-    /**
      * Concatenate polylines whose start/end points are within a close distance
      * @param  {L.Map}        map
      * @param  {L.Polyline[]} polylines         An array of L.Polyline objects
@@ -583,11 +513,60 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         tolerance = typeof tolerance == 'number' ? tolerance : 15;
         onEachConcat = typeof onEachConcat == 'function' ? onEachConcat : undefined;
 
-        var middle = polylines.length >> 1;
-        var lls = L.GeometryUtil.concatLines(map, polylines.slice(0, middle), tolerance);
-        var lrs = L.GeometryUtil.concatLines(map, polylines.slice(middle, polylines.length), tolerance);
+        var ll, lr;
 
-        return L.GeometryUtil._concatLineGroups(map, lls, lrs, tolerance, onEachConcat);
+        for (var i = 0, n = polylines.length; i < n; i++) {
+
+            if (polylines[i].merged) { continue; }
+
+            ll = polylines[i].getLatLngs();
+
+            for (var j = 0, m = polylines.length; j < m; j++) {
+
+                // if the right line has been merged, skip it
+                if (polylines[j].merged || i === j) { continue; }
+
+                lr = polylines[j].getLatLngs();
+
+                // if the right line starts at the start of the left line
+                if (L.GeometryUtil.distance(map, ll[0], lr[0]) < tolerance) {
+                    lr.splice(0, 1);
+                    polylines[i].spliceLatLngs.apply(polylines[i], [0, 0].concat(lr.reverse()));
+                    polylines[j].merged = true;
+                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    continue;
+                }
+
+                // if the right line ends at the start of the left line
+                if (L.GeometryUtil.distance(map, ll[0], lr[lr.length - 1]) < tolerance) {
+                    lr.splice(lr.length - 1, 1);
+                    polylines[i].spliceLatLngs.apply(polylines[i], [0, 0].concat(lr));
+                    polylines[j].merged = true;
+                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    continue;
+                }
+
+                // if the right line starts at the end of the left line
+                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[0]) < tolerance) {
+                    lr.splice(0, 1);
+                    polylines[i].spliceLatLngs.apply(polylines[i], [ll.length, 0].concat(lr));
+                    polylines[j].merged = true;
+                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    continue;
+                }
+
+                // if the right line ends at the end of the left line
+                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[lr.length - 1]) < tolerance) {
+                    lr.splice(lr.length - 1, 1);
+                    polylines[i].spliceLatLngs.apply(polylines[i], [ll.length, 0].concat(lr.reverse()));
+                    polylines[j].merged = true;
+                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    continue;
+                }
+            }
+        }
+
+        return polylines.filter(function(polyline) { return !polyline.merged; });
     },
 
     /**
