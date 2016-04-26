@@ -502,8 +502,6 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
      * @param  {L.Map}        map
      * @param  {L.Polyline[]} polylines         An array of L.Polyline objects
      * @param  {Number}       [tolerance=15]    A pixel distance in which points will be considered equal
-     * @param  {Function}     [onEachConcat]    A function called at each Concatenation. It accepts two parameters:
-     *                                          dest (line to be concatenated) and src (line to concatenate).
      * @return {L.Polyline[]} concateLines      An array of concatenated L.Polyline objects
      */
     concatLines: function(map, polylines, tolerance, onEachConcat) {
@@ -513,60 +511,63 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         tolerance = typeof tolerance == 'number' ? tolerance : 15;
         onEachConcat = typeof onEachConcat == 'function' ? onEachConcat : undefined;
 
+        // clone layers
+        var clonedLayers = []
+        for (var i = 0, n = polylines.length; i < n; i++) {
+            var options = polylines[i].options;
+            clonedLayers.push(L.polyline(polylines[i].getLatLngs(), options));
+        }
+
         var ll, lr;
 
-        for (var i = 0, n = polylines.length; i < n; i++) {
+        for (var i = 0, n = clonedLayers.length; i < n; i++) {
 
-            if (polylines[i].merged) { continue; }
+            if (clonedLayers[i].merged) { continue; }
 
-            ll = polylines[i].getLatLngs();
+            ll = clonedLayers[i].getLatLngs();
 
-            for (var j = 0, m = polylines.length; j < m; j++) {
+            for (var j = 0, m = clonedLayers.length; j < m; j++) {
 
                 // if the right line has been merged, skip it
-                if (polylines[j].merged || i === j) { continue; }
+                if (clonedLayers[j].merged || i === j) { continue; }
 
-                lr = polylines[j].getLatLngs();
+                lr = clonedLayers[j].getLatLngs();
 
                 // if the right line starts at the start of the left line
                 if (L.GeometryUtil.distance(map, ll[0], lr[0]) < tolerance) {
                     lr.splice(0, 1);
-                    polylines[i].spliceLatLngs.apply(polylines[i], [0, 0].concat(lr.reverse()));
-                    polylines[j].merged = true;
-                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [0, 0].concat(lr.reverse()));
+                    clonedLayers[j].merged = true;
                     continue;
                 }
 
                 // if the right line ends at the start of the left line
                 if (L.GeometryUtil.distance(map, ll[0], lr[lr.length - 1]) < tolerance) {
                     lr.splice(lr.length - 1, 1);
-                    polylines[i].spliceLatLngs.apply(polylines[i], [0, 0].concat(lr));
-                    polylines[j].merged = true;
-                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [0, 0].concat(lr));
+                    clonedLayers[j].merged = true;
                     continue;
                 }
 
                 // if the right line starts at the end of the left line
                 if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[0]) < tolerance) {
                     lr.splice(0, 1);
-                    polylines[i].spliceLatLngs.apply(polylines[i], [ll.length, 0].concat(lr));
-                    polylines[j].merged = true;
-                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [ll.length, 0].concat(lr));
+                    clonedLayers[j].merged = true;
                     continue;
                 }
 
                 // if the right line ends at the end of the left line
                 if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[lr.length - 1]) < tolerance) {
                     lr.splice(lr.length - 1, 1);
-                    polylines[i].spliceLatLngs.apply(polylines[i], [ll.length, 0].concat(lr.reverse()));
-                    polylines[j].merged = true;
-                    if (onEachConcat) { onEachConcat(polylines[i], polylines[j]); }
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [ll.length, 0].concat(lr.reverse()));
+                    clonedLayers[j].merged = true;
                     continue;
                 }
             }
         }
 
-        return polylines.filter(function(polyline) { return !polyline.merged; });
+        return clonedLayers.filter(function(polyline) { return !polyline.merged; });
     },
 
     /**
