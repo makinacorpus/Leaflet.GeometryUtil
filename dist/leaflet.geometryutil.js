@@ -504,12 +504,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
      * @param  {Number}       [tolerance=15]    A pixel distance in which points will be considered equal
      * @return {L.Polyline[]} concateLines      An array of concatenated L.Polyline objects
      */
-    concatLines: function(map, polylines, tolerance, onEachConcat) {
+    concatLines: function(map, polylines, tolerance) {
 
         if (polylines.length < 2) { return polylines; }
 
         tolerance = typeof tolerance == 'number' ? tolerance : 15;
-        onEachConcat = typeof onEachConcat == 'function' ? onEachConcat : undefined;
 
         // clone layers
         var clonedLayers = []
