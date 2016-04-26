@@ -498,6 +498,78 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
+     * Concatenate polylines whose start/end points are within a close distance
+     * @param  {L.Map}        map
+     * @param  {L.Polyline[]} polylines         An array of L.Polyline objects
+     * @param  {Number}       [tolerance=15]    A pixel distance in which points will be considered equal
+     * @return {L.Polyline[]} concateLines      An array of concatenated L.Polyline objects
+     */
+    concatLines: function(map, polylines, tolerance) {
+
+        if (polylines.length < 2) { return polylines; }
+
+        tolerance = typeof tolerance == 'number' ? tolerance : 15;
+
+        // clone layers
+        var clonedLayers = []
+        for (var i = 0, n = polylines.length; i < n; i++) {
+            var options = polylines[i].options;
+            clonedLayers.push(L.polyline(polylines[i].getLatLngs(), options));
+        }
+
+        var ll, lr;
+
+        for (var i = 0, n = clonedLayers.length; i < n; i++) {
+
+            if (clonedLayers[i].merged) { continue; }
+
+            ll = clonedLayers[i].getLatLngs();
+
+            for (var j = 0, m = clonedLayers.length; j < m; j++) {
+
+                // if the right line has been merged, skip it
+                if (clonedLayers[j].merged || i === j) { continue; }
+
+                lr = clonedLayers[j].getLatLngs();
+
+                // if the right line starts at the start of the left line
+                if (L.GeometryUtil.distance(map, ll[0], lr[0]) < tolerance) {
+                    lr.splice(0, 1);
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [0, 0].concat(lr.reverse()));
+                    clonedLayers[j].merged = true;
+                    continue;
+                }
+
+                // if the right line ends at the start of the left line
+                if (L.GeometryUtil.distance(map, ll[0], lr[lr.length - 1]) < tolerance) {
+                    lr.splice(lr.length - 1, 1);
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [0, 0].concat(lr));
+                    clonedLayers[j].merged = true;
+                    continue;
+                }
+
+                // if the right line starts at the end of the left line
+                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[0]) < tolerance) {
+                    lr.splice(0, 1);
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [ll.length, 0].concat(lr));
+                    clonedLayers[j].merged = true;
+                    continue;
+                }
+
+                // if the right line ends at the end of the left line
+                if (L.GeometryUtil.distance(map, ll[ll.length - 1], lr[lr.length - 1]) < tolerance) {
+                    lr.splice(lr.length - 1, 1);
+                    clonedLayers[i].spliceLatLngs.apply(clonedLayers[i], [ll.length, 0].concat(lr.reverse()));
+                    clonedLayers[j].merged = true;
+                    continue;
+                }
+            }
+        }
+
+        return clonedLayers.filter(function(polyline) { return !polyline.merged; });
+    },
+
+    /**
         Returns horizontal angle in degres between two points.
         @param {L.Point} a
         @param {L.Point} b

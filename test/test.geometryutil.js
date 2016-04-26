@@ -477,6 +477,53 @@ describe('Line order', function() {
   });
 });
 
+describe('Concatenate polylines', function(done) {
+
+  it('It should return an empty array if no polyline is given', function(done) {
+    var concated = L.GeometryUtil.concatLines(map, []);
+    assert.equal(concated.length, 0);
+    done();
+  });
+
+  it('It should return the original array if there is one given polyline', function(done) {
+    var line = L.polyline([[0, 0], [1, 1]]);
+    var concated = L.GeometryUtil.concatLines(map, [line]);
+    assert.equal(concated.length, 1);
+    done();
+  });
+
+  it('It should return an arry of concatenated lines', function(done) {
+    var lineA = L.polyline([[0, 0], [1, 1]]);
+    var lineB = L.polyline([[0.1, 0.1], [2, 1]]);
+    var lineC = L.polyline([[20, 20], [30, 30]]);
+    var lineD = L.polyline([[35, 35], [40, 40], [30, 30]]);
+    var concated = L.GeometryUtil.concatLines(map, [lineD, lineA, lineC, lineB], 1);
+
+    assert.equal(concated.length, 2);
+
+    var concatedLatLngs = concated[0].getLatLngs();
+    assert.equal(concatedLatLngs.length, 4);
+    assert.isTrue(concatedLatLngs[0].equals(L.latLng([35, 35])));
+    assert.isTrue(concatedLatLngs[3].equals(L.latLng([20, 20])));
+
+    var concatedLatLngs = concated[1].getLatLngs();
+    assert.equal(concatedLatLngs.length, 3);
+    assert.isTrue(concatedLatLngs[0].equals(L.latLng([2, 1])));
+    assert.isTrue(concatedLatLngs[2].equals(L.latLng([1, 1])));
+
+    done();
+  })
+
+  it('It should return an array of all polylines if none of them can be concatenated', function(done) {
+    var lineA = L.polyline([[0, 0], [1, 1]]);
+    var lineB = L.polyline([[100, 100], [200, 200]]);
+    var concated = L.GeometryUtil.concatLines(map, [lineA, lineB]);
+
+    assert.equal(concated.length, 2);
+    done();
+  });
+});
+
 describe('Compute angle', function() {
   it('It should return angle', function(done) {
     var p1 = L.point(0, 0),
