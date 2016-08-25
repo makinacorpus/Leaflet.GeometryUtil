@@ -8,7 +8,7 @@
     , "url" : "https://github.com/makinacorpus/Leaflet.GeometryUtil.git"
   }
   , "license" : "BSD-3-Clause"
-  , "main": "dist/leaflet.geometryutil.js"
+  , "main": "src/leaflet.geometryutil.js"
   , "scripts": {
     "test": "make test"
   }
