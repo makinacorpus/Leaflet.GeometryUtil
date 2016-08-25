@@ -10,7 +10,8 @@
   , "license" : "BSD-3-Clause"
   , "main": "src/leaflet.geometryutil.js"
   , "scripts": {
-    "test": "make test"
+    "test": "./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/index.html",
+    "jsdoc": "./node_modules/jsdoc/jsdoc -d ./docs/ src/ README.md"
   }
   , "dependencies": {
     "leaflet": "^0.7.0"
