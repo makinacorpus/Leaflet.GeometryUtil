@@ -82,7 +82,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns true if the latlng belongs to segment.
-        param {L.LatLng} latlng
+        @param {L.LatLng} latlng
         @param {L.LatLng} latlngA
         @param {L.LatLng} latlngB
         @param {?Number} [tolerance=0.2]
@@ -521,9 +521,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
        Returns LatLng of rotated point around specified LatLng center.
-        @param {L.LatLng} latlngPoint: point to rotate
-        @param {double} angleDeg: angle to rotate in degrees
-        @param {L.LatLng} latlngCenter: center of rotation
+        @param {L.LatLng} latlngPoint point to rotate
+        @param {double} angleDeg angle to rotate in degrees
+        @param {L.LatLng} latlngCenter center of rotation
         @returns {L.LatLng} rotated point
      */
     rotatePoint: function(map, latlngPoint, angleDeg, latlngCenter) {
@@ -541,8 +541,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
        Returns the bearing in degrees clockwise from north (0 degrees)
        from the first L.LatLng to the second, at the first LatLng
-       @param {L.LatLng} latlng1: origin point of the bearing
-       @param {L.LatLng} latlng2: destination point of the bearing
+       @param {L.LatLng} latlng1 origin point of the bearing
+       @param {L.LatLng} latlng2 destination point of the bearing
        @returns {float} degrees clockwise from north.
     */
     bearing: function(latlng1, latlng2) {
@@ -562,9 +562,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
        Returns the point that is a distance and heading away from
        the given origin point.
-       @param {L.LatLng} latlng: origin point
-       @param {float}: heading in degrees, clockwise from 0 degrees north.
-       @param {float}: distance in meters
+       @param {L.LatLng} latlng origin point
+       @param {float} heading in degrees, clockwise from 0 degrees north.
+       @param {float} distance in meters
        @returns {L.latLng} the destination point.
        Many thanks to Chris Veness at http://www.movable-type.co.uk/scripts/latlong.html
        for a great reference and examples.
