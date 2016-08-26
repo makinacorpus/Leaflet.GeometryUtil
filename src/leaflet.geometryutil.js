@@ -26,10 +26,14 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
+        
         @param {L.Map} map
         @param {L.LatLng} latlngA
         @param {L.LatLng} latlngB
         @returns {Number} in pixels
+
+        @example
+        [Tutorial of distance / length]{@tutorial distance-length}
      */
     distance: function (map, latlngA, latlngB) {
         return map.latLngToLayerPoint(latlngA).distanceTo(map.latLngToLayerPoint(latlngB));
