@@ -13,7 +13,7 @@
   "license": "BSD-3-Clause",
   "main": "src/leaflet.geometryutil.js",
   "scripts": {
-    "test": "./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/index.html",
+    "test": "node_modules/.bin/mocha-phantomjs spec/index.html",
     "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
   },
   "dependencies": {
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "chai": "1.6.0",
-    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/v3.1.1",
+    "jsdoc": "3.4.0",
     "minami": "^1.1.1",
     "mocha": "1.9.0",
     "mocha-phantomjs": "2.0.1"
