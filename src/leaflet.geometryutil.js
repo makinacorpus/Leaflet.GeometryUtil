@@ -26,6 +26,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
+        
+        @tutorial distance-length
+
         @param {L.Map} map
         @param {L.LatLng} latlngA
         @param {L.LatLng} latlngB
@@ -97,6 +100,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
      * Returns total length of line
+     * @tutorial distance-length
+     * 
      * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
      * @returns {Number} in meters
      */
