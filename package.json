@@ -14,7 +14,7 @@
   "main": "src/leaflet.geometryutil.js",
   "scripts": {
     "test": "./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/index.html",
-    "generate-docs": "./node_modules/jsdoc/jsdoc -d ./docs/ src/ README.md"
+    "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
   },
   "dependencies": {
     "leaflet": "^0.7.0"
