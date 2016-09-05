@@ -1,25 +1,29 @@
 {
-    "name": "leaflet-geometryutil"
-  , "version": "0.5.0"
-  , "description": "Leaflet utility functions on geometries"
-  , "keywords": ["Leaflet", "GIS"]
-  , "repository": {
-    "type": "git"
-    , "url" : "https://github.com/makinacorpus/Leaflet.GeometryUtil.git"
-  }
-  , "license" : "BSD-3-Clause"
-  , "main": "src/leaflet.geometryutil.js"
-  , "scripts": {
+  "name": "leaflet-geometryutil",
+  "version": "0.5.0",
+  "description": "Leaflet utility functions on geometries",
+  "keywords": [
+    "Leaflet",
+    "GIS"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/makinacorpus/Leaflet.GeometryUtil.git"
+  },
+  "license": "BSD-3-Clause",
+  "main": "src/leaflet.geometryutil.js",
+  "scripts": {
     "test": "./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/index.html",
-    "jsdoc": "./node_modules/jsdoc/jsdoc -d ./docs/ src/ README.md"
-  }
-  , "dependencies": {
+    "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
+  },
+  "dependencies": {
     "leaflet": "^0.7.0"
-  }
-  , "devDependencies": {
-    "mocha": "1.9.0",
+  },
+  "devDependencies": {
     "chai": "1.6.0",
-    "mocha-phantomjs": "2.0.1",
-    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/v3.1.1"
+    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/v3.1.1",
+    "minami": "^1.1.1",
+    "mocha": "1.9.0",
+    "mocha-phantomjs": "2.0.1"
   }
 }
