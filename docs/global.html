@@ -115,7 +115,7 @@
 
     
 
-    <h4 class="name" id="accumulatedLengths"><span class="type-signature"></span>accumulatedLengths<span class="signature">()</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="accumulatedLengths"><span class="type-signature"></span>accumulatedLengths<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Array.&lt;Number>}</span></h4>
 
     
 
@@ -140,6 +140,8 @@
     <thead>
     <tr>
         
+        <th>Name</th>
+        
 
         <th>Type</th>
 
@@ -155,6 +157,8 @@
     
 
         <tr>
+            
+                <td class="name"><code>coords</code></td>
             
 
             <td class="type">
@@ -176,7 +180,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Set of coordinates</p></td>
         </tr>
 
     
@@ -244,7 +248,7 @@
 
         
 <div class="param-desc">
-    <p>in meters</p>
+    <p>Array of accumulated lengths (pixels for Point, meters for LatLng)</p>
 </div>
 
 
@@ -255,7 +259,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">Array.&lt;Number></span>
 
 
     </dd>
@@ -447,15 +451,14 @@
 
     
 
-    <h4 class="name" id="belongsSegment"><span class="type-signature"></span>belongsSegment<span class="signature">(latlngA, latlngB, tolerance<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    <h4 class="name" id="belongsSegment"><span class="type-signature"></span>belongsSegment<span class="signature">(latlng, latlngA, latlngB, tolerance<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>Returns true if the latlng belongs to segment.
-        param {L.LatLng} latlng</p>
+    <p>Returns true if the latlng belongs to segment A-B</p>
 </div>
 
 
@@ -495,6 +498,41 @@
 
         <tr>
             
+                <td class="name"><code>latlng</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">L.LatLng</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The position to search</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>latlngA</code></td>
             
 
@@ -523,7 +561,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point A of the segment</p></td>
         </tr>
 
     
@@ -558,7 +596,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point B of the segment</p></td>
         </tr>
 
     
@@ -599,7 +637,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>tolerance to accept if latlng belongs really</p></td>
         </tr>
 
     
@@ -764,7 +802,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -837,7 +875,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -945,6 +983,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>Closest geographical point</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -1027,7 +1069,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -1050,7 +1092,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Set of layers</p></td>
         </tr>
 
     
@@ -1073,7 +1115,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -1141,7 +1183,7 @@
 
         
 <div class="param-desc">
-    <p>with layer, latlng and distance or {null} if list is empty;</p>
+    <p><code>{layer, latlng, distance}</code> or <code>null</code> if list is empty;</p>
 </div>
 
 
@@ -1243,7 +1285,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -1313,7 +1355,7 @@
                 </td>
             
 
-            <td class="description last"><p>The position to snap.</p></td>
+            <td class="description last"><p>The position to snap</p></td>
         </tr>
 
     
@@ -1395,7 +1437,7 @@
                 </td>
             
 
-            <td class="description last"><p>Snap to layers vertices.</p></td>
+            <td class="description last"><p>Snap to layers vertices or segment points (not only vertex)</p></td>
         </tr>
 
     
@@ -1548,7 +1590,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -1571,7 +1613,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -1594,7 +1636,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point A of the segment</p></td>
         </tr>
 
     
@@ -1617,7 +1659,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point B of the segment</p></td>
         </tr>
 
     
@@ -1684,6 +1726,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>Closest geographical point</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -1707,7 +1753,7 @@
 
     
 
-    <h4 class="name" id="computeAngle"><span class="type-signature"></span>computeAngle<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {float}</span></h4>
+    <h4 class="name" id="computeAngle"><span class="type-signature"></span>computeAngle<span class="signature">(a, b)</span><span class="type-signature"> &rarr; {Number}</span></h4>
 
     
 
@@ -1766,7 +1812,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Coordinates of point A</p></td>
         </tr>
 
     
@@ -1789,7 +1835,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Coordinates of point B</p></td>
         </tr>
 
     
@@ -1856,6 +1902,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>horizontal angle</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -1864,7 +1914,7 @@
     </dt>
     <dd>
         
-<span class="param-type">float</span>
+<span class="param-type">Number</span>
 
 
     </dd>
@@ -1938,7 +1988,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Coordinates of point A</p></td>
         </tr>
 
     
@@ -1961,7 +2011,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Coordinates of point B</p></td>
         </tr>
 
     
@@ -2316,7 +2366,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -2339,7 +2389,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point A</p></td>
         </tr>
 
     
@@ -2362,7 +2412,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point B</p></td>
         </tr>
 
     
@@ -2437,7 +2487,7 @@
 
         
 <div class="param-desc">
-    <p>distance between the two {L.LatLng} in pixels</p>
+    <p>planar distance</p>
 </div>
 
 
@@ -2522,7 +2572,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -2545,7 +2595,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -2568,7 +2618,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point A of the segment</p></td>
         </tr>
 
     
@@ -2591,7 +2641,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>geographical point B of the segment</p></td>
         </tr>
 
     
@@ -2659,7 +2709,7 @@
 
         
 <div class="param-desc">
-    <p>in pixels</p>
+    <p>planar distance</p>
 </div>
 
 
@@ -2685,7 +2735,7 @@
 
     
 
-    <h4 class="name" id="extract"><span class="type-signature"></span>extract<span class="signature">(map, latlngs, start, end)</span><span class="type-signature"> &rarr; {Array.&lt;L.LatLng>}</span></h4>
+    <h4 class="name" id="extract"><span class="type-signature"></span>extract<span class="signature">(map, polyline, start, end)</span><span class="type-signature"> &rarr; {Array.&lt;L.LatLng>}</span></h4>
 
     
 
@@ -2745,14 +2795,14 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>latlngs</code></td>
+                <td class="name"><code>polyline</code></td>
             
 
             <td class="type">
@@ -2768,7 +2818,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Polyline on which will be extracted the sub-part</p></td>
         </tr>
 
     
@@ -2881,6 +2931,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>new polyline</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -2904,7 +2958,7 @@
 
     
 
-    <h4 class="name" id="interpolateOnLine"><span class="type-signature"></span>interpolateOnLine<span class="signature">(map, latlngs, the)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="interpolateOnLine"><span class="type-signature"></span>interpolateOnLine<span class="signature">(map, latlngs, ratio)</span><span class="type-signature"> &rarr; {Object}</span></h4>
 
     
 
@@ -2963,7 +3017,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -2989,14 +3043,14 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Set of geographical points</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>the</code></td>
+                <td class="name"><code>ratio</code></td>
             
 
             <td class="type">
@@ -3012,7 +3066,7 @@
 
             
 
-            <td class="description last"><p>length ratio, expressed as a decimal between 0 and 1, inclusive</p></td>
+            <td class="description last"><p>the length ratio, expressed as a decimal between 0 and 1, inclusive</p></td>
         </tr>
 
     
@@ -3166,7 +3220,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>coordinates of point A</p></td>
         </tr>
 
     
@@ -3189,7 +3243,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>coordinates of point B</p></td>
         </tr>
 
     
@@ -3365,7 +3419,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>First polyline</p></td>
         </tr>
 
     
@@ -3388,7 +3442,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Second polyline</p></td>
         </tr>
 
     
@@ -3537,7 +3591,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>First polyline</p></td>
         </tr>
 
     
@@ -3560,7 +3614,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Second polyline</p></td>
         </tr>
 
     
@@ -3725,7 +3779,7 @@
                 </td>
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -3795,7 +3849,7 @@
                 </td>
             
 
-            <td class="description last"><p>The position to search.</p></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -3904,7 +3958,7 @@
 
         
 <div class="param-desc">
-    <p>an array of object including layer within the radius, closest latlng, and distance</p>
+    <p>an array of objects including layer within the radius, closest latlng, and distance</p>
 </div>
 
 
@@ -3930,7 +3984,7 @@
 
     
 
-    <h4 class="name" id="length"><span class="type-signature"></span>length<span class="signature">()</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="length"><span class="type-signature"></span>length<span class="signature">(coords)</span><span class="type-signature"> &rarr; {Number}</span></h4>
 
     
 
@@ -3955,6 +4009,8 @@
     <thead>
     <tr>
         
+        <th>Name</th>
+        
 
         <th>Type</th>
 
@@ -3970,6 +4026,8 @@
     
 
         <tr>
+            
+                <td class="name"><code>coords</code></td>
             
 
             <td class="type">
@@ -3991,7 +4049,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Set of coordinates</p></td>
         </tr>
 
     
@@ -4066,7 +4124,7 @@
 
         
 <div class="param-desc">
-    <p>in meters</p>
+    <p>Total length (pixels for Point, meters for LatLng)</p>
 </div>
 
 
@@ -4100,7 +4158,7 @@
 
 <div class="description">
     <p>Returns a float between 0 and 1 representing the location of the
-        closest point on polyline to the given latlng, as a fraction of total 2d line length.
+        closest point on polyline to the given latlng, as a fraction of total line length.
         (opposite of L.GeometryUtil.interpolateOnLine())</p>
 </div>
 
@@ -4153,7 +4211,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Leaflet map to be used for this method</p></td>
         </tr>
 
     
@@ -4176,7 +4234,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Polyline on which the latlng will be search</p></td>
         </tr>
 
     
@@ -4199,7 +4257,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>The position to search</p></td>
         </tr>
 
     
@@ -4266,6 +4324,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>Float between 0 and 1</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -4289,7 +4351,7 @@
 
     
 
-    <h4 class="name" id="readableDistance"><span class="type-signature"></span>readableDistance<span class="signature">(distance, unit)</span><span class="type-signature"> &rarr; {Number}</span></h4>
+    <h4 class="name" id="readableDistance"><span class="type-signature"></span>readableDistance<span class="signature">(distance, unit)</span><span class="type-signature"> &rarr; {String}</span></h4>
 
     
 
@@ -4348,7 +4410,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>distance to be converted</p></td>
         </tr>
 
     
@@ -4371,7 +4433,7 @@
 
             
 
-            <td class="description last"><p>('metric' or 'imperial')</p></td>
+            <td class="description last"><p>'metric' or 'imperial'</p></td>
         </tr>
 
     
@@ -4450,7 +4512,7 @@
     </dt>
     <dd>
         
-<span class="param-type">Number</span>
+<span class="param-type">String</span>
 
 
     </dd>
@@ -4524,7 +4586,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>polyline to reverse</p></td>
         </tr>
 
     
@@ -4591,6 +4653,10 @@
 <h5>Returns:</h5>
 
         
+<div class="param-desc">
+    <p>polyline reversed</p>
+</div>
+
 
 
 <dl class="param-type">
@@ -4872,7 +4938,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>First polyline</p></td>
         </tr>
 
     
@@ -4895,7 +4961,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last"><p>Second polyline</p></td>
         </tr>
 
     
@@ -4998,7 +5064,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 05 2016 15:23:31 GMT+0200 (CEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 05 2016 17:40:38 GMT+0200 (CEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
