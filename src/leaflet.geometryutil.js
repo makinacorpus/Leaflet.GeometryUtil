@@ -272,11 +272,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest position from specified {LatLng} among specified layers,
         with a maximum tolerance in pixels, providing snapping behaviour.
-        @param {L.Map} map
+        @param {L.Map} map Leaflet map to be used for this method
         @param {Array<ILayer>} layers - A list of layers to snap on.
-        @param {L.LatLng} latlng - The position to snap.
+        @param {L.LatLng} latlng - The position to snap
         @param {?Number} [tolerance=Infinity] - Maximum number of pixels.
-        @param {?boolean} [withVertices=true] - Snap to layers vertices.
+        @param {?boolean} [withVertices=true] - Snap to layers vertices or segment points (not only vertex)
         @returns {object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
     */
     closestLayerSnap: function (map, layers, latlng, tolerance, withVertices) {
