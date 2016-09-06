@@ -132,6 +132,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest point of a {L.LatLng} on the segment (A-B)
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {L.LatLng} latlng - The position to search
         @param {L.LatLng} latlngA geographical point A of the segment
@@ -204,6 +207,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest layer to latlng among a list of layers.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {Array<L.ILayer>} layers Set of layers
         @param {L.LatLng} latlng - The position to search
@@ -276,6 +282,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest position from specified {LatLng} among specified layers,
         with a maximum tolerance in pixels, providing snapping behaviour.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {Array<ILayer>} layers - A list of layers to snap on.
         @param {L.LatLng} latlng - The position to snap
