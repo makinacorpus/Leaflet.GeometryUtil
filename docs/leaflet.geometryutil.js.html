@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
 </nav>
 
 <div id="main">
@@ -172,6 +172,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest point of a {L.LatLng} on the segment (A-B)
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {L.LatLng} latlng - The position to search
         @param {L.LatLng} latlngA geographical point A of the segment
@@ -191,8 +194,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest latlng on layer.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
-        @param {Array&lt;L.LatLng>|L.PolyLine} layer - Layer that contains the result.
+        @param {Array&lt;L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng} Closest geographical point
@@ -219,7 +225,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             }
             return result;
         }
-
+        
+        // add the first point to close the polygon
         if (layer instanceof L.Polygon) {
             latlngs.push(latlngs[0]);
         }
@@ -240,6 +247,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest layer to latlng among a list of layers.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {Array&lt;L.ILayer>} layers Set of layers
         @param {L.LatLng} latlng - The position to search
@@ -312,6 +322,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest position from specified {LatLng} among specified layers,
         with a maximum tolerance in pixels, providing snapping behaviour.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
         @param {Array&lt;ILayer>} layers - A list of layers to snap on.
         @param {L.LatLng} latlng - The position to snap
@@ -651,7 +664,7 @@ return L.GeometryUtil;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 05 2016 17:40:37 GMT+0200 (CEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Sep 06 2016 17:18:23 GMT+0200 (CEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
