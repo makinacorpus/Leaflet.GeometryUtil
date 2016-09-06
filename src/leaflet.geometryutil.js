@@ -151,8 +151,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest latlng on layer.
+
+        @tutorial closest
+
         @param {L.Map} map Leaflet map to be used for this method
-        @param {Array<L.LatLng>|L.PolyLine} layer - Layer that contains the result.
+        @param {Array<L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng} Closest geographical point
@@ -179,7 +182,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             }
             return result;
         }
-
+        
+        // add the first point to close the polygon
         if (layer instanceof L.Polygon) {
             latlngs.push(latlngs[0]);
         }
