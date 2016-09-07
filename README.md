@@ -5,6 +5,12 @@ Leaflet.GeometryUtil
 
 * Tested with stable Leaflet 0.7.0
 
+For Leaflet 1.0, some users encounter problems with closest method.
+
+We plan to open a new branch for testing purpose soon !
+
+Don't hesitate to submit issues or Pull Request if you detect something wrong.
+
 Usage
 -----
 
@@ -38,7 +44,7 @@ Development
 * Ready !
 
 ```
-    make test
+    npm test
 ```
 
 Changelog
