@@ -17,8 +17,48 @@
     var map = L.map('map').fitWorld();
   </script>
 
-  <script>mocha.setup('bdd')</script>
-  <script src="test.geometryutil.js"></script>
+  <script>
+    mocha.setup('bdd');
+
+    var assert = chai.assert;
+
+    assert.almostequal = function (a, b, n) {
+        n = n || 12;
+        return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
+                            Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
+    };
+    // use Leaflet equality functions for Point and LatLng
+    assert.pointEqual = function (a, b) {
+        return a.equals(b);
+    };
+    assert.latLngEqual = function (a, b, n) {
+        n = n || 2;
+        return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
+    }
+  </script>
+
+  <script src="test.accumulatedLengths.js"></script>
+  <script src="test.bearing.js"></script>
+  <script src="test.closest.js"></script>
+  <script src="test.closestLayer.js"></script>
+  <script src="test.closestLayerSnap.js"></script>
+  <script src="test.closestSegment.js"></script>
+  <script src="test.computeAngle.js"></script>
+  <script src="test.computeSlope.js"></script>
+  <script src="test.destination.js"></script>
+  <script src="test.distanceSegment.js"></script>
+  <script src="test.extract.js"></script>
+  <script src="test.interpolateOnLine.js"></script>
+  <script src="test.interpolateOnPointSegment.js"></script>
+  <script src="test.isAfter.js"></script>
+  <script src="test.isBefore.js"></script>
+  <script src="test.layersWithin.js"></script>
+  <script src="test.length.js"></script>
+  <script src="test.locateOnLine.js"></script>
+  <script src="test.readableDistance.js"></script>
+  <script src="test.reverse.js"></script>
+  <script src="test.rotatePoint.js"></script>
+  <script src="test.startsAtExtremity.js"></script>
   <script>
     (window.mochaPhantomJS || window.mocha).run();
   </script>
