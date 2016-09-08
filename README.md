@@ -54,6 +54,11 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.5.1 ###
+
+* Fix closestLayer to be able to work with GeoJSON nested layers
+* Restrict closest method to Array and L.Polyline (L.Polygon extend L.Polyline)
+
 ### 0.5.0 ###
 
 * Add function `layersWithin()` (#34, thanks @haoliangyu)

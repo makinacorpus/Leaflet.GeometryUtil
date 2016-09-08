@@ -161,12 +161,18 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         @param {Array<L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
-        @returns {L.LatLng} Closest geographical point
+        @returns {L.LatLng} Closest geographical point or null if layer param is incorrect
     */
     closest: function (map, layer, latlng, vertices) {
-        if (typeof layer.getLatLngs != 'function')
+        
+        if (layer instanceof Array)
             layer = L.polyline(layer);
-
+        
+        // if we don't have here a Polyline, that means layer is incorrect
+        // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
+        if (! ( layer instanceof L.Polyline ) )
+            return null;
+        
         var latlngs = layer.getLatLngs().slice(0),
             mindist = Infinity,
             result = null,
@@ -223,18 +229,27 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
         for (var i = 0, n = layers.length; i < n; i++) {
             var layer = layers[i];
-            // Single dimension, snap on points, else snap on closest
-            if (typeof layer.getLatLng == 'function') {
-                ll = layer.getLatLng();
-                distance = L.GeometryUtil.distance(map, latlng, ll);
-            }
-            else {
-                ll = L.GeometryUtil.closest(map, layer, latlng);
-                if (ll) distance = ll.distance;  // Can return null if layer has no points.
-            }
-            if (distance < mindist) {
-                mindist = distance;
-                result = {layer: layer, latlng: ll, distance: distance};
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                if (subResult.distance < mindist) {
+                    mindist = subResult.distance;
+                    result = subResult;
+                }
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                if (distance < mindist) {
+                    mindist = distance;
+                    result = {layer: layer, latlng: ll, distance: distance};
+                }
             }
         }
         return result;
