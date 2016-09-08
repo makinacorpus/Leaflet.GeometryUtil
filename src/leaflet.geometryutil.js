@@ -161,12 +161,18 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         @param {Array<L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
-        @returns {L.LatLng} Closest geographical point
+        @returns {L.LatLng} Closest geographical point or null if layer param is incorrect
     */
     closest: function (map, layer, latlng, vertices) {
-        if (typeof layer.getLatLngs != 'function')
+        
+        if (layer instanceof Array)
             layer = L.polyline(layer);
-
+        
+        // if we don't have here a Polyline, that means layer is incorrect
+        // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
+        if (! ( layer instanceof L.Polyline ) )
+            return null;
+        
         var latlngs = layer.getLatLngs().slice(0),
             mindist = Infinity,
             result = null,
