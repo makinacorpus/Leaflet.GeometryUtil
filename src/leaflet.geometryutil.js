@@ -229,18 +229,27 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
         for (var i = 0, n = layers.length; i < n; i++) {
             var layer = layers[i];
-            // Single dimension, snap on points, else snap on closest
-            if (typeof layer.getLatLng == 'function') {
-                ll = layer.getLatLng();
-                distance = L.GeometryUtil.distance(map, latlng, ll);
-            }
-            else {
-                ll = L.GeometryUtil.closest(map, layer, latlng);
-                if (ll) distance = ll.distance;  // Can return null if layer has no points.
-            }
-            if (distance < mindist) {
-                mindist = distance;
-                result = {layer: layer, latlng: ll, distance: distance};
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                if (subResult.distance < mindist) {
+                    mindist = subResult.distance;
+                    result = subResult;
+                }
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                if (distance < mindist) {
+                    mindist = distance;
+                    result = {layer: layer, latlng: ll, distance: distance};
+                }
             }
         }
         return result;
