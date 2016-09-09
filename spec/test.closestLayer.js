@@ -88,7 +88,9 @@ describe('Closest among layers', function() {
           }
         }),
         closest = L.GeometryUtil.closestLayer(map, layers.getLayers(), ll);
-    assert.deepEqual(closest.layer, layers.getLayers()[0].getLayers()[0])
+    // we test instanceof because of differences between Leaflet 0.7.7 & 1.0.0
+    // in 0.7.7 geojson are LayerGroup, in 1.0, we have directly instances of L.Polyline & co
+    assert.deepEqual(closest.layer, layers.getLayers()[0] instanceof L.LayerGroup ? layers.getLayers()[0].getLayers()[0] : layers.getLayers()[0])
     assert.deepEqual(closest.distance, 4)
     done();
   })

@@ -5,7 +5,7 @@ describe('Length of line', function() {
   });
 
   it('It should return length in meters', function(done) {
-    assert.equal(111319.49079327357, L.GeometryUtil.length(L.polyline([[0, 0], [1, 0]])));
+    assert.closeTo(111319.49079327357, L.GeometryUtil.length(L.polyline([[0, 0], [1, 0]])), 500); // compatibility of Leaflet 1.0, due to earth R changed
     done();
   });
 });
