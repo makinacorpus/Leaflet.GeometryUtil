@@ -155,28 +155,81 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest latlng on layer.
 
+        Accept nested arrays
+
         @tutorial closest
 
         @param {L.Map} map Leaflet map to be used for this method
-        @param {Array<L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
+        @param {Array<L.LatLng>|Array<Array<L.LatLng>>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng} Closest geographical point or null if layer param is incorrect
     */
     closest: function (map, layer, latlng, vertices) {
         
-        if (layer instanceof Array)
-            layer = L.polyline(layer);
+        var latlngs,
+            mindist = Infinity,
+            result = null,
+            i, n, distance;
+
+        if (layer instanceof Array) {
+            // if layer is Array<Array<T>>
+            if (layer[0] instanceof Array && typeof layer[0][0] !== 'number') {
+                // if we have nested arrays, we calc the closest for each array
+                // recursive
+                for (var i = 0; i < layer.length; i++) {
+                    var subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
+                    if (subResult.distance < mindist) {
+                        mindist = subResult.distance;
+                        result = subResult;
+                    }
+                }
+                return result;
+            } else if (layer[0] instanceof L.LatLng || typeof layer[0][0] === 'number') { // we could have a latlng as [x,y] with x & y numbers
+                layer = L.polyline(layer);
+            } else {
+                return result;
+            }
+        }
         
         // if we don't have here a Polyline, that means layer is incorrect
         // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
         if (! ( layer instanceof L.Polyline ) )
-            return null;
+            return result;
+
+        /**
+         * Flat an array upon a predicate, saying if we have to dig digger or not
+         * Specific use for Polygon, Polyline, MultiPolyline (0.7.7)
+         * Leaflet 1.0 change the structure of Polyline (could be MultiPolyline > nested arrays), idem for Polygon
+         */
+        function flattenArray(array, predicate, result) {
+
+            var index = -1,
+                length = array.length;
         
-        var latlngs = layer.getLatLngs().slice(0),
-            mindist = Infinity,
-            result = null,
-            i, n, distance;
+            predicate || ( predicate = function(v) { return true } );
+            result || ( result = []);
+
+            if (predicate(array)) {
+                while (++index < length) {
+                    var value = array[index];
+                    if (predicate(value)) {
+                        flattenArray(value, predicate, result);
+                    } else {
+                        result.push(value);
+                    }
+                }
+            } else {
+                result.push(array);
+            }
+
+            return result;
+
+        }
+        
+        latlngs = flattenArray(layer.getLatLngs().slice(0), function isFlattenable(value) {
+            return ( ( value instanceof Array && typeof value[0] !== 'number' ) && ! ( value instanceof L.LatLng ) )
+        });
 
         // Lookup vertices
         if (vertices) {

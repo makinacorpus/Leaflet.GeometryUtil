@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a><ul class='methods'><li data-type='method'><a href="global.html#closest#~flattenArray">flattenArray</a></li></ul></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
 </nav>
 
 <div id="main">
@@ -195,28 +195,81 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest latlng on layer.
 
+        Accept nested arrays
+
         @tutorial closest
 
         @param {L.Map} map Leaflet map to be used for this method
-        @param {Array&lt;L.LatLng>|L.PolyLine|L.Polygon} layer - Layer that contains the result
+        @param {Array&lt;L.LatLng>|Array&lt;Array&lt;L.LatLng>>|L.PolyLine|L.Polygon} layer - Layer that contains the result
         @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
         @returns {L.LatLng} Closest geographical point or null if layer param is incorrect
     */
     closest: function (map, layer, latlng, vertices) {
         
-        if (layer instanceof Array)
-            layer = L.polyline(layer);
+        var latlngs,
+            mindist = Infinity,
+            result = null,
+            i, n, distance;
+
+        if (layer instanceof Array) {
+            // if layer is Array&lt;Array&lt;T>>
+            if (layer[0] instanceof Array &amp;&amp; typeof layer[0][0] !== 'number') {
+                // if we have nested arrays, we calc the closest for each array
+                // recursive
+                for (var i = 0; i &lt; layer.length; i++) {
+                    var subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
+                    if (subResult.distance &lt; mindist) {
+                        mindist = subResult.distance;
+                        result = subResult;
+                    }
+                }
+                return result;
+            } else if (layer[0] instanceof L.LatLng || typeof layer[0][0] === 'number') { // we could have a latlng as [x,y] with x &amp; y numbers
+                layer = L.polyline(layer);
+            } else {
+                return result;
+            }
+        }
         
         // if we don't have here a Polyline, that means layer is incorrect
         // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
         if (! ( layer instanceof L.Polyline ) )
-            return null;
+            return result;
+
+        /**
+         * Flat an array upon a predicate, saying if we have to dig digger or not
+         * Specific use for Polygon, Polyline, MultiPolyline (0.7.7)
+         * Leaflet 1.0 change the structure of Polyline (could be MultiPolyline > nested arrays), idem for Polygon
+         */
+        function flattenArray(array, predicate, result) {
+
+            var index = -1,
+                length = array.length;
         
-        var latlngs = layer.getLatLngs().slice(0),
-            mindist = Infinity,
-            result = null,
-            i, n, distance;
+            predicate || ( predicate = function(v) { return true } );
+            result || ( result = []);
+
+            if (predicate(array)) {
+                while (++index &lt; length) {
+                    var value = array[index];
+                    if (predicate(value)) {
+                        flattenArray(value, predicate, result);
+                    } else {
+                        result.push(value);
+                    }
+                }
+            } else {
+                result.push(array);
+            }
+
+            return result;
+
+        }
+        
+        latlngs = flattenArray(layer.getLatLngs().slice(0), function isFlattenable(value) {
+            return ( ( value instanceof Array &amp;&amp; typeof value[0] !== 'number' ) &amp;&amp; ! ( value instanceof L.LatLng ) )
+        });
 
         // Lookup vertices
         if (vertices) {
@@ -679,7 +732,7 @@ return L.GeometryUtil;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 08 2016 12:06:58 GMT+0200 (CEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Sep 09 2016 17:35:19 GMT+0200 (CEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
