@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a><ul class='methods'><li data-type='method'><a href="global.html#closest#~flattenArray">flattenArray</a></li></ul></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
 </nav>
 
 <div id="main">
@@ -398,7 +398,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line581">line 581</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line634">line 634</a>
     </li></ul></dd>
     
 
@@ -735,6 +735,7 @@
 
 <div class="description">
     <p>Returns the closest latlng on layer.</p>
+<pre class="prettyprint source"><code>    Accept nested arrays</code></pre>
 </div>
 
 
@@ -816,6 +817,9 @@
             
                 
 <span class="param-type">Array.&lt;L.LatLng></span>
+|
+
+<span class="param-type">Array.&lt;Array.&lt;L.LatLng>></span>
 |
 
 <span class="param-type">L.PolyLine</span>
@@ -960,7 +964,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line166">line 166</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -1166,7 +1170,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line224">line 224</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line277">line 277</a>
     </li></ul></dd>
     
 
@@ -1495,7 +1499,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line310">line 310</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line363">line 363</a>
     </li></ul></dd>
     
 
@@ -1907,7 +1911,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line539">line 539</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line592">line 592</a>
     </li></ul></dd>
     
 
@@ -2083,7 +2087,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line549">line 549</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line602">line 602</a>
     </li></ul></dd>
     
 
@@ -2283,7 +2287,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line605">line 605</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line658">line 658</a>
     </li></ul></dd>
     
 
@@ -2936,7 +2940,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line465">line 465</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line518">line 518</a>
     </li></ul></dd>
     
 
@@ -3138,7 +3142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line351">line 351</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line404">line 404</a>
     </li></ul></dd>
     
 
@@ -3338,7 +3342,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line336">line 336</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line389">line 389</a>
     </li></ul></dd>
     
 
@@ -3514,7 +3518,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line512">line 512</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line565">line 565</a>
     </li></ul></dd>
     
 
@@ -3686,7 +3690,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line499">line 499</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line552">line 552</a>
     </li></ul></dd>
     
 
@@ -3962,7 +3966,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line266">line 266</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line319">line 319</a>
     </li></ul></dd>
     
 
@@ -4329,7 +4333,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line419">line 419</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line472">line 472</a>
     </li></ul></dd>
     
 
@@ -4658,7 +4662,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line452">line 452</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line505">line 505</a>
     </li></ul></dd>
     
 
@@ -4857,7 +4861,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line562">line 562</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line615">line 615</a>
     </li></ul></dd>
     
 
@@ -5033,7 +5037,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line525">line 525</a>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line578">line 578</a>
     </li></ul></dd>
     
 
@@ -5095,7 +5099,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 08 2016 12:06:58 GMT+0200 (CEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Sep 09 2016 17:20:01 GMT+0200 (CEST) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
