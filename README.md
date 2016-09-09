@@ -4,12 +4,7 @@ Leaflet.GeometryUtil
 [![Build Status](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master)](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil)
 
 * Tested with stable Leaflet 0.7.0
-
-For Leaflet 1.0, some users encounter problems with closest method.
-
-We plan to open a new branch for testing purpose soon !
-
-Don't hesitate to submit issues or Pull Request if you detect something wrong.
+* Tested with Leaflet 1.0.0-rc.3
 
 Usage
 -----
@@ -39,6 +34,8 @@ Development
 
 ```
     sudo apt-get install nodejs phantomjs
+
+    npm install
 ```
 
 * Ready !
@@ -57,6 +54,7 @@ Changelog
 ### 0.6.0 ###
 
 * Add nested arrays for `layer` param in `closest` method
+* Tested for Leaflet 1.0.0-rc.3
 
 ### 0.5.1 ###
 
