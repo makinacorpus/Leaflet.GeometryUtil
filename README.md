@@ -51,10 +51,13 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.7.0 ###
+
+* Tested for Leaflet 1.0.0-rc.3
+
 ### 0.6.0 ###
 
 * Add nested arrays for `layer` param in `closest` method
-* Tested for Leaflet 1.0.0-rc.3
 
 ### 0.5.1 ###
 
