@@ -144,4 +144,19 @@ describe('Closest on path with precision', function() {
       assert.isNull(closest);
       done();
   });
+
+  it('It should have distance at 0 if on path of a nested array', function(done) {
+    var ll = L.latLng([0, 0]),
+        closest = L.GeometryUtil.closest(map, [ [[-30, -50], [-10, -10], [10, 10], [30, 50]],  [[-10, -20], [-30, -10], [40, 10], [50, 50]] ], ll);
+    assert.equal(0, closest.distance);
+    assert.equal(ll.toString(), closest.toString());
+    done();
+  });
+
+  it('It should work with nested arrays and return the correct point', function(done) {
+      var closest = L.GeometryUtil.closest(map, [ [[0,0], [1, 1], [2, 2]], [[0,0], [2, 2], [4, 4]] ], [3, 3]);
+      assert.latLngEqual(closest, L.latLng(3, 3));
+      done();
+  });
+
 });
