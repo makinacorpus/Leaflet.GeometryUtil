@@ -69,7 +69,7 @@ describe('Closest on path with precision', function() {
       done();
   });
 
-  it('It should return null if layer param is not instance of Array|L.Polygon|L.Polyline', function(done) {
+  it('It should return null if layer param is not instance of Array|L.Polygon|L.Polyline (Leaflet 0.7.7 only)', function(done) {
       var campus = {
           "type": "Feature",
           "properties": {
@@ -141,7 +141,15 @@ describe('Closest on path with precision', function() {
           }
         }),ll = [-1, 5],
           closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
-      assert.isNull(closest);
+      // if layers.getLayers()[0] is a LayerGroup, we are in Leaflet 0.7.7
+      // so there is no result
+      // if not, we are in Leaflet 1.0, and we don't need to test it, because 
+      // layers.getLayers()[0] will contain a multipolygon, and so there is a result
+      if (layers.getLayers()[0] instanceof L.LayerGroup) {
+        assert.isNull(closest);
+      } else {
+        assert.isOk(true);
+      }
       done();
   });
 
