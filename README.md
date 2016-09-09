@@ -54,6 +54,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.6.0 ###
+
+* Add nested arrays for `layer` param in `closest` method
+
 ### 0.5.1 ###
 
 * Fix closestLayer to be able to work with GeoJSON nested layers
