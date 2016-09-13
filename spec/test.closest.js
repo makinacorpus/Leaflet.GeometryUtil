@@ -28,7 +28,7 @@ describe('Closest on path with precision', function() {
   it('It should not depend on zoom', function(done) {
     // Test with plain value
     var ll = L.latLng([5, 10]),
-        line = L.polyline([[-50, -10], [30, 40]]).addTo(map),
+        line = L.polyline([[-50, -10], [30, 40]])/*.addTo(map)*/,
         closest = L.GeometryUtil.closest(map, line, ll);
     assert.isTrue(closest.distance > 0);
     /*
@@ -61,8 +61,9 @@ describe('Closest on path with precision', function() {
   });
 
   it('It should work with last segment of polygon', function(done) {
-      var polygon = L.polygon([[0, 0], [10, 10], [0, 10]]),
-          ll = [-1, 5],
+      var polygon = L.polygon([[0, 0], [10, 10], [0, 10]])/*.addTo(map)*/,
+          ll = [0, 5],
+          marker = L.marker(ll)/*.addTo(map)*/,
           closest = L.GeometryUtil.closest(map, polygon, ll);
       assert.almostEqual(closest.lat, 0, 2);
       assert.almostEqual(closest.lng, 5, 2);
@@ -127,20 +128,10 @@ describe('Closest on path with precision', function() {
               ]
           }
         },
-        layers = L.geoJson(campus, {
-
-          pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-              radius: 8,
-              fillColor: "#ff7800",
-              color: "#000",
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.8
-            });
-          }
-        }),ll = [-1, 5],
-          closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
+        layers = L.geoJson(campus)/*.addTo(map)*/,
+        ll = [-1, 5],
+        marker = L.marker(ll)/*.addTo(map)*/,
+        closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
       // if layers.getLayers()[0] is a LayerGroup, we are in Leaflet 0.7.7
       // so there is no result
       // if not, we are in Leaflet 1.0, and we don't need to test it, because 
@@ -148,7 +139,7 @@ describe('Closest on path with precision', function() {
       if (layers.getLayers()[0] instanceof L.LayerGroup) {
         assert.isNull(closest);
       } else {
-        assert.isOk(true);
+        assert.isNotNull(closest);
       }
       done();
   });
@@ -164,6 +155,72 @@ describe('Closest on path with precision', function() {
   it('It should work with nested arrays and return the correct point', function(done) {
       var closest = L.GeometryUtil.closest(map, [ [[0,0], [1, 1], [2, 2]], [[0,0], [2, 2], [4, 4]] ], [3, 3]);
       assert.latLngEqual(closest, L.latLng(3, 3));
+      done();
+  });
+
+  it('It should work with nested arrays and last segment of polygon', function(done) {
+      var campus = {
+          "type": "Feature",
+          "geometry": {
+              "type": "MultiPolygon",
+              "coordinates": [
+                  [
+                      [
+                          [0, 0], [50, 50], [100, 0]
+                      ],
+                      [
+                          [20,10], [50, 40], [80, 10]
+                      ]
+                  ]
+              ]
+          }
+        },
+        layers = L.geoJson(campus)/*.addTo(map)*/,
+        ll =  L.latLng([0, 50]),
+        closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
+      // if layers.getLayers()[0] is a LayerGroup, we are in Leaflet 0.7.7
+      // so there is no result
+      if (layers.getLayers()[0] instanceof L.LayerGroup) {
+        assert.isNull(closest);
+      } else {
+        assert.latLngEqual(L.latLng(0,2), closest);
+        assert.equal(closest.distance, 0);
+      }
+      done();
+  });
+
+  it('It must not return a point on a segment between the last point of a polygon and the first point of his follower', function(done) {
+      var campus = {
+          "type": "Feature",
+          "geometry": {
+              "type": "MultiPolygon",
+              "coordinates": [
+                  [
+                      [
+                          [0, 0], [50, 50], [100, 0]
+                      ],
+                      [
+                          [20,10], [50, 40], [80, 10]
+                      ]
+                  ]
+              ]
+          }
+        },
+        layers = L.geoJson(campus)/*.addTo(map)*/,
+        ll =  L.latLng(5,10),
+        marker = L.marker(ll)/*.addTo(map)*/,
+        closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
+      // if layers.getLayers()[0] is a LayerGroup, we are in Leaflet 0.7.7
+      // so there is no result
+      if (layers.getLayers()[0] instanceof L.LayerGroup) {
+        assert.isNull(closest);
+      } else {
+        // L.marker(closest).addTo(map)
+        assert.almostNotEqual(ll.lat, closest.lat, .5);
+        assert.almostNotEqual(ll.lng, closest.lng, .5);
+        assert.almostEqual('7.8', closest.lat, .5);
+        assert.almostEqual('6.75', closest.lng, .5);
+      }
       done();
   });
 
