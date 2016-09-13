@@ -2,10 +2,11 @@
 <head>
   <meta charset="utf-8">
   <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
 </head>
 <body>
-  <div id="map" style="display: none; height: 300px"></div>
+  <div id="map" style="display: none; height: 300px; width: 360px"></div>
   <div id="mocha"></div>
   <script src="../node_modules/chai/chai.js"></script>
   <script src="../node_modules/mocha/mocha.js"></script>
@@ -16,14 +17,22 @@
 
   <script>
     var map = L.map('map').fitWorld();
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
     mocha.setup('bdd');
 
     var assert = chai.assert;
 
-    assert.almostequal = function (a, b, n) {
+    assert.almostEqual = function (a, b, n) {
         n = n || 12;
         return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
+                            Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
+    };
+    assert.almostNotEqual = function (a, b, n) {
+        n = n || 12;
+        return assert.notEqual(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                             Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
     };
     // use Leaflet equality functions for Point and LatLng
@@ -32,7 +41,7 @@
     };
     assert.latLngEqual = function (a, b, n) {
         n = n || 2;
-        return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
+        return assert.almostEqual(a.lat, b.lat, 2) && assert.almostEqual(a.lng, b.lng, n);
     }
   </script>
 

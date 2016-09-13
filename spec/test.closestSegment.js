@@ -10,8 +10,8 @@ describe('Closest on segment', function() {
     var ll = L.latLng([-1, 1]),
         closest = L.GeometryUtil.closestOnSegment(map, ll, L.latLng([-10, -10]), L.latLng([10, 10]));
     // TODO: should not be almost equal
-    assert.almostequal(0, closest.lat, 2);
-    assert.almostequal(0, closest.lng, 2);
+    assert.almostEqual(0, closest.lat, 2);
+    assert.almostEqual(0, closest.lng, 2);
     done();
   });
 });

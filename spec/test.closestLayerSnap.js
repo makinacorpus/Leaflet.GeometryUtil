@@ -33,24 +33,24 @@ describe('Closest snap', function() {
   it('It should not snap to corners if vertices disabled', function(done) {
     var corner = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d, -w-d]));
     assert.equal(corner.layer, square);
-    assert.almostequal(corner.latlng.lat, w);
-    assert.almostequal(corner.latlng.lng, -w);
+    assert.almostEqual(corner.latlng.lat, w);
+    assert.almostEqual(corner.latlng.lng, -w);
 
     var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d, -w-d]), Infinity, false);
-    assert.almostequal(snap.latlng.lat, w-d);
-    assert.almostequal(snap.latlng.lng, -w);
+    assert.almostEqual(snap.latlng.lat, w-d);
+    assert.almostEqual(snap.latlng.lng, -w);
     done();
   });
 
   it('It should not snap to corners if distance to vertice exceeds tolerance', function(done) {
     var corner = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d-d/2, -w-d]));
     assert.equal(corner.layer, square);
-    assert.almostequal(corner.latlng.lat, w);
-    assert.almostequal(corner.latlng.lng, -w);
+    assert.almostEqual(corner.latlng.lat, w);
+    assert.almostEqual(corner.latlng.lng, -w);
 
     var snap = L.GeometryUtil.closestLayerSnap(map, layers, L.latLng([w-d-d/2, -w-d]), d);
-    assert.almostequal(snap.latlng.lat, w-d-d/2);
-    assert.almostequal(snap.latlng.lng, -w);
+    assert.almostEqual(snap.latlng.lat, w-d-d/2);
+    assert.almostEqual(snap.latlng.lng, -w);
     done();
   });
 });
