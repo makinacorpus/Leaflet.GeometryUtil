@@ -10,8 +10,8 @@ describe('Closest on path with precision', function() {
   it('It should return same point if on path', function(done) {
       var line = L.polyline([[0,0], [1, 1], [2, 2]]);
           closest = L.GeometryUtil.closest(map, line, [1.7, 1.7]);
-      assert.almostequal(closest.lat, 1.7, 2);
-      assert.almostequal(closest.lng, 1.7, 2);
+      assert.almostEqual(closest.lat, 1.7, 2);
+      assert.almostEqual(closest.lng, 1.7, 2);
       done();
   });
 
@@ -20,8 +20,8 @@ describe('Closest on path with precision', function() {
         closest = L.GeometryUtil.closest(map, [[-10, -10], [10, 10]], ll);
     assert.equal(Math.sqrt(2), closest.distance);
     // TODO: should not be almost equal
-    assert.almostequal(closest.lat, 0, 2);
-    assert.almostequal(closest.lng, 0, 2);
+    assert.almostEqual(closest.lat, 0, 2);
+    assert.almostEqual(closest.lng, 0, 2);
     done();
   });
 
@@ -64,8 +64,8 @@ describe('Closest on path with precision', function() {
       var polygon = L.polygon([[0, 0], [10, 10], [0, 10]]),
           ll = [-1, 5],
           closest = L.GeometryUtil.closest(map, polygon, ll);
-      assert.almostequal(closest.lat, 0, 2);
-      assert.almostequal(closest.lng, 5, 2);
+      assert.almostEqual(closest.lat, 0, 2);
+      assert.almostEqual(closest.lng, 5, 2);
       done();
   });
 

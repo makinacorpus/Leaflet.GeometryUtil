@@ -25,7 +25,7 @@
 
     var assert = chai.assert;
 
-    assert.almostequal = function (a, b, n) {
+    assert.almostEqual = function (a, b, n) {
         n = n || 12;
         return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                             Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
@@ -36,7 +36,7 @@
     };
     assert.latLngEqual = function (a, b, n) {
         n = n || 2;
-        return assert.almostequal(a.lat, b.lat, 2) && assert.almostequal(a.lng, b.lng, n);
+        return assert.almostEqual(a.lat, b.lat, 2) && assert.almostEqual(a.lng, b.lng, n);
     }
   </script>
 

@@ -12,9 +12,9 @@ describe('Locate on line', function() {
   });
 
   it('It should return ratio of point', function(done) {
-    assert.almostequal(0.5, L.GeometryUtil.locateOnLine(map, line, L.latLng([1, 1])), 4);
-    assert.almostequal(0.25, L.GeometryUtil.locateOnLine(map, line, L.latLng([0.5, 0.5])), 4);
-    assert.almostequal(0.85, L.GeometryUtil.locateOnLine(map, line, L.latLng([1.7, 1.7])), 4);
+    assert.almostEqual(0.5, L.GeometryUtil.locateOnLine(map, line, L.latLng([1, 1])), 4);
+    assert.almostEqual(0.25, L.GeometryUtil.locateOnLine(map, line, L.latLng([0.5, 0.5])), 4);
+    assert.almostEqual(0.85, L.GeometryUtil.locateOnLine(map, line, L.latLng([1.7, 1.7])), 4);
     done();
   });
 });
