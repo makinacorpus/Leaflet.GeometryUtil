@@ -1,6 +1,6 @@
 {
   "name": "leaflet-geometryutil",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Leaflet utility functions on geometries",
   "keywords": [
     "Leaflet",
