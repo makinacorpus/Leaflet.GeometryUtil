@@ -2,10 +2,11 @@
 <head>
   <meta charset="utf-8">
   <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
 </head>
 <body>
-  <div id="map" style="display: none; height: 300px"></div>
+  <div id="map" style="display: none; height: 300px; width: 360px"></div>
   <div id="mocha"></div>
   <script src="../node_modules/chai/chai.js"></script>
   <script src="../node_modules/mocha/mocha.js"></script>
@@ -16,6 +17,9 @@
 
   <script>
     var map = L.map('map').fitWorld();
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
     mocha.setup('bdd');
 
