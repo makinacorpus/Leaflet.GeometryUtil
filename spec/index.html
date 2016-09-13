@@ -30,6 +30,11 @@
         return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
                             Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
     };
+    assert.almostNotEqual = function (a, b, n) {
+        n = n || 12;
+        return assert.notEqual(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
+                            Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
+    };
     // use Leaflet equality functions for Point and LatLng
     assert.pointEqual = function (a, b) {
         return a.equals(b);
