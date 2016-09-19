@@ -190,7 +190,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                     }
                 }
                 return result;
-            } else if (layer[0] instanceof L.LatLng || typeof layer[0][0] === 'number') { // we could have a latlng as [x,y] with x & y numbers
+            } else if (layer[0] instanceof L.LatLng 
+                        || typeof layer[0][0] === 'number'
+                        || typeof layer[0].lat === 'number') { // we could have a latlng as [x,y] with x & y numbers or {lat, lng}
                 layer = L.polyline(layer);
             } else {
                 return result;
@@ -202,7 +204,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         if (! ( layer instanceof L.Polyline ) )
             return result;
 
-        latlngs = layer.getLatLngs().slice(0);
+        // deep copy of latlngs
+        latlngs = JSON.parse(JSON.stringify(layer.getLatLngs().slice(0)));
 
         // add the last segment for L.Polygon
         if (layer instanceof L.Polygon) {
