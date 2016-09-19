@@ -70,6 +70,33 @@ describe('Closest on path with precision', function() {
       done();
   });
 
+  it('It should not alterate the latLngs of a polygon', function(done) {
+      var polygon = L.polygon([[0, 0], [10, 10], [0, 10]])/*.addTo(map)*/,
+          ll = [0, 5],
+          marker = L.marker(ll),
+          latlngs;
+
+      latlngs = polygon.getLatLngs();
+      if (L.Polyline._flat(latlngs)) {
+        assert.equal(latlngs.length, 3)
+      } else {
+        assert.equal(latlngs.length, 1)
+        assert.equal(latlngs[0].length, 3)
+      }
+
+      closest = L.GeometryUtil.closest(map, polygon, ll);
+
+      latlngs = polygon.getLatLngs();
+      if (L.Polyline._flat(latlngs)) {
+        assert.equal(latlngs.length, 3)
+      } else {
+        assert.equal(latlngs.length, 1)
+        assert.equal(latlngs[0].length, 3)
+      }
+
+      done();
+  });
+
   it('It should return null if layer param is not instance of Array|L.Polygon|L.Polyline (Leaflet 0.7.7 only)', function(done) {
       var campus = {
           "type": "Feature",
