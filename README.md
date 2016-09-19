@@ -51,6 +51,10 @@ Changelog
 
 * Nothing changed yet.
 
+### 0.7.2 ###
+
+* Fix #59, `closest` method using a shallow copy of latLngs => deep copy now
+
 ### 0.7.1 ###
 
 * Fix `closest` method for last segment on Polygon and nested Polygons
