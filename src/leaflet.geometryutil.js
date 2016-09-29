@@ -31,7 +31,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
-        
+
         @tutorial distance-length
 
         @param {L.Map} map Leaflet map to be used for this method
@@ -46,7 +46,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Shortcut function for planar distance between a {L.LatLng} and a segment (A-B).
         @param {L.Map} map Leaflet map to be used for this method
-        @param {L.LatLng} latlng - The position to search 
+        @param {L.LatLng} latlng - The position to search
         @param {L.LatLng} latlngA geographical point A of the segment
         @param {L.LatLng} latlngB geographical point B of the segment
         @returns {Number} planar distance
@@ -106,7 +106,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
      * Returns total length of line
      * @tutorial distance-length
-     * 
+     *
      * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>} coords Set of coordinates
      * @returns {Number} Total length (pixels for Point, meters for LatLng)
      */
@@ -190,7 +190,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                     }
                 }
                 return result;
-            } else if (layer[0] instanceof L.LatLng 
+            } else if (layer[0] instanceof L.LatLng
                         || typeof layer[0][0] === 'number'
                         || typeof layer[0].lat === 'number') { // we could have a latlng as [x,y] with x & y numbers or {lat, lng}
                 layer = L.polyline(layer);
@@ -198,7 +198,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 return result;
             }
         }
-        
+
         // if we don't have here a Polyline, that means layer is incorrect
         // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
         if (! ( layer instanceof L.Polyline ) )
@@ -222,7 +222,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             addLastSegment(latlngs);
         }
 
-        // we have a multi polygon / multi polyline / polygon with holes 
+        // we have a multi polygon / multi polyline / polygon with holes
         // use recursive to explore and return the good result
         if ( ! L.Polyline._flat(latlngs) ) {
 
@@ -251,7 +251,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 }
                 return result;
             }
-            
+
             // Keep the closest point of all segments
             for (i = 0, n = latlngs.length; i < n-1; i++) {
                 var latlngA = latlngs[i],
@@ -310,6 +310,56 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             }
         }
         return result;
+    },
+
+    /**
+        Returns the n closest layer to latlng among a list of layers.
+
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {Array<L.ILayer>} layers Set of layers
+        @param {L.LatLng} latlng - The position to search
+        @param {Number} - the expected number of output layers
+        @returns {object} ``{layer, latlng, distance}`` or ``null`` if list is empty;
+    */
+    nClosestLayers: function (map, layers, latlng, n) {
+        n = typeof n === 'number' ? n : Infinity;
+
+        if (n < 1 || layers.length < 1) {
+            return null;
+        }
+
+        var results = [];
+        var distance, ll;
+
+        for (var i = 0, m = layers.length; i < m; i++) {
+            var layer = layers[i];
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                results.push(subResult)
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                results.push({layer: layer, latlng: ll, distance: distance})
+            }
+        }
+
+        results.sort(function(a, b) {
+            return a.distance - b.distance;
+        });
+
+        if (results.length > n) {
+            return results.slice(0, n);
+        } else  {
+            return results;
+        }
     },
 
     /**
