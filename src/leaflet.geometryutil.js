@@ -313,16 +313,16 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-        Returns the n closest layer to latlng among a list of layers.
+        Returns the n closest layers to latlng among a list of input layers.
 
-        @param {L.Map} map Leaflet map to be used for this method
-        @param {Array<L.ILayer>} layers Set of layers
+        @param {L.Map} map - Leaflet map to be used for this method
+        @param {Array<L.ILayer>} layers - Set of layers
         @param {L.LatLng} latlng - The position to search
-        @param {Number} - the expected number of output layers
-        @returns {object} ``{layer, latlng, distance}`` or ``null`` if list is empty;
+        @param {?Number} [n=layers.length] - the expected number of output layers.
+        @returns {Array<object>} an array of objects ``{layer, latlng, distance}`` or ``null`` if the input is invalid (empty list or negative n)
     */
     nClosestLayers: function (map, layers, latlng, n) {
-        n = typeof n === 'number' ? n : Infinity;
+        n = typeof n === 'number' ? n : layers.length;
 
         if (n < 1 || layers.length < 1) {
             return null;

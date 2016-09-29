@@ -42,6 +42,27 @@ describe('N closest layers among an arry of layers', function() {
     done();
   });
 
+  it('It should return an array of objects with the same size of input array if n is larger than the size of input array.', function(done) {
+    var ll = L.latLng([0, 0]),
+        layers = [L.marker([3, 3]), L.marker([4, 4]), L.marker([2, 2])],
+        n = 5,
+        closests = L.GeometryUtil.nClosestLayers(map, layers, ll, n);
+
+    assert.equal(closests.length, layers.length);
+    assert.equal(closests[1].distance >= closests[0].distance, true);
+    assert.equal(closests[2].distance >= closests[1].distance, true);
+    done();
+  });
+
+  it('It should return an array of objects with the same size of input array if n is not given.', function(done) {
+    var ll = L.latLng([0, 0]),
+        layers = [L.marker([3, 3]), L.marker([4, 4]), L.marker([2, 2])],
+        closests = L.GeometryUtil.nClosestLayers(map, layers, ll);
+
+    assert.equal(closests.length, layers.length);
+    done();
+  });
+
   it('It should return the sub layer closest to the latlng point', function(done) {
     var ll = L.latLng([0,5]),
         campus = {
