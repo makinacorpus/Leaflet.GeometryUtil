@@ -1,0 +1,75 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../node_modules/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+</head>
+<body>
+  <div id="map" style="display: none; height: 300px; width: 360px"></div>
+  <div id="mocha"></div>
+  <script src="../node_modules/chai/chai.js"></script>
+  <script src="../node_modules/mocha/mocha.js"></script>
+  <script src="../node_modules/leaflet/build/deps.js"></script>
+  <script src="../node_modules/leaflet/debug/leaflet-include.js"></script>
+  <!-- <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script> -->
+  <script src="../src/leaflet.geometryutil.js"></script>
+
+  <script>
+    var map = L.map('map').fitWorld();
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    mocha.setup('bdd');
+
+    var assert = chai.assert;
+
+    assert.almostEqual = function (a, b, n) {
+        n = n || 12;
+        return assert.equal(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
+                            Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
+    };
+    assert.almostNotEqual = function (a, b, n) {
+        n = n || 12;
+        return assert.notEqual(Math.round(a * Math.pow(10, n)) / Math.pow(10, n),
+                            Math.round(b * Math.pow(10, n)) / Math.pow(10, n));
+    };
+    // use Leaflet equality functions for Point and LatLng
+    assert.pointEqual = function (a, b) {
+        return a.equals(b);
+    };
+    assert.latLngEqual = function (a, b, n) {
+        n = n || 2;
+        return assert.almostEqual(a.lat, b.lat, 2) && assert.almostEqual(a.lng, b.lng, n);
+    }
+  </script>
+
+  <script src="test.accumulatedLengths.js"></script>
+  <script src="test.bearing.js"></script>
+  <script src="test.closest.js"></script>
+  <script src="test.nClosestLayers.js"></script>
+  <script src="test.closestLayer.js"></script>
+  <script src="test.closestLayerSnap.js"></script>
+  <script src="test.closestSegment.js"></script>
+  <script src="test.computeAngle.js"></script>
+  <script src="test.computeSlope.js"></script>
+  <script src="test.destination.js"></script>
+  <script src="test.distanceSegment.js"></script>
+  <script src="test.extract.js"></script>
+  <script src="test.interpolateOnLine.js"></script>
+  <script src="test.interpolateOnPointSegment.js"></script>
+  <script src="test.isAfter.js"></script>
+  <script src="test.isBefore.js"></script>
+  <script src="test.layersWithin.js"></script>
+  <script src="test.length.js"></script>
+  <script src="test.locateOnLine.js"></script>
+  <script src="test.readableDistance.js"></script>
+  <script src="test.reverse.js"></script>
+  <script src="test.rotatePoint.js"></script>
+  <script src="test.startsAtExtremity.js"></script>
+  <script>
+    (window.mochaPhantomJS || window.mocha).run();
+  </script>
+</body>
+</html>

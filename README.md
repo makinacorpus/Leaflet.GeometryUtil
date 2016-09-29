@@ -4,6 +4,7 @@ Leaflet.GeometryUtil
 [![Build Status](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master)](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil)
 
 * Tested with stable Leaflet 0.7.0
+* Tested with Leaflet 1.0.0-rc.3
 
 Usage
 -----
@@ -33,12 +34,14 @@ Development
 
 ```
     sudo apt-get install nodejs phantomjs
+
+    npm install
 ```
 
 * Ready !
 
 ```
-    make test
+    npm test
 ```
 
 Changelog
@@ -47,6 +50,27 @@ Changelog
 ### master ###
 
 * Nothing changed yet.
+
+### 0.7.2 ###
+
+* Fix #59, `closest` method using a shallow copy of latLngs => deep copy now
+
+### 0.7.1 ###
+
+* Fix `closest` method for last segment on Polygon and nested Polygons
+
+### 0.7.0 ###
+
+* Tested for Leaflet 1.0.0-rc.3
+
+### 0.6.0 ###
+
+* Add nested arrays for `layer` param in `closest` method
+
+### 0.5.1 ###
+
+* Fix closestLayer to be able to work with GeoJSON nested layers
+* Restrict closest method to Array and L.Polyline (L.Polygon extend L.Polyline)
 
 ### 0.5.0 ###
 

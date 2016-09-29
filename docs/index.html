@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#nClosestLayers">nClosestLayers</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><h1>Leaflet.GeometryUtil</h1><p><a href="https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil"><img src="https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master" alt="Build Status"></a></p>
+<ul>
+<li>Tested with stable Leaflet 0.7.0</li>
+<li>Tested with Leaflet 1.0.0-rc.3</li>
+</ul>
+<h2>Usage</h2><p>Using Node:</p>
+<pre class="prettyprint source"><code>    npm install leaflet-geometryutil</code></pre><p>Or browser:</p>
+<pre class="prettyprint source"><code>    &lt;script src=&quot;leaflet.geometryutil.js&quot;>&lt;/script></code></pre><p>Check out <a href="http://makinacorpus.github.io/Leaflet.GeometryUtil/">online documentation</a>.</p>
+<h2>Development</h2><h3>Running tests in command-line</h3><ul>
+<li>Install <a href="http://nodejs.org">nodejs</a> and <a href="http://phantomjs.org">phantomjs</a></li>
+</ul>
+<pre class="prettyprint source"><code>    sudo apt-get install nodejs phantomjs
+
+    npm install</code></pre><ul>
+<li>Ready !</li>
+</ul>
+<pre class="prettyprint source"><code>    npm test</code></pre><h2>Changelog</h2><h3>master</h3><ul>
+<li>Nothing changed yet.</li>
+</ul>
+<h3>0.7.2</h3><ul>
+<li>Fix #59, <code>closest</code> method using a shallow copy of latLngs =&gt; deep copy now</li>
+</ul>
+<h3>0.7.1</h3><ul>
+<li>Fix <code>closest</code> method for last segment on Polygon and nested Polygons</li>
+</ul>
+<h3>0.7.0</h3><ul>
+<li>Tested for Leaflet 1.0.0-rc.3</li>
+</ul>
+<h3>0.6.0</h3><ul>
+<li>Add nested arrays for <code>layer</code> param in <code>closest</code> method</li>
+</ul>
+<h3>0.5.1</h3><ul>
+<li>Fix closestLayer to be able to work with GeoJSON nested layers</li>
+<li>Restrict closest method to Array and L.Polyline (L.Polygon extend L.Polyline)</li>
+</ul>
+<h3>0.5.0</h3><ul>
+<li>Add function <code>layersWithin()</code> (#34, thanks @haoliangyu)</li>
+<li>Fix safety check on the ratio value in <code>`interpolateOnLine()</code> (#29, thanks @Marcussacapuces91)</li>
+</ul>
+<h3>0.4.0</h3><ul>
+<li>Same version as v0.3.3, new release as v0.4.0 to keep numbering coherent as a new feature has been added</li>
+</ul>
+<h3>0.3.3</h3><ul>
+<li>Add bearing and destination functions (thanks @doublestranded)</li>
+</ul>
+<h3>0.3.2</h3><ul>
+<li>Use a soft dependency for Leaflet (thanks Erik Escoffier)</li>
+</ul>
+<h3>0.3.1</h3><ul>
+<li>Make sure interpolateOnLine() always returns a L.LatLng object (thanks Justin Manley)</li>
+</ul>
+<h3>0.3.0</h3><ul>
+<li>Added UMD style initialization (thanks @PerLiedman)</li>
+<li>Added readable distance (thanks @Mylen)</li>
+<li>Fix side effects on latlngs with <code>closest()</code> (thanks @AndrewIngram)</li>
+</ul>
+<h3>0.2.0</h3><ul>
+<li>Locate point on line</li>
+<li>Rotate point around center</li>
+<li>Fixed bug if closest point was on last segment</li>
+</ul>
+<h3>0.1.0</h3><ul>
+<li>Line subpart extraction</li>
+<li>Line lengths</li>
+<li>Angle and slope computation</li>
+<li>Line reverse</li>
+<li>Line interpolation</li>
+</ul>
+<h3>0.0.1</h3><ul>
+<li>Initial working version</li>
+</ul>
+<h2>License</h2><ul>
+<li>BSD New</li>
+</ul>
+<h2>Authors</h2><ul>
+<li><a href="https://github.com/bbecquet">Benjamin Becquet</a></li>
+<li><a href="https://github.com/leplatrem">Mathieu Leplatre</a></li>
+<li><a href="https://github.com/djcoin">Simon Thépot</a></li>
+<li><a href="https://github.com/nhinze">Nhinze</a></li>
+<li><a href="https://github.com/fredericbonifas">Frédéric Bonifas</a></li>
+<li><a href="https://github.com/mylen">Alexander Melard</a></li>
+</ul>
+<p><a href="http://makinacorpus.com"><img src="http://depot.makina-corpus.org/public/logo.gif" alt="Makina Corpus"></a></p></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        L.GeometryUtil
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>Leaflet Geometry utilities for distances and linear referencing.</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="leaflet.geometryutil.js.html">leaflet.geometryutil.js</a>, <a href="leaflet.geometryutil.js.html#line25">line 25</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 29 2016 09:47:20 GMT-0400 (EDT) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

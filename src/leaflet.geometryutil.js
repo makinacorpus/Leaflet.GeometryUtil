@@ -17,6 +17,11 @@
 }(function (L) {
 "use strict";
 
+L.Polyline._flat = L.Polyline._flat || function (latlngs) {
+    // true if it's a flat array of latlngs; false if nested
+    return !L.Util.isArray(latlngs[0]) || (typeof latlngs[0][0] !== 'object' && typeof latlngs[0][0] !== 'undefined');
+};
+
 /**
  * @fileOverview Leaflet Geometry utilities for distances and linear referencing.
  * @name L.GeometryUtil
@@ -26,10 +31,13 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
-        @param {L.Map} map
-        @param {L.LatLng} latlngA
-        @param {L.LatLng} latlngB
-        @returns {Number} in pixels
+
+        @tutorial distance-length
+
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {L.LatLng} latlngA geographical point A
+        @param {L.LatLng} latlngB geographical point B
+        @returns {Number} planar distance
      */
     distance: function (map, latlngA, latlngB) {
         return map.latLngToLayerPoint(latlngA).distanceTo(map.latLngToLayerPoint(latlngB));
@@ -37,11 +45,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between a {L.LatLng} and a segment (A-B).
-        @param {L.Map} map
-        @param {L.LatLng} latlng
-        @param {L.LatLng} latlngA
-        @param {L.LatLng} latlngB
-        @returns {Number} in pixels
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {L.LatLng} latlng - The position to search
+        @param {L.LatLng} latlngA geographical point A of the segment
+        @param {L.LatLng} latlngB geographical point B of the segment
+        @returns {Number} planar distance
     */
     distanceSegment: function (map, latlng, latlngA, latlngB) {
         var p = map.latLngToLayerPoint(latlng),
@@ -52,9 +60,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for converting distance to readable distance.
-        @param {Number} distance
-        @param {String} unit ('metric' or 'imperial')
-        @returns {Number} in yard or miles
+        @param {Number} distance distance to be converted
+        @param {String} unit 'metric' or 'imperial'
+        @returns {String} in yard or miles
     */
     readableDistance: function (distance, unit) {
         var isMetric = (unit !== 'imperial'),
@@ -81,11 +89,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
-        Returns true if the latlng belongs to segment.
-        param {L.LatLng} latlng
-        @param {L.LatLng} latlngA
-        @param {L.LatLng} latlngB
-        @param {?Number} [tolerance=0.2]
+        Returns true if the latlng belongs to segment A-B
+        @param {L.LatLng} latlng - The position to search
+        @param {L.LatLng} latlngA geographical point A of the segment
+        @param {L.LatLng} latlngB geographical point B of the segment
+        @param {?Number} [tolerance=0.2] tolerance to accept if latlng belongs really
         @returns {boolean}
      */
     belongsSegment: function(latlng, latlngA, latlngB, tolerance) {
@@ -97,8 +105,10 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
      * Returns total length of line
-     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
-     * @returns {Number} in meters
+     * @tutorial distance-length
+     *
+     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>} coords Set of coordinates
+     * @returns {Number} Total length (pixels for Point, meters for LatLng)
      */
     length: function (coords) {
         var accumulated = L.GeometryUtil.accumulatedLengths(coords);
@@ -107,8 +117,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
      * Returns a list of accumulated length along a line.
-     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>}
-     * @returns {Number} in meters
+     * @param {L.Polyline|Array<L.Point>|Array<L.LatLng>} coords Set of coordinates
+     * @returns {Array<Number>} Array of accumulated lengths (pixels for Point, meters for LatLng)
      */
     accumulatedLengths: function (coords) {
         if (typeof coords.getLatLngs == 'function') {
@@ -127,11 +137,14 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest point of a {L.LatLng} on the segment (A-B)
-        @param {L.Map} map
-        @param {L.LatLng} latlng
-        @param {L.LatLng} latlngA
-        @param {L.LatLng} latlngB
-        @returns {L.LatLng}
+
+        @tutorial closest
+
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {L.LatLng} latlng - The position to search
+        @param {L.LatLng} latlngA geographical point A of the segment
+        @param {L.LatLng} latlngB geographical point B of the segment
+        @returns {L.LatLng} Closest geographical point
     */
     closestOnSegment: function (map, latlng, latlngA, latlngB) {
         var maxzoom = map.getMaxZoom();
@@ -146,59 +159,124 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the closest latlng on layer.
-        @param {L.Map} map
-        @param {Array<L.LatLng>|L.PolyLine} layer - Layer that contains the result.
-        @param {L.LatLng} latlng
+
+        Accept nested arrays
+
+        @tutorial closest
+
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {Array<L.LatLng>|Array<Array<L.LatLng>>|L.PolyLine|L.Polygon} layer - Layer that contains the result
+        @param {L.LatLng} latlng - The position to search
         @param {?boolean} [vertices=false] - Whether to restrict to path vertices.
-        @returns {L.LatLng}
+        @returns {L.LatLng} Closest geographical point or null if layer param is incorrect
     */
     closest: function (map, layer, latlng, vertices) {
-        if (typeof layer.getLatLngs != 'function')
-            layer = L.polyline(layer);
 
-        var latlngs = layer.getLatLngs().slice(0),
+        var latlngs,
             mindist = Infinity,
             result = null,
             i, n, distance;
 
-        // Lookup vertices
-        if (vertices) {
-            for(i = 0, n = latlngs.length; i < n; i++) {
-                var ll = latlngs[i];
-                distance = L.GeometryUtil.distance(map, latlng, ll);
-                if (distance < mindist) {
+        if (layer instanceof Array) {
+            // if layer is Array<Array<T>>
+            if (layer[0] instanceof Array && typeof layer[0][0] !== 'number') {
+                // if we have nested arrays, we calc the closest for each array
+                // recursive
+                for (var i = 0; i < layer.length; i++) {
+                    var subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
+                    if (subResult.distance < mindist) {
+                        mindist = subResult.distance;
+                        result = subResult;
+                    }
+                }
+                return result;
+            } else if (layer[0] instanceof L.LatLng
+                        || typeof layer[0][0] === 'number'
+                        || typeof layer[0].lat === 'number') { // we could have a latlng as [x,y] with x & y numbers or {lat, lng}
+                layer = L.polyline(layer);
+            } else {
+                return result;
+            }
+        }
+
+        // if we don't have here a Polyline, that means layer is incorrect
+        // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
+        if (! ( layer instanceof L.Polyline ) )
+            return result;
+
+        // deep copy of latlngs
+        latlngs = JSON.parse(JSON.stringify(layer.getLatLngs().slice(0)));
+
+        // add the last segment for L.Polygon
+        if (layer instanceof L.Polygon) {
+            // add the last segment for each child that is a nested array
+            var addLastSegment = function(latlngs) {
+                if (L.Polyline._flat(latlngs)) {
+                    latlngs.push(latlngs[0]);
+                } else {
+                    for (var i = 0; i < latlngs.length; i++) {
+                        addLastSegment(latlngs[i]);
+                    }
+                }
+            }
+            addLastSegment(latlngs);
+        }
+
+        // we have a multi polygon / multi polyline / polygon with holes
+        // use recursive to explore and return the good result
+        if ( ! L.Polyline._flat(latlngs) ) {
+
+            for (var i = 0; i < latlngs.length; i++) {
+                // if we are at the lower level, and if we have a L.Polygon, we add the last segment
+                var subResult = L.GeometryUtil.closest(map, latlngs[i], latlng, vertices);
+                if (subResult.distance < mindist) {
+                    mindist = subResult.distance;
+                    result = subResult;
+                }
+            }
+            return result;
+
+        } else {
+
+            // Lookup vertices
+            if (vertices) {
+                for(i = 0, n = latlngs.length; i < n; i++) {
+                    var ll = latlngs[i];
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                    if (distance < mindist) {
+                        mindist = distance;
+                        result = ll;
+                        result.distance = distance;
+                    }
+                }
+                return result;
+            }
+
+            // Keep the closest point of all segments
+            for (i = 0, n = latlngs.length; i < n-1; i++) {
+                var latlngA = latlngs[i],
+                    latlngB = latlngs[i+1];
+                distance = L.GeometryUtil.distanceSegment(map, latlng, latlngA, latlngB);
+                if (distance <= mindist) {
                     mindist = distance;
-                    result = ll;
+                    result = L.GeometryUtil.closestOnSegment(map, latlng, latlngA, latlngB);
                     result.distance = distance;
                 }
             }
             return result;
         }
 
-        if (layer instanceof L.Polygon) {
-            latlngs.push(latlngs[0]);
-        }
-
-        // Keep the closest point of all segments
-        for (i = 0, n = latlngs.length; i < n-1; i++) {
-            var latlngA = latlngs[i],
-                latlngB = latlngs[i+1];
-            distance = L.GeometryUtil.distanceSegment(map, latlng, latlngA, latlngB);
-            if (distance <= mindist) {
-                mindist = distance;
-                result = L.GeometryUtil.closestOnSegment(map, latlng, latlngA, latlngB);
-                result.distance = distance;
-            }
-        }
-        return result;
     },
 
     /**
         Returns the closest layer to latlng among a list of layers.
-        @param {L.Map} map
-        @param {Array<L.ILayer>} layers
-        @param {L.LatLng} latlng
-        @returns {object} with layer, latlng and distance or {null} if list is empty;
+
+        @tutorial closest
+
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {Array<L.ILayer>} layers Set of layers
+        @param {L.LatLng} latlng - The position to search
+        @returns {object} ``{layer, latlng, distance}`` or ``null`` if list is empty;
     */
     closestLayer: function (map, layers, latlng) {
         var mindist = Infinity,
@@ -208,30 +286,89 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
         for (var i = 0, n = layers.length; i < n; i++) {
             var layer = layers[i];
-            // Single dimension, snap on points, else snap on closest
-            if (typeof layer.getLatLng == 'function') {
-                ll = layer.getLatLng();
-                distance = L.GeometryUtil.distance(map, latlng, ll);
-            }
-            else {
-                ll = L.GeometryUtil.closest(map, layer, latlng);
-                if (ll) distance = ll.distance;  // Can return null if layer has no points.
-            }
-            if (distance < mindist) {
-                mindist = distance;
-                result = {layer: layer, latlng: ll, distance: distance};
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                if (subResult.distance < mindist) {
+                    mindist = subResult.distance;
+                    result = subResult;
+                }
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                if (distance < mindist) {
+                    mindist = distance;
+                    result = {layer: layer, latlng: ll, distance: distance};
+                }
             }
         }
         return result;
     },
 
     /**
+        Returns the n closest layers to latlng among a list of input layers.
+
+        @param {L.Map} map - Leaflet map to be used for this method
+        @param {Array<L.ILayer>} layers - Set of layers
+        @param {L.LatLng} latlng - The position to search
+        @param {?Number} [n=layers.length] - the expected number of output layers.
+        @returns {Array<object>} an array of objects ``{layer, latlng, distance}`` or ``null`` if the input is invalid (empty list or negative n)
+    */
+    nClosestLayers: function (map, layers, latlng, n) {
+        n = typeof n === 'number' ? n : layers.length;
+
+        if (n < 1 || layers.length < 1) {
+            return null;
+        }
+
+        var results = [];
+        var distance, ll;
+
+        for (var i = 0, m = layers.length; i < m; i++) {
+            var layer = layers[i];
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                results.push(subResult)
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                results.push({layer: layer, latlng: ll, distance: distance})
+            }
+        }
+
+        results.sort(function(a, b) {
+            return a.distance - b.distance;
+        });
+
+        if (results.length > n) {
+            return results.slice(0, n);
+        } else  {
+            return results;
+        }
+    },
+
+    /**
      * Returns all layers within a radius of the given position, in an ascending order of distance.
-       @param {L.Map} map
+       @param {L.Map} map Leaflet map to be used for this method
        @param {Array<ILayer>} layers - A list of layers.
-       @param {L.LatLng} latlng - The position to search.
+       @param {L.LatLng} latlng - The position to search
        @param {?Number} [radius=Infinity] - Search radius in pixels
-       @return {object[]} an array of object including layer within the radius, closest latlng, and distance
+       @return {object[]} an array of objects including layer within the radius, closest latlng, and distance
      */
     layersWithin: function(map, layers, latlng, radius) {
       radius = typeof radius == 'number' ? radius : Infinity;
@@ -267,11 +404,14 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns the closest position from specified {LatLng} among specified layers,
         with a maximum tolerance in pixels, providing snapping behaviour.
-        @param {L.Map} map
+
+        @tutorial closest
+
+        @param {L.Map} map Leaflet map to be used for this method
         @param {Array<ILayer>} layers - A list of layers to snap on.
-        @param {L.LatLng} latlng - The position to snap.
+        @param {L.LatLng} latlng - The position to snap
         @param {?Number} [tolerance=Infinity] - Maximum number of pixels.
-        @param {?boolean} [withVertices=true] - Snap to layers vertices.
+        @param {?boolean} [withVertices=true] - Snap to layers vertices or segment points (not only vertex)
         @returns {object} with snapped {LatLng} and snapped {Layer} or null if tolerance exceeded.
     */
     closestLayerSnap: function (map, layers, latlng, tolerance, withVertices) {
@@ -295,8 +435,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the Point located on a segment at the specified ratio of the segment length.
-        @param {L.Point} pA
-        @param {L.Point} pB
+        @param {L.Point} pA coordinates of point A
+        @param {L.Point} pB coordinates of point B
         @param {Number} the length ratio, expressed as a decimal between 0 and 1, inclusive.
         @returns {L.Point} the interpolated point.
     */
@@ -309,9 +449,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns the coordinate of the point located on a line at the specified ratio of the line length.
-        @param {L.Map} map
-        @param {Array<L.LatLng>|L.PolyLine} latlngs
-        @param {Number} the length ratio, expressed as a decimal between 0 and 1, inclusive
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {Array<L.LatLng>|L.PolyLine} latlngs Set of geographical points
+        @param {Number} ratio the length ratio, expressed as a decimal between 0 and 1, inclusive
         @returns {Object} an object with latLng ({LatLng}) and predecessor ({Number}), the index of the preceding vertex in the Polyline
         (-1 if the interpolated point is the first vertex)
     */
@@ -376,12 +516,12 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns a float between 0 and 1 representing the location of the
-        closest point on polyline to the given latlng, as a fraction of total 2d line length.
+        closest point on polyline to the given latlng, as a fraction of total line length.
         (opposite of L.GeometryUtil.interpolateOnLine())
-        @param {L.Map} map
-        @param {L.PolyLine} polyline
-        @param {L.LatLng} latlng
-        @returns {Number}
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {L.PolyLine} polyline Polyline on which the latlng will be search
+        @param {L.LatLng} latlng The position to search
+        @returns {Number} Float between 0 and 1
     */
     locateOnLine: function (map, polyline, latlng) {
         var latlngs = polyline.getLatLngs();
@@ -413,8 +553,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns a clone with reversed coordinates.
-        @param {L.PolyLine} polyline
-        @returns {L.PolyLine}
+        @param {L.PolyLine} polyline polyline to reverse
+        @returns {L.PolyLine} polyline reversed
     */
     reverse: function (polyline) {
         return L.polyline(polyline.getLatLngs().slice(0).reverse());
@@ -423,11 +563,11 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Returns a sub-part of the polyline, from start to end.
         If start is superior to end, returns extraction from inverted line.
-        @param {L.Map} map
-        @param {L.PolyLine} latlngs
+        @param {L.Map} map Leaflet map to be used for this method
+        @param {L.PolyLine} polyline Polyline on which will be extracted the sub-part
         @param {Number} start ratio, expressed as a decimal between 0 and 1, inclusive
         @param {Number} end ratio, expressed as a decimal between 0 and 1, inclusive
-        @returns {Array<L.LatLng>}
+        @returns {Array<L.LatLng>} new polyline
      */
     extract: function (map, polyline, start, end) {
         if (start > end) {
@@ -459,8 +599,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns true if first polyline ends where other second starts.
-        @param {L.PolyLine} polyline
-        @param {L.PolyLine} other
+        @param {L.PolyLine} polyline First polyline
+        @param {L.PolyLine} other Second polyline
         @returns {bool}
     */
     isBefore: function (polyline, other) {
@@ -472,8 +612,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns true if first polyline starts where second ends.
-        @param {L.PolyLine} polyline
-        @param {L.PolyLine} other
+        @param {L.PolyLine} polyline First polyline
+        @param {L.PolyLine} other Second polyline
         @returns {bool}
     */
     isAfter: function (polyline, other) {
@@ -485,8 +625,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns true if first polyline starts where second ends or start.
-        @param {L.PolyLine} polyline
-        @param {L.PolyLine} other
+        @param {L.PolyLine} polyline First polyline
+        @param {L.PolyLine} other Second polyline
         @returns {bool}
     */
     startsAtExtremity: function (polyline, other) {
@@ -499,9 +639,9 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Returns horizontal angle in degres between two points.
-        @param {L.Point} a
-        @param {L.Point} b
-        @returns {float}
+        @param {L.Point} a Coordinates of point A
+        @param {L.Point} b Coordinates of point B
+        @returns {Number} horizontal angle
      */
     computeAngle: function(a, b) {
         return (Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI);
@@ -509,8 +649,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
        Returns slope (Ax+B) between two points.
-        @param {L.Point} a
-        @param {L.Point} b
+        @param {L.Point} a Coordinates of point A
+        @param {L.Point} b Coordinates of point B
         @returns {Object} with ``a`` and ``b`` properties.
      */
     computeSlope: function(a, b) {
