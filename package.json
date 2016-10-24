@@ -19,7 +19,7 @@
     "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
   },
   "dependencies": {
-    "leaflet": "^0.7.0"
+    "leaflet": ">=0.7.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
