@@ -49,7 +49,7 @@ Changelog
 
 ### master ###
 
-* Nothing changed yet.
+* Add `nClosestLayer` (#62, thanks @haoliangyu)
 
 ### 0.7.2 ###
 
