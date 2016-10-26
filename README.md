@@ -49,6 +49,11 @@ Changelog
 
 ### master ###
 
+Nothing yet.
+
+### 0.8.0 ###
+
+* Update leaflet dependency to `>=0.7.0` (#64, thanks @kozze89)
 * Add `nClosestLayer` (#62, thanks @haoliangyu)
 
 ### 0.7.2 ###
