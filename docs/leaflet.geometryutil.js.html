@@ -23,7 +23,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Tutorials</h3><ul><li><a href="tutorial-closest.html">closest</a></li><li><a href="tutorial-distance-length.html">distance-length</a></li></ul><h3>Global</h3><ul><li><a href="global.html#accumulatedLengths">accumulatedLengths</a></li><li><a href="global.html#bearing">bearing</a></li><li><a href="global.html#belongsSegment">belongsSegment</a></li><li><a href="global.html#closest">closest</a></li><li><a href="global.html#closestLayer">closestLayer</a></li><li><a href="global.html#closestLayerSnap">closestLayerSnap</a></li><li><a href="global.html#closestOnSegment">closestOnSegment</a></li><li><a href="global.html#computeAngle">computeAngle</a></li><li><a href="global.html#computeSlope">computeSlope</a></li><li><a href="global.html#destination">destination</a></li><li><a href="global.html#distance">distance</a></li><li><a href="global.html#distanceSegment">distanceSegment</a></li><li><a href="global.html#extract">extract</a></li><li><a href="global.html#interpolateOnLine">interpolateOnLine</a></li><li><a href="global.html#interpolateOnPointSegment">interpolateOnPointSegment</a></li><li><a href="global.html#isAfter">isAfter</a></li><li><a href="global.html#isBefore">isBefore</a></li><li><a href="global.html#layersWithin">layersWithin</a></li><li><a href="global.html#length">length</a></li><li><a href="global.html#locateOnLine">locateOnLine</a></li><li><a href="global.html#nClosestLayers">nClosestLayers</a></li><li><a href="global.html#readableDistance">readableDistance</a></li><li><a href="global.html#reverse">reverse</a></li><li><a href="global.html#rotatePoint">rotatePoint</a></li><li><a href="global.html#startsAtExtremity">startsAtExtremity</a></li></ul>
 </nav>
 
 <div id="main">
@@ -71,7 +71,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 
     /**
         Shortcut function for planar distance between two {L.LatLng} at current zoom.
-        
+
         @tutorial distance-length
 
         @param {L.Map} map Leaflet map to be used for this method
@@ -86,7 +86,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
         Shortcut function for planar distance between a {L.LatLng} and a segment (A-B).
         @param {L.Map} map Leaflet map to be used for this method
-        @param {L.LatLng} latlng - The position to search 
+        @param {L.LatLng} latlng - The position to search
         @param {L.LatLng} latlngA geographical point A of the segment
         @param {L.LatLng} latlngB geographical point B of the segment
         @returns {Number} planar distance
@@ -146,7 +146,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     /**
      * Returns total length of line
      * @tutorial distance-length
-     * 
+     *
      * @param {L.Polyline|Array&lt;L.Point>|Array&lt;L.LatLng>} coords Set of coordinates
      * @returns {Number} Total length (pixels for Point, meters for LatLng)
      */
@@ -230,7 +230,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                     }
                 }
                 return result;
-            } else if (layer[0] instanceof L.LatLng 
+            } else if (layer[0] instanceof L.LatLng
                         || typeof layer[0][0] === 'number'
                         || typeof layer[0].lat === 'number') { // we could have a latlng as [x,y] with x &amp; y numbers or {lat, lng}
                 layer = L.polyline(layer);
@@ -238,7 +238,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 return result;
             }
         }
-        
+
         // if we don't have here a Polyline, that means layer is incorrect
         // see https://github.com/makinacorpus/Leaflet.GeometryUtil/issues/23
         if (! ( layer instanceof L.Polyline ) )
@@ -262,7 +262,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             addLastSegment(latlngs);
         }
 
-        // we have a multi polygon / multi polyline / polygon with holes 
+        // we have a multi polygon / multi polyline / polygon with holes
         // use recursive to explore and return the good result
         if ( ! L.Polyline._flat(latlngs) ) {
 
@@ -291,7 +291,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 }
                 return result;
             }
-            
+
             // Keep the closest point of all segments
             for (i = 0, n = latlngs.length; i &lt; n-1; i++) {
                 var latlngA = latlngs[i],
@@ -350,6 +350,56 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             }
         }
         return result;
+    },
+
+    /**
+        Returns the n closest layers to latlng among a list of input layers.
+
+        @param {L.Map} map - Leaflet map to be used for this method
+        @param {Array&lt;L.ILayer>} layers - Set of layers
+        @param {L.LatLng} latlng - The position to search
+        @param {?Number} [n=layers.length] - the expected number of output layers.
+        @returns {Array&lt;object>} an array of objects ``{layer, latlng, distance}`` or ``null`` if the input is invalid (empty list or negative n)
+    */
+    nClosestLayers: function (map, layers, latlng, n) {
+        n = typeof n === 'number' ? n : layers.length;
+
+        if (n &lt; 1 || layers.length &lt; 1) {
+            return null;
+        }
+
+        var results = [];
+        var distance, ll;
+
+        for (var i = 0, m = layers.length; i &lt; m; i++) {
+            var layer = layers[i];
+            if (layer instanceof L.LayerGroup) {
+                // recursive
+                var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
+                results.push(subResult)
+            } else {
+                // Single dimension, snap on points, else snap on closest
+                if (typeof layer.getLatLng == 'function') {
+                    ll = layer.getLatLng();
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                }
+                else {
+                    ll = L.GeometryUtil.closest(map, layer, latlng);
+                    if (ll) distance = ll.distance;  // Can return null if layer has no points.
+                }
+                results.push({layer: layer, latlng: ll, distance: distance})
+            }
+        }
+
+        results.sort(function(a, b) {
+            return a.distance - b.distance;
+        });
+
+        if (results.length > n) {
+            return results.slice(0, n);
+        } else  {
+            return results;
+        }
     },
 
     /**
@@ -736,7 +786,7 @@ return L.GeometryUtil;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Sep 19 2016 12:02:29 GMT+0200 (CEST) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Thu Sep 29 2016 09:47:20 GMT-0400 (EDT) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
