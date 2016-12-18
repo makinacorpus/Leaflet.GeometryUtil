@@ -1,0 +1,26 @@
+{
+  "name": "leaflet-geometryutil",
+  "version": "0.4.0",
+  "description": "Leaflet utility functions on geometries",
+  "main": "dist/leaflet.geometryutil.js",
+  "license": "BSD",
+  "keywords": [
+    "Leaflet",
+    "GIS"
+  ],
+  "homepage": "https://github.com/makinacorpus/Leaflet.GeometryUtil",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "mocha": "1.9.0",
+    "chai": "1.6.0",
+    "mocha-phantomjs": "2.0.1",
+    "jsdoc": "https://github.com/jsdoc3/jsdoc/tarball/v3.1.1"
+  }
+}
