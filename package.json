@@ -13,8 +13,8 @@
   "license": "BSD-3-Clause",
   "main": "src/leaflet.geometryutil.js",
   "scripts": {
-    "test-leaflet-0.7.7": "npm install leaflet@0.7.7 && node_modules/.bin/mocha-phantomjs spec/index.html",
-    "test-leaflet-1.0.0": "npm install leaflet@1.0.0-rc.3 && node_modules/.bin/mocha-phantomjs spec/index.html",
+    "test-leaflet-0.7.7": "npm install leaflet@0.7.7 --no-save && node_modules/.bin/mocha-phantomjs spec/index.html",
+    "test-leaflet-1.0.0": "npm install leaflet@^1.0.0 --no-save && node_modules/.bin/mocha-phantomjs spec/index.html",
     "test": "npm run test-leaflet-0.7.7 && npm run test-leaflet-1.0.0",
     "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
   },
