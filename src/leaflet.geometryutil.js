@@ -175,15 +175,15 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         var latlngs,
             mindist = Infinity,
             result = null,
-            i, n, distance;
+            i, n, distance, subResult;
 
         if (layer instanceof Array) {
             // if layer is Array<Array<T>>
             if (layer[0] instanceof Array && typeof layer[0][0] !== 'number') {
                 // if we have nested arrays, we calc the closest for each array
                 // recursive
-                for (var i = 0; i < layer.length; i++) {
-                    var subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
+                for (i = 0; i < layer.length; i++) {
+                    subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
                     if (subResult.distance < mindist) {
                         mindist = subResult.distance;
                         result = subResult;
@@ -218,17 +218,16 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                         addLastSegment(latlngs[i]);
                     }
                 }
-            }
+            };
             addLastSegment(latlngs);
         }
 
         // we have a multi polygon / multi polyline / polygon with holes
         // use recursive to explore and return the good result
         if ( ! L.Polyline._flat(latlngs) ) {
-
-            for (var i = 0; i < latlngs.length; i++) {
+            for (i = 0; i < latlngs.length; i++) {
                 // if we are at the lower level, and if we have a L.Polygon, we add the last segment
-                var subResult = L.GeometryUtil.closest(map, latlngs[i], latlng, vertices);
+                subResult = L.GeometryUtil.closest(map, latlngs[i], latlng, vertices);
                 if (subResult.distance < mindist) {
                     mindist = subResult.distance;
                     result = subResult;
@@ -336,7 +335,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             if (layer instanceof L.LayerGroup) {
                 // recursive
                 var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
-                results.push(subResult)
+                results.push(subResult);
             } else {
                 // Single dimension, snap on points, else snap on closest
                 if (typeof layer.getLatLng == 'function') {
@@ -347,7 +346,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                     ll = L.GeometryUtil.closest(map, layer, latlng);
                     if (ll) distance = ll.distance;  // Can return null if layer has no points.
                 }
-                results.push({layer: layer, latlng: ll, distance: distance})
+                results.push({layer: layer, latlng: ll, distance: distance});
             }
         }
 
