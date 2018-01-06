@@ -702,8 +702,8 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
        Returns the point that is a distance and heading away from
        the given origin point.
        @param {L.LatLng} latlng: origin point
-       @param {float}: heading in degrees, clockwise from 0 degrees north.
-       @param {float}: distance in meters
+       @param {float} heading: heading in degrees, clockwise from 0 degrees north.
+       @param {float} distance: distance in meters
        @returns {L.latLng} the destination point.
        Many thanks to Chris Veness at http://www.movable-type.co.uk/scripts/latlong.html
        for a great reference and examples.
@@ -727,7 +727,37 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         lon2 = lon2 * radInv;
         lon2 = lon2 > 180 ? lon2 - 360 : lon2 < -180 ? lon2 + 360 : lon2;
         return L.latLng([lat2 * radInv, lon2]);
-    }
+    },
+
+    /**
+       Returns the the angle of the given segment and the Equator in degrees,
+       clockwise from 0 degrees north.
+       @param {L.Map} map: Leaflet map to be used for this method
+       @param {L.LatLng} latlngA: geographical point A of the segment
+       @param {L.LatLng} latlngB: geographical point B of the segment
+       @returns {Float} the angle in degrees.
+    */
+    angle: function(map, latlngA, latlngB) {
+      var pointA = map.latLngToContainerPoint(latlngA),
+          pointB = map.latLngToContainerPoint(latlngB),
+          angleDeg = Math.atan2(pointB.y - pointA.y, pointB.x - pointA.x) * 180 / Math.PI + 90;
+      angleDeg += angleDeg < 0 ? 360 : 0;
+      return angleDeg;
+    },
+
+    /**
+       Returns a point snaps on the segment and heading away from the given origin point a distance.
+       @param {L.Map} map: Leaflet map to be used for this method
+       @param {L.LatLng} latlngA: geographical point A of the segment
+       @param {L.LatLng} latlngB: geographical point B of the segment
+       @param {float} distance: distance in meters
+       @returns {L.latLng} the destination point.
+    */
+    destinationOnSegment: function(map, latlngA, latlngB, distance) {
+      var angleDeg = L.GeometryUtil.angle(map, latlngA, latlngB),
+          latlng = L.GeometryUtil.destination(latlngA, angleDeg, distance);
+      return L.GeometryUtil.closestOnSegment(map, latlng, latlngA, latlngB);
+    },
 });
 
 return L.GeometryUtil;
