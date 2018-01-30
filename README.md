@@ -49,7 +49,7 @@ Changelog
 
 ### master ###
 
-* Add `angle()` and `destinationOnSegment()` (#71)
+* Add `angle()` and `destinationOnSegment()` (#71, thanks @trandaison)
 
 ### 0.8.1 ###
 
