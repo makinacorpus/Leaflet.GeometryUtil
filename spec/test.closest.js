@@ -40,7 +40,8 @@ describe('Closest on path with precision', function() {
         "POINT(20.3370786516854 -1.46067415730337)"
       TODO: find out what's going on with Longitudes :)
      */
-    assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
+    assert.almostEqual(closest.lat, -1.467431, 6)
+    assert.almostEqual(closest.lng, 21.5729367, 6)
 
     // Change zoom and check that closest did not change.
     assert.equal(0, map.getZoom());
@@ -50,7 +51,8 @@ describe('Closest on path with precision', function() {
         assert.notEqual(0, map.getZoom());
 
         closest = L.GeometryUtil.closest(map, line, ll);
-        assert.equal('LatLng(-1.46743, 21.57294)', closest.toString());
+        assert.almostEqual(closest.lat, -1.467431, 6)
+        assert.almostEqual(closest.lng, 21.5729367, 6)
         // Restore zoom
         map.off('moveend');
         map._resetView(map.getCenter(), 0);
@@ -161,7 +163,7 @@ describe('Closest on path with precision', function() {
         closest = L.GeometryUtil.closest(map, layers.getLayers()[0], ll);
       // if layers.getLayers()[0] is a LayerGroup, we are in Leaflet 0.7.7
       // so there is no result
-      // if not, we are in Leaflet 1.0, and we don't need to test it, because 
+      // if not, we are in Leaflet 1.0, and we don't need to test it, because
       // layers.getLayers()[0] will contain a multipolygon, and so there is a result
       if (layers.getLayers()[0] instanceof L.LayerGroup) {
         assert.isNull(closest);
