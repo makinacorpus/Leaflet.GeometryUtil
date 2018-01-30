@@ -49,7 +49,11 @@ Changelog
 
 ### master ###
 
-Nothing yet.
+* Add `angle()` and `destinationOnSegment()` (#71)
+
+### 0.8.1 ###
+
+* Remove a deprecated function in Leaflet 1.x (#69)
 
 ### 0.8.0 ###
 
