@@ -491,26 +491,24 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         }
 
         var ratioDist = lineLength * ratio;
-        var a = pts[0],
-            b = pts[1],
-            distA = 0,
-            distB = a.distanceTo(b);
-        // follow the line segments [ab], adding lengths,
+
+		// follow the line segments [ab], adding lengths,
         // until we find the segment where the points should lie on
-        var index = 1;
-        for (; index < n && distB < ratioDist; index++) {
-            a = b;
-            distA = distB;
-            b = pts[index];
-            distB += a.distanceTo(b);
-        }
-        // compute the ratio relative to the segment [ab]
-        var segmentRatio = ((distB - distA) !== 0) ? ((ratioDist - distA) / (distB - distA)) : 0;
-        var interpolatedPoint = L.GeometryUtil.interpolateOnPointSegment(a, b, segmentRatio);
-        return {
-            latLng: map.unproject(interpolatedPoint, maxzoom),
-            predecessor: index-2
-        };
+		var cumulativeDistanceToA = 0, cumulativeDistanceToB = 0;
+		for (var i = 0; cumulativeDistanceToB < ratioDist; i++) {
+			var pointA = pts[i], pointB = pts[i+1];
+
+			cumulativeDistanceToA = cumulativeDistanceToB;
+			cumulativeDistanceToB += pointA.distanceTo(pointB);
+		}
+
+		// compute the ratio relative to the segment [ab]
+		var segmentRatio = ((cumulativeDistanceToB - cumulativeDistanceToA) !== 0) ? ((ratioDist - cumulativeDistanceToA) / (cumulativeDistanceToB - cumulativeDistanceToA)) : 0;
+		var interpolatedPoint = L.GeometryUtil.interpolateOnPointSegment(pointA, pointB, segmentRatio);
+		return {
+			latLng: map.unproject(interpolatedPoint, maxzoom),
+			predecessor: i-1
+		};
     },
 
     /**
