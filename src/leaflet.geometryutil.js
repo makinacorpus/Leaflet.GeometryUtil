@@ -501,6 +501,10 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
 			cumulativeDistanceToA = cumulativeDistanceToB;
 			cumulativeDistanceToB += pointA.distanceTo(pointB);
 		}
+		
+		if (pointA == undefined && pointB == undefined) { // Happens when line has no length
+			var pointA = pts[0], pointB = pts[1], i = 1;
+		}
 
 		// compute the ratio relative to the segment [ab]
 		var segmentRatio = ((cumulativeDistanceToB - cumulativeDistanceToA) !== 0) ? ((ratioDist - cumulativeDistanceToA) / (cumulativeDistanceToB - cumulativeDistanceToA)) : 0;
