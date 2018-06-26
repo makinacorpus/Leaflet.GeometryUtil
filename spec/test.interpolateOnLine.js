@@ -69,4 +69,9 @@ describe('Interpolate on line', function() {
     assert.isDefined(interp2.latLng.lat);
     assert.isDefined(interp2.latLng.lng);
   });
+  
+  it('It should not return a negative predecessor index when interpolating a point on the first segment', function() {
+  	var interp = L.GeometryUtil.interpolateOnLine(map, [llA, llB], 0.5);
+  	assert.isTrue(interp.predecessor >= 0);
+  });
 });
