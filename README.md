@@ -49,6 +49,9 @@ Changelog
 
 ### master ###
 
+### 0.9.0 ###
+
+* Fix `interpolateOnLine()` doesn't return correct predecessor (#66, thanks @jb2b38)
 * Add `angle()` and `destinationOnSegment()` (#71, thanks @trandaison)
 
 ### 0.8.1 ###
