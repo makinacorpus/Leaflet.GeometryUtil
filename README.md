@@ -49,6 +49,10 @@ Changelog
 
 ### master ###
 
+### 0.9.1 ###
+
+* Fix `locateOnLine()` doesn't return correct subline (#79, thanks @lepetittim)
+
 ### 0.9.0 ###
 
 * Fix `interpolateOnLine()` doesn't return correct predecessor (#66, thanks @jb2b38)
