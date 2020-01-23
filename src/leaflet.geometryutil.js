@@ -184,7 +184,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 // recursive
                 for (i = 0; i < layer.length; i++) {
                     subResult = L.GeometryUtil.closest(map, layer[i], latlng, vertices);
-                    if (subResult.distance < mindist) {
+                    if (subResult && subResult.distance < mindist) {
                         mindist = subResult.distance;
                         result = subResult;
                     }
