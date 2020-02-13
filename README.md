@@ -49,6 +49,10 @@ Changelog
 
 ### master ###
 
+### 0.9.2 ###
+
+* Fixes a crash if a multilinestring has an element with only one vertex (fixes #84, thanks @runette)
+
 ### 0.9.1 ###
 
 * Fix `locateOnLine()` doesn't return correct subline (#79, thanks @lepetittim)
