@@ -30,10 +30,10 @@ Development
 
 ### Running tests in command-line
 
-* Install [nodejs](http://nodejs.org) and [phantomjs](http://phantomjs.org)
+* Install [nodejs](http://nodejs.org)
 
 ```
-    sudo apt-get install nodejs phantomjs
+    sudo apt-get install nodejs
 
     npm install
 ```
