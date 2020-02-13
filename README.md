@@ -47,7 +47,7 @@ Development
 Changelog
 ---------
 
-### master ###
+### 0.9.3 ###
 
 * Increase locateOnLine() tolerance
 
