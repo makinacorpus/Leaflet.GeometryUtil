@@ -540,7 +540,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
             var l1 = latlngs[i],
                 l2 = latlngs[i+1];
             portion = lengths[i];
-            if (L.GeometryUtil.belongsSegment(point, l1, l2, 0.0001)) {
+            if (L.GeometryUtil.belongsSegment(point, l1, l2, 0.001)) {
                 portion += l1.distanceTo(point);
                 found = true;
                 break;
