@@ -15,11 +15,12 @@
   "scripts": {
     "test-leaflet-0.7.7": "npm install leaflet@0.7.7 --no-save && node_modules/.bin/mocha-chrome spec/index.html",
     "test-leaflet-1.0.0": "npm install leaflet@^1.0.0 --no-save && node_modules/.bin/mocha-chrome spec/index.html",
-    "test": "npm run test-leaflet-0.7.7 && npm run test-leaflet-1.0.0",
+    "test-leaflet-1.6.0": "npm install leaflet@^1.6.0 --no-save && node_modules/.bin/mocha-chrome spec/index.html",
+    "test": "npm run test-leaflet-0.7.7 && npm run test-leaflet-1.0.0  && npm run test-leaflet-1.6.0",
     "generate-docs": "rm -rf docs; node_modules/.bin/jsdoc -c jsdoc.config -d ./docs/"
   },
   "dependencies": {
-    "leaflet": ">=0.7.0"
+    "leaflet": "^1.6.0"
   },
   "devDependencies": {
     "chai": "3.5.0",
