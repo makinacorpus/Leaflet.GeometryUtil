@@ -6,6 +6,10 @@ interface LayerPointRelation<LayerType extends Layer = Layer> {
     distance: number;
 }
 
+interface LatLngWithDistance extends LatLngLiteral {
+    distance: number;
+}
+
 declare module "leaflet" {
     namespace Polyline {
         function _flat(latlngs: LatLngExpression[]): boolean;
@@ -27,7 +31,7 @@ declare module "leaflet" {
     
         function closestOnSegment(map: Map, latlng: LatLngExpression, latlngA: LatLngExpression, latlngB: LatLngExpression): LatLng;
     
-        function closest(map: Map, layer: LatLngExpression[] | LatLngExpression[][] | Polyline, latlng: LatLngExpression, vertices?: boolean): LatLngLiteral | null;
+        function closest(map: Map, layer: LatLngExpression[] | LatLngExpression[][] | Polyline, latlng: LatLngExpression, vertices?: boolean): LatLngWithDistance | null;
     
         function closestLayer<LayerType extends Layer>(map: Map, layers: LayerType[], latlng: LatLngExpression): LayerPointRelation<LayerType> | null;
     
