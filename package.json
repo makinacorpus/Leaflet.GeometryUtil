@@ -12,6 +12,7 @@
   },
   "license": "BSD-3-Clause",
   "main": "src/leaflet.geometryutil.js",
+  "types": "src/leaflet.geometryutil.d.ts",
   "scripts": {
     "test-leaflet-0.7.7": "npm install leaflet@0.7.7 --no-save && node_modules/.bin/mocha-chrome spec/index.html",
     "test-leaflet-1.0.0": "npm install leaflet@^1.0.0 --no-save && node_modules/.bin/mocha-chrome spec/index.html",
@@ -23,6 +24,7 @@
     "leaflet": "^1.6.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.5.21",
     "chai": "3.5.0",
     "jsdoc": "^3.6.3",
     "minami": "^1.1.1",
