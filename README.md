@@ -47,6 +47,10 @@ Development
 Changelog
 ---------
 
+### 0.10.0 ###
+
+* Add TypeScript definitions (#90, thanks @cdauth)
+
 ### 0.9.3 ###
 
 * Increase locateOnLine() tolerance
