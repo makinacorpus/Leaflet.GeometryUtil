@@ -1,11 +1,11 @@
 describe('Readable distances', function() {
   it('It should be meters by default', function(done) {
-    assert.equal("0 m", L.GeometryUtil.readableDistance(0));
+    assert.equal("0.0 m", L.GeometryUtil.readableDistance(0));
     done();
   });
 
-  it('It should be 0 yd if imperial', function(done) {
-    assert.equal("0 yd", L.GeometryUtil.readableDistance(0, 'imperial'));
+  it('It should be 0.0 yd if imperial', function(done) {
+    assert.equal("0.0 yd", L.GeometryUtil.readableDistance(0, 'imperial'));
     done();
   });
 

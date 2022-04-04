@@ -73,7 +73,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 distanceStr = (distance  / 1000).toFixed(2) + ' km';
             }
             else {
-                distanceStr = distance.toFixed(2) + ' m';
+                distanceStr = distance.toFixed(1) + ' m';
             }
         }
         else {
@@ -82,7 +82,7 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 distanceStr = (distance / 1760).toFixed(2) + ' miles';
             }
             else {
-                distanceStr = distance.toFixed(2) + ' yd';
+                distanceStr = distance.toFixed(1) + ' yd';
             }
         }
         return distanceStr;
