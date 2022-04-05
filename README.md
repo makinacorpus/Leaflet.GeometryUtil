@@ -47,6 +47,10 @@ Development
 Changelog
 ---------
 
+### 0.10.1 ###
+
+* Enhance precision for meter values (metric / imperial) (#94, thanks @karlbeecken)
+
 ### 0.10.0 ###
 
 * Add TypeScript definitions (#90, thanks @cdauth)
