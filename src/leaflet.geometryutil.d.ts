@@ -1,4 +1,5 @@
-import L, { LatLngLiteral, Layer } from "leaflet";
+import * as L from "leaflet";
+import { LatLngLiteral, Layer } from "leaflet"
 
 interface LayerPointRelation<LayerType extends Layer = Layer> {
     layer: LayerType;
