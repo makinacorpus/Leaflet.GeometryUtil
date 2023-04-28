@@ -47,6 +47,11 @@ Development
 Changelog
 ---------
 
+### 0.10.2 ###
+
+* use leaflet's earth radius in destination function (#96, thanks to viliusstanga)
+* Changed imports to acommodate to new ngx-leaflet organization (#97, thanks to @rtrevinnoc)
+
 ### 0.10.1 ###
 
 * Enhance precision for meter values (metric / imperial) (#94, thanks @karlbeecken)
