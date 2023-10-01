@@ -1,3 +1,6 @@
+<a href="https://www.npmjs.com/package/leaflet-geometryutil"><img alt="npm" src="https://img.shields.io/npm/dt/leaflet-geometryutil"></a>
+<a href="https://www.npmjs.com/package/leaflet-geometryutil"><img alt="npm" src= "https://img.shields.io/npm/v/leaflet-geometryutil?color=red"></a>
+
 Leaflet.GeometryUtil
 ====================
 
