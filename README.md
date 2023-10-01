@@ -4,8 +4,6 @@
 Leaflet.GeometryUtil
 ====================
 
-[![Build Status](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil.png?branch=master)](https://travis-ci.org/makinacorpus/Leaflet.GeometryUtil)
-
 * Tested with stable Leaflet 0.7.0
 * Tested with Leaflet 1.0.0-rc.3
 
