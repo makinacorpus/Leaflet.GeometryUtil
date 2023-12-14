@@ -174,12 +174,14 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
         const y = latLng.lat;
         const cx = center.lng;
         const cy = center.lat;
+        // dx and dy is the vector from the circle's center to latLng
         const dx = x - cx;
         const dy = y - cy;
-        const distanceSquared = dx * dx + dy * dy;
 
-        const distance = Math.sqrt(distanceSquared)
+        // distance between the point and the circle's center
+        const distance = Math.sqrt(dx * dx + dy * dy)
 
+        // Calculate the closest point on the circle by adding the normalized vector to the center
         const tx = cx + (dx / distance) * radius;
         const ty = cy + (dy / distance) * radius;
 
