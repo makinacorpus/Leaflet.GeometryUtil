@@ -158,6 +158,36 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
     },
 
     /**
+    Returns the closest point of a {L.LatLng} on a {L.Circle}
+
+    @tutorial closest
+
+    @param {L.LatLng} latlng - The position to search
+    @param {L.Circle} circle - A Circle defined by a center and a radius
+    @returns {L.LatLng} Closest geographical point on the circle circumference
+    */
+    closestOnCircle: function (circle, latLng) {
+        const center = circle.getLatLng();
+        const circleRadius = circle.getRadius();
+        const radius = typeof circleRadius === 'number' ? circleRadius : circleRadius.radius;
+        const x = latLng.lng;
+        const y = latLng.lat;
+        const cx = center.lng;
+        const cy = center.lat;
+        const dx = x - cx;
+        const dy = y - cy;
+        const distanceSquared = dx * dx + dy * dy;
+
+        const distance = Math.sqrt(distanceSquared)
+
+        const tx = cx + (dx / distance) * radius;
+        const ty = cy + (dy / distance) * radius;
+
+        return new L.LatLng(ty, tx);
+    },
+    
+
+    /**
         Returns the closest latlng on layer.
 
         Accept nested arrays
@@ -293,6 +323,10 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                     result = subResult;
                 }
             } else {
+                if (layer instanceof L.Circle){
+                    ll = this.closestOnCircle(layer, latlng);
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                } else
                 // Single dimension, snap on points, else snap on closest
                 if (typeof layer.getLatLng == 'function') {
                     ll = layer.getLatLng();
@@ -337,6 +371,10 @@ L.GeometryUtil = L.extend(L.GeometryUtil || {}, {
                 var subResult = L.GeometryUtil.closestLayer(map, layer.getLayers(), latlng);
                 results.push(subResult);
             } else {
+                if (layer instanceof L.Circle){
+                    ll = this.closestOnCircle(layer, latlng);
+                    distance = L.GeometryUtil.distance(map, latlng, ll);
+                } else
                 // Single dimension, snap on points, else snap on closest
                 if (typeof layer.getLatLng == 'function') {
                     ll = layer.getLatLng();
