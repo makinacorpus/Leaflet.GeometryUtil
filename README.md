@@ -48,6 +48,10 @@ Development
 Changelog
 ---------
 
+### 0.10.3 ###
+
+* add support for closestOnCircle (#101, thanks to @danyhoron)
+
 ### 0.10.2 ###
 
 * use leaflet's earth radius in destination function (#96, thanks to @viliusstanga)
