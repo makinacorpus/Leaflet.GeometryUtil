@@ -48,6 +48,10 @@ Development
 Changelog
 ---------
 
+### 0.11.0 ###
+
+* Move Leaflet to the peer dependencies (`>=0.7 <2`): npm no longer installs a second copy of Leaflet next to the application's one
+
 ### 0.10.3 ###
 
 * add support for closestOnCircle (#101, thanks to @danyhoron)
